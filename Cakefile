@@ -31,7 +31,7 @@ build = (cb) ->
 
 # Run a CoffeeScript through our node/coffee interpreter.
 run = (args, cb) ->
-  proc =         spawn 'node', ['bin/coffee'].concat(args)
+  proc =         spawn 'nodejs', ['bin/coffee'].concat(args)
   proc.stderr.on 'data', (buffer) -> console.log buffer.toString()
   proc.on        'exit', (status) ->
     process.exit(1) if status != 0
@@ -43,21 +43,27 @@ log = (message, color, explanation) ->
 
 option '-p', '--prefix [DIR]', 'set the installation prefix for `cake install`'
 
+option '-d', '--destdir [DIR]', 'set the installation destdir for `cake install`'
+
+option '-n', '--nodedir [DIR]', 'set the installation nodedir for `cake install`'
+
 task 'install', 'install CoffeeScript into /usr/local (or --prefix)', (options) ->
   base = options.prefix or '/usr/local'
+  destdir = options.destdir or ''
   lib  = "#{base}/lib/coffee-script"
   bin  = "#{base}/bin"
-  node = "~/.node_libraries/coffee-script"
-  console.log   "Installing CoffeeScript to #{lib}"
+  nodedir = options.nodedir or "~/.node_libraries"
+  node = "#{nodedir}/coffee-script"
+  console.log   "Installing CoffeeScript to #{destdir}#{lib}"
   console.log   "Linking to #{node}"
-  console.log   "Linking 'coffee' to #{bin}/coffee"
+  console.log   "Linking 'coffee' to #{destdir}#{bin}/coffee"
   exec([
-    "mkdir -p #{lib} #{bin}"
-    "cp -rf bin lib LICENSE README package.json src #{lib}"
-    "ln -sfn #{lib}/bin/coffee #{bin}/coffee"
-    "ln -sfn #{lib}/bin/cake #{bin}/cake"
-    "mkdir -p ~/.node_libraries"
-    "ln -sfn #{lib}/lib/coffee-script #{node}"
+    "mkdir -p #{destdir}#{lib} #{destdir}#{bin}"
+    "cp -rf bin lib LICENSE README package.json src #{destdir}#{lib}"
+    "ln -sfn #{lib}/bin/coffee #{destdir}#{bin}/coffee"
+    "ln -sfn #{lib}/bin/cake #{destdir}#{bin}/cake"
+    "mkdir -p #{destdir}#{nodedir}"
+    "ln -sfn #{lib}/lib/coffee-script #{destdir}#{node}"
   ].join(' && '), (err, stdout, stderr) ->
     if err then console.log stderr.trim() else log 'done', green
   )
@@ -118,8 +124,6 @@ task 'build:browser', 'rebuild the merged script for inclusion in the browser', 
   unless process.env.MINIFY is 'false'
     {code} = require('uglify-js').minify code, fromString: true
   fs.writeFileSync 'extras/coffee-script.js', header + '\n' + code
-  console.log "built ... running browser tests:"
-  invoke 'test:browser'
 
 
 task 'doc:site', 'watch and continually rebuild the documentation for the website', ->
