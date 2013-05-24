@@ -24,7 +24,7 @@ return unless window?
 # Include source maps where possible. If we've got a base64 encoder, a
 # JSON serializer, and tools for escaping unicode characters, we're good to go.
 # Ported from https://developer.mozilla.org/en-US/docs/DOM/window.btoa
-if btoa? and JSON? and unescape? and encodeURIComponent?
+if false and btoa? and JSON? and unescape? and encodeURIComponent?
   compile = (code, options = {}) ->
     options.sourceMap = true
     options.inline = true
