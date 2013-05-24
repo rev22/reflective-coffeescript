@@ -1336,7 +1336,11 @@ exports.Code = class Code extends Base
     @eachParamName (name, node) ->
       node.error "multiple parameters named '#{name}'" if name in uniqs
       uniqs.push name
-    @body.makeReturn() unless wasEmpty or @noReturn
+    unless wasEmpty or @noReturn
+      if @body instanceof Value
+        @body = new Return @body
+      else
+        @body.makeReturn() 
     if @bound
       if o.scope.parent.method?.bound
         @bound = @context = o.scope.parent.method.context
