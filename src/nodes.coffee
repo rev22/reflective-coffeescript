@@ -550,6 +550,8 @@ exports.Value = class Value extends Base
         return new If new Existence(fst), snd, soak: on
       no
 
+   makeReturn: (res) -> new Return this
+
 #### Comment
 
 # CoffeeScript passes through block comments as JavaScript block comments
