@@ -108,7 +108,10 @@ exports.Base = class Base
     if res
       new Call new Literal("#{res}.push"), [me]
     else
-      new Return me
+      if this instanceof Value
+        new Return this
+      else
+        new Return me
 
   # Does this node, or any of its children, contain a node of a certain kind?
   # Recursively traverses down the *children* nodes and returns the first one
@@ -1336,11 +1339,7 @@ exports.Code = class Code extends Base
     @eachParamName (name, node) ->
       node.error "multiple parameters named '#{name}'" if name in uniqs
       uniqs.push name
-    unless wasEmpty or @noReturn
-      if @body instanceof Value
-        @body = new Return @body
-      else
-        @body.makeReturn() 
+    @body.makeReturn() unless wasEmpty or @noReturn
     if @bound
       if o.scope.parent.method?.bound
         @bound = @context = o.scope.parent.method.context
