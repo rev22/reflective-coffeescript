@@ -41,7 +41,7 @@
 
   This makes the function easily reusable in different contexts, and,
   when used consistently, makes it easier to create objects without
-  hidden state, simply make sure that all its methods are pure.
+  hidden state, by simply making sure that all their methods are pure.
 
   As an automatic bonus feature, the 'do @>' syntax can be used to
   fully isolate the lexical scope of a block of code.
