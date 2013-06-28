@@ -25,7 +25,7 @@
   Reflective CoffeeScript aims to be fully compatible with the
   upstream, vanilla CoffeeScript.
 
-  Features:
+  Features added to reflective-coffeescript:
 
   * Pure methods
   
@@ -41,7 +41,7 @@
 
   This makes the function easily reusable in different contexts, and,
   when used consistently, makes it easier to create objects without
-  hidden state.
+  hidden state, simply make sure that all its methods are pure.
 
   As an automatic bonus feature, the 'do @>' syntax can be used to
   fully isolate the lexical scope of a block of code.
