@@ -25,7 +25,7 @@ if require.extensions
     require.extensions[ext] = loadFile
 
 # The current CoffeeScript version number.
-exports.VERSION = '1.6.1'
+exports.VERSION = '1.6.2-reflective'
 
 # Expose helpers for testing.
 exports.helpers = helpers
