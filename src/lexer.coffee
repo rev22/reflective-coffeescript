@@ -768,7 +768,7 @@ NUMBER     = ///
 HEREDOC    = /// ^ ("""|''') ([\s\S]*?) (?:\n[^\n\S]*)? \1 ///
 
 OPERATOR   = /// ^ (
-  ?: [-=]>             # function
+  ?: [-=@]>            # function
    | [-+*/%<>&|^!?=]=  # compound assign / compare
    | >>>=?             # zero-fill right shift
    | ([-+:])\1         # doubles
@@ -783,7 +783,7 @@ COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|(?:###)$)|^(?:\s*#(?!##[^#]).*)+/
 
 LITERATE   = /^([ ]{4}|\t)/
 
-CODE       = /^[-=]>/
+CODE       = /^[-=@]>/
 
 MULTI_DENT = /^(?:\n[^\n\S]*)+/
 
