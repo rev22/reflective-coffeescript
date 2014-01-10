@@ -118,7 +118,10 @@ exports.Base = class Base
     if res
       new Call new Literal("#{res}.push"), [me]
     else
-      new Return me
+      if this instanceof Value
+        new Return this
+      else
+        new Return me
 
   # Does this node, or any of its children, contain a node of a certain kind?
   # Recursively traverses down the *children* nodes and returns the first one
@@ -543,6 +546,12 @@ exports.Value = class Value extends Base
   compileNode: (o) ->
     @base.front = @front
     props = @properties
+    if o.scope.strict and @base instanceof Literal
+      do (val = @base.value) =>
+        if IDENTIFIER.test val
+          # Check that variable is declared in the strict scope
+          unless val is 'this' or o.scope.check val
+            @error "Variable \"#{val}\" is not declared in strict scope"
     fragments = @base.compileToFragments o, (if props.length then LEVEL_ACCESS else null)
     if (@base instanceof Parens or props.length) and SIMPLENUM.test fragmentsToText fragments
       fragments.push @makeCode '.'
@@ -1157,8 +1166,11 @@ exports.Assign = class Assign extends Base
       return @compilePatternMatch o if @variable.isArray() or @variable.isObject()
       return @compileSplice       o if @variable.isSplice()
       return @compileConditional  o if @context in ['||=', '&&=', '?=']
+    if maybestrict = o.scope.strict
+      o.scope.strict = false
     compiledName = @variable.compileToFragments o, LEVEL_LIST
     name = fragmentsToText compiledName
+    o.scope.strict = true if maybestrict
     unless @context
       varBase = @variable.unwrapAll()
       unless varBase.isAssignable()
@@ -1302,6 +1314,7 @@ exports.Code = class Code extends Base
     @params  = params or []
     @body    = body or new Block
     @bound   = tag is 'boundfunc'
+    @reflective = 1 if tag is 'reflectivefunc'
 
   children: ['params', 'body']
 
@@ -1309,7 +1322,7 @@ exports.Code = class Code extends Base
 
   jumps: NO
 
-  makeScope: (parentScope) -> new Scope parentScope, @body, this
+  makeScope: (parentScope) -> new Scope parentScope, @body, this, !!@reflective
 
   # Compilation creates a new scope unless explicitly asked to share with the
   # outer scope. Handles splat parameters in the parameter list by peeking at
@@ -1329,6 +1342,7 @@ exports.Code = class Code extends Base
       boundfunc.updateLocationDataIfMissing @locationData
       return boundfunc.compileNode(o)
 
+    o.scope = null if @reflective
     o.scope         = del(o, 'classScope') or @makeScope o.scope
     o.scope.shared  = del(o, 'sharedScope')
     o.indent        += TAB

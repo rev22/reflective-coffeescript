@@ -189,7 +189,7 @@ class exports.Rewriter
         #  1. We have seen a `CONTROL` argument on the line.
         #  2. The last token before the indent is part of the list below
         #
-        if prevTag not in ['=>', '->', '[', '(', ',', '{', 'TRY', 'ELSE', '=']
+        if prevTag not in ['@>', '=>', '->', '[', '(', ',', '{', 'TRY', 'ELSE', '=']
           endImplicitCall() while inImplicitCall()
         stack.pop() if inImplicitControl()
         stack.push [tag, i]
@@ -371,7 +371,7 @@ class exports.Rewriter
       token[1] isnt ';' and token[0] in SINGLE_CLOSERS and
       not (token[0] is 'TERMINATOR' and @tag(i + 1) in EXPRESSION_CLOSE) and
       not (token[0] is 'ELSE' and starter isnt 'THEN') and
-      not (token[0] in ['CATCH', 'FINALLY'] and starter in ['->', '=>']) or
+      not (token[0] in ['CATCH', 'FINALLY'] and starter in ['->', '=>', '@>']) or
       token[0] in CALL_CLOSERS and @tokens[i - 1].newLine
 
     action = (token, i) ->
@@ -471,7 +471,7 @@ IMPLICIT_FUNC    = ['IDENTIFIER', 'SUPER', ')', 'CALL_END', ']', 'INDEX_END', '@
 IMPLICIT_CALL    = [
   'IDENTIFIER', 'NUMBER', 'STRING', 'JS', 'REGEX', 'NEW', 'PARAM_START', 'CLASS'
   'IF', 'TRY', 'SWITCH', 'THIS', 'BOOL', 'NULL', 'UNDEFINED', 'UNARY', 'SUPER'
-  'THROW', '@', '->', '=>', '[', '(', '{', '--', '++'
+  'THROW', '@', '->', '=>', '@>', '[', '(', '{', '--', '++'
 ]
 
 IMPLICIT_UNSPACED_CALL = ['+', '-']
@@ -482,7 +482,7 @@ IMPLICIT_END     = ['POST_IF', 'FOR', 'WHILE', 'UNTIL', 'WHEN', 'BY',
 
 # Single-line flavors of block expressions that have unclosed endings.
 # The grammar can't disambiguate them, so we insert the implicit indentation.
-SINGLE_LINERS    = ['ELSE', '->', '=>', 'TRY', 'FINALLY', 'THEN']
+SINGLE_LINERS    = ['ELSE', '->', '=>', '@>', 'TRY', 'FINALLY', 'THEN']
 SINGLE_CLOSERS   = ['TERMINATOR', 'CATCH', 'FINALLY', 'ELSE', 'OUTDENT', 'LEADING_WHEN']
 
 # Tokens that end a line.

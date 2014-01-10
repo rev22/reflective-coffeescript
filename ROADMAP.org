@@ -1,0 +1,12 @@
+* Support for reflective objects
+** Reflective methods
+*** Syntax for reflective methods
+*** Coffee source metadata for reflective methods
+* Reflective compiler
+** Extensible syntax
+*** Extensible grammar
+*** Extensible backend
+* Extras
+** Calculate domain and codomains of functions
+** Partial evaluation
+** Continuations and coroutines (useful for loading libraries dynamically)
