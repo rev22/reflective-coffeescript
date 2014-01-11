@@ -1,8 +1,8 @@
 {
-  "name":         "coffee-script",
-  "description":  "Unfancy JavaScript",
-  "keywords":     ["javascript", "language", "coffeescript", "compiler"],
-  "author":       "Jeremy Ashkenas",
+  "name":         "reflective-coffeescript",
+  "description":  "Reflection-augmented CoffeeScript",
+  "keywords":     ["reflection", "language", "coffeescript", "compiler"],
+  "author":       "Michele Bini, Jeremy Ashkenas",
   "version":      "1.6.3-reflective",
   "license":      "MIT",
   "engines":      {
@@ -19,11 +19,11 @@
   "scripts": {
     "test": "node ./bin/cake test"
   },
-  "homepage":     "http://coffeescript.org",
-  "bugs":         "https://github.com/jashkenas/coffee-script/issues",
+  "homepage":     "http://rev22.github.io/reflective-coffeescript",
+  "bugs":         "https://github.com/rev22/reflective-coffeescript/issues",
   "repository":   {
     "type": "git",
-    "url": "git://github.com/jashkenas/coffee-script.git"
+    "url": "git://github.com/rev22/reflective-coffeescript.git"
   },
   "devDependencies": {
     "uglify-js":  "~2.2",

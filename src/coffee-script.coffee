@@ -1,3 +1,6 @@
+# Copyright (c) 2009-2013 Jeremy Ashkenas
+# Copyright (c) 2013,2014 Michele Bini
+
 # CoffeeScript can be used both on the server, as a command-line compiler based
 # on Node.js/V8, or to run CoffeeScript directly in the browser. This module
 # contains the main entry functions for tokenizing, parsing, and compiling

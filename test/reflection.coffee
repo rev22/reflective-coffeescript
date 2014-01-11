@@ -1,3 +1,5 @@
+# Copyright (c) 2013,2014 Michele Bini
+
 test "Verify catching impure reflective functions", ->
   CoffeeScript.compile "@>@foo"
   CoffeeScript.compile "->foo"
@@ -13,7 +15,6 @@ test "Verify catching impure reflective functions", ->
     catch
       caught = true
     caught
-    
 
 test "Verify reflective functions source", ->
   ok ((@>).coffee is "@>")

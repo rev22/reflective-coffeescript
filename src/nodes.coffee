@@ -1,3 +1,6 @@
+# Copyright (c) 2009-2013 Jeremy Ashkenas
+# Copyright (c) 2013,2014 Michele Bini
+
 # `nodes.coffee` contains all of the node classes for the syntax tree. Most
 # nodes are created as the result of actions in the [grammar](grammar.html),
 # but some are created by other nodes as a method of code generation. To convert

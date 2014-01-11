@@ -1,3 +1,6 @@
+# Copyright (c) 2009-2013 Jeremy Ashkenas
+# Copyright (c) 2013,2014 Michele Bini
+
 # This file contains the common helper functions that we'd like to share among
 # the **Lexer**, **Rewriter**, and the **Nodes**. Merge objects, flatten
 # arrays, count characters, that sort of thing.
