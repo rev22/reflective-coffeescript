@@ -10,7 +10,7 @@ Error.stackTraceLimit = Infinity
 
 # Import the helpers we plan to use.
 {compact, flatten, extend, merge, del, starts, ends, last, some,
-addLocationDataFn, locationDataToString, throwSyntaxError} = require './helpers'
+addLocationDataFn, locationDataToString, locationDataToSource, throwSyntaxError} = require './helpers'
 
 # Functions required by parser
 exports.extend = extend
@@ -1314,7 +1314,8 @@ exports.Code = class Code extends Base
     @params  = params or []
     @body    = body or new Block
     @bound   = tag is 'boundfunc'
-    @reflective = 1 if tag is 'reflectivefunc'
+    @reflective = tag is 'reflectivefunc'
+    @pure = tag is 'purefunc'
 
   children: ['params', 'body']
 
@@ -1322,7 +1323,7 @@ exports.Code = class Code extends Base
 
   jumps: NO
 
-  makeScope: (parentScope) -> new Scope parentScope, @body, this, !!@reflective
+  makeScope: (parentScope) -> new Scope parentScope, @body, this, !!@pure
 
   # Compilation creates a new scope unless explicitly asked to share with the
   # outer scope. Handles splat parameters in the parameter list by peeking at
@@ -1342,7 +1343,22 @@ exports.Code = class Code extends Base
       boundfunc.updateLocationDataIfMissing @locationData
       return boundfunc.compileNode(o)
 
-    o.scope = null if @reflective
+    if @reflective
+      # Annotate the function with its source
+      # transforms: ->... to (((x)->x.coffee="->...";x)(->...))
+      lecode = locationDataToSource @locationData
+      lecode = lecode
+      .replace(/[\"\\]/g, (((x)->"\\"+x)))
+      .replace(/(\n[ \t]*)*$/, "")
+      .replace(/\n/g, "\\n")
+      wrapper = new Code [new Param new Literal "x"], new Block [(new Assign(new Value(new Literal("x"), [new Access(new Literal("coffee"))]), new Literal('"'+lecode+'"'))), new Literal("x")]
+      @pure = true
+      @reflective = false
+      boundfunc = new Call(wrapper, [new Code(@params, @body, "purefunc")])
+      boundfunc.updateLocationDataIfMissing @locationData
+      return boundfunc.compileNode(o)
+
+    o.scope = null if @pure
     o.scope         = del(o, 'classScope') or @makeScope o.scope
     o.scope.shared  = del(o, 'sharedScope')
     o.indent        += TAB

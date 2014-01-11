@@ -117,6 +117,15 @@ exports.locationDataToString = (obj) ->
   else
     "No location data"
 
+exports.locationDataToSource = (l)->
+  lines = exports.code.lines or= exports.code.full.split("\n")
+  # if ("2" of obj) and ("first_line" of obj[2]) then locationData = obj[2]
+  # else if "first_line" of obj then locationData = obj
+  m = lines[l.first_line .. l.last_line]
+  m[m.length - 1]  = m[m.length - 1]  .substr(0,  l.last_column+1)
+  m[0]             = m[0]             .substr(    l.first_column)
+  m.join("\n")
+
 # A `.coffee.md` compatible version of `basename`, that returns the file sans-extension.
 exports.baseFileName = (file, stripExt = no, useWinPathSep = no) ->
   pathSep = if useWinPathSep then /\\|\// else /\//

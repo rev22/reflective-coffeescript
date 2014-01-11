@@ -24,9 +24,12 @@ exports.helpers = helpers
 withPrettyErrors = (fn) ->
   (code, options = {}) ->
     try
+      helpers.code = full: code
       fn.call @, code, options
     catch err
       throw helpers.updateSyntaxError err, code, options.filename
+    finally
+      delete helpers.code
 
 # Compile CoffeeScript code to JavaScript, using the Coffee/Jison compiler.
 #
