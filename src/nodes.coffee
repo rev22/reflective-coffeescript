@@ -1346,9 +1346,9 @@ exports.Code = class Code extends Base
       boundfunc.updateLocationDataIfMissing @locationData
       return boundfunc.compileNode(o)
 
+    # Annotate the function with its source
+    # transforming `->foo` to `(((x)->x.coffee="->foo";x)(->foo))`
     if @reflective
-      # Annotate the function with its source
-      # transforms: ->... to (((x)->x.coffee="->...";x)(->...))
       lecode = locationDataToSource @locationData
       lecode = lecode
       .replace(/[\"\\]/g, (((x)->"\\"+x)))

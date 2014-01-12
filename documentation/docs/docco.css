@@ -51,17 +51,9 @@ b, strong {
   font-family: "aller-bold";
 }
 
-p {
+p, ul, ol {
   margin: 15px 0 0px;
 }
-  .annotation ul, .annotation ol {
-    margin: 25px 0;
-  }
-    .annotation ul li, .annotation ol li {
-      font-size: 14px;
-      line-height: 18px;
-      margin: 10px 0;
-    }
 
 h1, h2, h3, h4, h5, h6 {
   color: #112233;
@@ -399,8 +391,7 @@ pre .css .rule .keyword,
 pre .winutils,
 pre .javascript .title,
 pre .lisp .title,
-pre .subst,
-pre .reserved {
+pre .subst {
   color: #954121;
   /*font-weight: bold*/
 }
@@ -507,3 +498,65 @@ pre .chunk {
 pre .tex .formula {
   opacity: 0.5;
 }
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-blockquote {
+  color: #060;
+  background: #ddd;
+  font-style: italic;
+}
+
+.hljs-comment {
+  color: #2a2;
+  font-style: italic;
+}
+
+.hljs-keyword {
+  color: #55f;
+  font-style: italic;
+}
+
+.hljs-number {
+  color: #802;
+}
+
+.hljs-string {
+  color: #820;
+}
+
+.hljs-attribute {
+  color: #626;
+}
+
+.hljs-title {
+  color: #055;
+}
+
+.hljs-function .hljs-title {
+  color: #088;
+}
+
+.hljs-built_in {
+  color: #668;
+}
+
+.hljs-regexp {
+  color: #832;
+}
+
+.hljs-params {
+  color: #066;
+}
+
+// .hljs-function { background: #eff; }
+
+// .hljs-class { background: #ffd; }
+
+// .hljs-annotation .hljs-at_rule .hljs-bullet .hljs-code .hljs-constant .hljs-decorator .hljs-doctype .hljs-emphasis .hljs-header .hljs-hexcolor .hljs-horizontal_rule .hljs-id .hljs-important .hljs-javadoc .hljs-label .hljs-link_label .hljs-link_url .hljs-pi .hljs-pragma .hljs-preprocessor .hljs-pseudo .hljs-reserved .hljs-strong .hljs-symbol .hljs-symbol .hljs-tag .hljs-value .hljs-variable 
+
