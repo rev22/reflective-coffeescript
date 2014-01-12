@@ -11,7 +11,7 @@
 </head>
 <body>
 
-  <a id="logo" href="#top" style="color:black;opacity:1;line-height:100px;z-index:1000;font-size:20px">Reflective CoffeeScript</a>
+  <a id="logo" href="#top" style="color:black;opacity:1;line-height:100px;z-index:1000;font-size:20px;left:50px">Reflective CoffeeScript</a>
   <div id="flybar">
     <div class="navigation toc">
       <div class="button">
