@@ -3,7 +3,7 @@ path = require 'path'
 vm = require 'vm'
 nodeREPL = require 'repl'
 CoffeeScript = require './coffee-script'
-{merge, updateSyntaxError} = require './helpers'
+{merge, updateSyntaxError} = helpers = require './helpers'
 
 replDefaults =
   prompt: 'coffee> ',
@@ -26,6 +26,7 @@ replDefaults =
       ast = new Block [
         new Assign (new Value new Literal '_'), ast, '='
       ]
+      helpers.code = full: input
       js = ast.compile bare: yes, locals: Object.keys(context)
       result = if context is global
         vm.runInThisContext js, filename 
@@ -36,6 +37,8 @@ replDefaults =
       # AST's `compile` does not add source code information to syntax errors.
       updateSyntaxError err, input
       cb err
+    finally
+      delete helpers.code
 
 addMultilineHandler = (repl) ->
   {rli, inputStream, outputStream} = repl
