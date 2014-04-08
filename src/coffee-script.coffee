@@ -17,7 +17,7 @@ SourceMap     = require './sourcemap'
 # The current CoffeeScript version number.
 exports.VERSION = '1.6.3-reflective'
 
-exports.FILE_EXTENSIONS = ['.coffee', '.litcoffee', '.coffee.md']
+exports.FILE_EXTENSIONS = ['.refcoffee', '.litrefcoffee', '.refcoffee.md', '.coffee', '.litcoffee', '.coffee.md']
 
 # Expose helpers for testing.
 exports.helpers = helpers

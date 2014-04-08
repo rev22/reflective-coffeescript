@@ -131,20 +131,21 @@ exports.locationDataToSource = (l)->
 
 # A `.coffee.md` compatible version of `basename`, that returns the file sans-extension.
 exports.baseFileName = (file, stripExt = no, useWinPathSep = no) ->
+  isExt = (x)-> x is 'coffee' or x is 'refcoffee'
   pathSep = if useWinPathSep then /\\|\// else /\//
   parts = file.split(pathSep)
   file = parts[parts.length - 1]
   return file unless stripExt and file.indexOf('.') >= 0
   parts = file.split('.')
   parts.pop()
-  parts.pop() if parts[parts.length - 1] is 'coffee' and parts.length > 1
+  parts.pop() if isExt(parts[parts.length - 1]) and parts.length > 1
   parts.join('.')
 
 # Determine if a filename represents a CoffeeScript file.
-exports.isCoffee = (file) -> /\.((lit)?coffee|coffee\.md)$/.test file
+exports.isCoffee = (file) -> /\.((lit)?(ref)?coffee|(ref)?coffee\.md)$/.test file
 
 # Determine if a filename represents a Literate CoffeeScript file.
-exports.isLiterate = (file) -> /\.(litcoffee|coffee\.md)$/.test file
+exports.isLiterate = (file) -> /\.(lit(ref)?coffee|(ref)?coffee\.md)$/.test file
 
 # Throws a SyntaxError from a given location.
 # The error's `toString` will return an error message following the "standard"
