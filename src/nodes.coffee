@@ -1394,6 +1394,9 @@ exports.Code = class Code extends Base
     exprs.unshift splats if splats
     @body.expressions.unshift exprs... if exprs.length
     for p, i in params
+      if (nam = p?.base?.value)?
+        o.scope.add nam, 'var', yes
+    for p, i in params
       params[i] = p.compileToFragments o
       o.scope.parameter fragmentsToText params[i]
     uniqs = []
