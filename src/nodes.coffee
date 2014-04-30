@@ -1578,6 +1578,7 @@ exports.While = class While extends Base
     o.indent += TAB
     set      = ''
     {body}   = this
+    condition = @condition.compileToFragments(o, LEVEL_PAREN)
     if body.isEmpty()
       body = @makeCode ''
     else
@@ -1590,7 +1591,7 @@ exports.While = class While extends Base
         else
           body = Block.wrap [new If @guard, body] if @guard
       body = [].concat @makeCode("\n"), (body.compileToFragments o, LEVEL_TOP), @makeCode("\n#{@tab}")
-    answer = [].concat @makeCode(set + @tab + "while ("), @condition.compileToFragments(o, LEVEL_PAREN),
+    answer = [].concat @makeCode(set + @tab + "while ("), condition,
       @makeCode(") {"), body, @makeCode("}")
     if @returns
       answer.push @makeCode "\n#{@tab}return #{rvar};"

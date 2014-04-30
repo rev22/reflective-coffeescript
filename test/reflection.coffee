@@ -24,3 +24,17 @@ test "Verify reflective functions source", ->
     @console.log "hello"
   fooString = "@>\n    @console.log \"hello\""
   ok (foo.coffee is fooString)
+
+test "Declaration of variables in 'while' statements", ->
+  ok do->
+    try
+      c = CoffeeScript.compile """
+        @>
+          while (x = @foo())?
+            @foo(x)
+        """
+    catch error
+      c = false
+    !!c
+
+
