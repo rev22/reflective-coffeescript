@@ -34,6 +34,10 @@ withPrettyErrors = (fn) ->
     finally
       delete helpers.code
 
+
+# Map of filenames -> sourceMap object.
+exports.sourceMaps = sourceMaps = {}
+
 # Compile CoffeeScript code to JavaScript, using the Coffee/Jison compiler.
 #
 # If `options.sourceMap` is specified, then `options.filename` must also be specified.  All
@@ -80,6 +84,9 @@ exports.compile = compile = withPrettyErrors (code, options) ->
     js = "// #{header}\n#{js}"
 
   if options.sourceMap
+    if (filename = options.filename)?
+      filename = fs.realpathSync filename
+      delete sourceMaps[filename]
     answer = {js}
     answer.sourceMap = map
     answer.v3SourceMap = map.generate(options, code)
@@ -141,14 +148,14 @@ exports.eval = (code, options = {}) ->
       sandbox.global = sandbox.root = sandbox.GLOBAL = sandbox
     else
       sandbox = global
-    sandbox.__filename = options.filename || 'eval'
-    sandbox.__dirname  = path.dirname sandbox.__filename
+    sandbox.__filename = filename = options.filename ? 'eval'
+    sandbox.__dirname  = path.dirname filename
     # define module/require only if they chose not to specify their own
     unless sandbox isnt global or sandbox.module or sandbox.require
       Module = require 'module'
       sandbox.module  = _module  = new Module(options.modulename || 'eval')
       sandbox.require = _require = (path) ->  Module._load path, _module, true
-      _module.filename = sandbox.__filename
+      _module.filename = filename
       _require[r] = require[r] for r in Object.getOwnPropertyNames require when r isnt 'paths'
       # use the same hack node currently uses for their own REPL
       _require.paths = _module.paths = Module._nodeModulePaths process.cwd()
@@ -263,9 +270,6 @@ formatSourcePosition = (frame, getSourceMapping) ->
     "#{functionName} (#{fileLocation})"
   else
     fileLocation
-
-# Map of filenames -> sourceMap object.
-sourceMaps = {}
 
 # Generates the source map for a coffee file and stores it in the local cache variable.
 getSourceMap = (filename) ->
