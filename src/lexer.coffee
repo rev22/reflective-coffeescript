@@ -60,6 +60,7 @@ exports.Lexer = class Lexer
            @commentToken()    or
            @whitespaceToken() or
            @lineToken()       or
+           @literalBlock()    or
            @heredocToken()    or
            @stringToken()     or
            @numberToken()     or
@@ -198,6 +199,28 @@ exports.Lexer = class Lexer
     if octalEsc = /^(?:\\.|[^\\])*\\(?:0[0-7]|[1-7])/.test string
       @error "octal escape sequences #{string} are not allowed"
     string.length
+
+  literalBlock: ->
+    return 0 unless match = LITBLOCK.exec @chunk
+    @error "Literal block should start on its own line" unless @chunkColumn is @indent
+    # @error @chunk
+    if (end = /// \n [\t\ ]{0,#{@indent - 1}} \S ///.exec @chunk)
+      # @error "#{JSON.stringify(start[0].length)}"
+      end = end.index
+    else
+      end = @chunk.length
+    unless start = /// ^ '''' [\ \t]* \n ///.exec @chunk
+      @error "could not start: #{@chunk}"
+    start = start[0].length - 1
+    block = @chunk.substring start, end
+    string = block.replace /\n {4}/g, "\n"
+    string = string.substring(1)
+    string = string.replace /\\/g, "\\\\"
+    string = string.replace /\n/g, "\\n"
+    string = string.replace /\"/g, "\\\""
+    string = '"' + string + '"'
+    @token 'STRING', string, 0, block.length + start
+    block.length + start
 
   # Matches heredocs, adjusting indentation to the correct level, as heredocs
   # preserve whitespace, but ignore indentation to the left.
@@ -769,6 +792,8 @@ NUMBER     = ///
   ^ 0x[\da-f]+ |              # hex
   ^ \d*\.?\d+ (?:e[+-]?\d+)?  # decimal
 ///i
+
+LITBLOCK   = /// ^ '''' ///
 
 HEREDOC    = /// ^ ("""|''') ((?: \\[\s\S] | [^\\] )*?) (?:\n[^\n\S]*)? \1 ///
 
