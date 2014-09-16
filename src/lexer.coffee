@@ -213,7 +213,7 @@ exports.Lexer = class Lexer
       @error "could not start: #{@chunk}"
     start = start[0].length - 1
     block = @chunk.substring start, end
-    string = block.replace /\n {4}/g, "\n"
+    string = block.replace /// \n [\t\ ]{#{@indent}} ///g, "\n"
     string = string.substring(1)
     string = string.replace /\\/g, "\\\\"
     string = string.replace /\n/g, "\\n"
