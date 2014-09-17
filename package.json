@@ -3,7 +3,7 @@
   "description":  "Reflection-augmented CoffeeScript",
   "keywords":     ["reflection", "language", "coffeescript", "compiler"],
   "author":       "Michele Bini, Jeremy Ashkenas",
-  "version":      "1.6.3-reflective.11",
+  "version":      "1.6.3-reflective.12",
   "license":      "MIT",
   "engines":      {
     "node":       ">=0.8.0"

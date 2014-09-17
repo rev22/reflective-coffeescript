@@ -83,7 +83,8 @@ exports.Lexer = class Lexer
   # by removing all lines that aren't indented by at least four spaces or a tab.
   clean: (code) ->
     code = code.slice(1) if code.charCodeAt(0) is BOM
-    code = code.replace(/\r/g, '').replace TRAILING_SPACES, ''
+    code = code.replace(/\r/g, '')
+    # .replace TRAILING_SPACES, '' # this would strip literal string blocks at the end of the file
     if WHITESPACE.test code
       code = "\n#{code}"
       @chunkLine--
@@ -210,7 +211,7 @@ exports.Lexer = class Lexer
     else
       end = @chunk.length
     unless start = /// ^ '''' [\ \t]* \n ///.exec @chunk
-      @error "could not start: #{@chunk}"
+      @error "Literal string block should start with a new line: #{@chunk}"
     start = start[0].length - 1
     block = @chunk.substring start, end
     string = block.replace /// \n [\t\ ]{#{@indent}} ///g, "\n"
