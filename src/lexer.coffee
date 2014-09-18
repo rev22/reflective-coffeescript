@@ -300,7 +300,13 @@ exports.Lexer = class Lexer
     return 0 unless match = LITDOC.exec @chunk
     indent = match[1].length
     string = match[2]
-    string = string.replace /\n$/, ""
+
+    length = match[0].length
+
+    length -= string.length
+    string = string.replace /\n[^\n\S]*$/, ""
+    length += string.length
+
     string = string.replace /// \n [^\n\S]{0,#{indent}} ///g, "\n"
     string = string.substring(1)
     string = string.replace /\\/g, "\\\\"
@@ -309,10 +315,6 @@ exports.Lexer = class Lexer
     string = '"' + string + '"'
 
     last(@tokens)?.spaced = true
-
-    # Determine end of token
-    length = match[0].length
-    length-- if match[0][length - 1] is '\n'
 
     @token 'STRING', string, 0, length
     length
