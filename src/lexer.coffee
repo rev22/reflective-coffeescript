@@ -351,7 +351,7 @@ exports.Lexer = class Lexer
       @indents.push diff
       @ends.push 'OUTDENT'
       @outdebt = @indebt = 0
-    else if size < @baseIndent
+    else if size < @baseIndent and indent.length isnt @chunk.length
       @error 'missing indentation', indent.length
     else
       @indebt = 0
