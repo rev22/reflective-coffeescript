@@ -59,8 +59,8 @@ exports.Lexer = class Lexer
            @identifierToken() or
            @commentToken()    or
            @whitespaceToken() or
+           @litdocToken()     or
            @lineToken()       or
-           @literalBlock()    or
            @heredocToken()    or
            @stringToken()     or
            @numberToken()     or
@@ -201,28 +201,6 @@ exports.Lexer = class Lexer
       @error "octal escape sequences #{string} are not allowed"
     string.length
 
-  literalBlock: ->
-    return 0 unless match = LITBLOCK.exec @chunk
-    @error "Literal block should start on its own line" unless @chunkColumn is @indent
-    # @error @chunk
-    if (end = /// \n [\t\ ]{0,#{@indent - 1}} \S ///.exec @chunk)
-      # @error "#{JSON.stringify(start[0].length)}"
-      end = end.index
-    else
-      end = @chunk.length
-    unless start = /// ^ '''' [\ \t]* \n ///.exec @chunk
-      @error "Literal string block should start with a new line: #{@chunk}"
-    start = start[0].length - 1
-    block = @chunk.substring start, end
-    string = block.replace /// \n [\t\ ]{#{@indent}} ///g, "\n"
-    string = string.substring(1)
-    string = string.replace /\\/g, "\\\\"
-    string = string.replace /\n/g, "\\n"
-    string = string.replace /\"/g, "\\\""
-    string = '"' + string + '"'
-    @token 'STRING', string, 0, block.length + start
-    block.length + start
-
   # Matches heredocs, adjusting indentation to the correct level, as heredocs
   # preserve whitespace, but ignore indentation to the left.
   heredocToken: ->
@@ -317,6 +295,27 @@ exports.Lexer = class Lexer
 
     @token ')', ')', heregex.length-1, 0
     heregex.length
+
+  litdocToken: ->
+    return 0 unless match = LITDOC.exec @chunk
+    indent = match[1].length
+    string = match[2]
+    string = string.replace /\n$/, ""
+    string = string.replace /// \n [^\n\S]{0,#{indent}} ///g, "\n"
+    string = string.substring(1)
+    string = string.replace /\\/g, "\\\\"
+    string = string.replace /\n/g, "\\n"
+    string = string.replace /\"/g, "\\\""
+    string = '"' + string + '"'
+
+    last(@tokens)?.spaced = true
+
+    # Determine end of token
+    length = match[0].length
+    length-- if match[0][length - 1] is '\n'
+
+    @token 'STRING', string, 0, length
+    length
 
   # Matches newlines, indents, and outdents, and determines which is which.
   # If we can detect that the current line is continued onto the the next line,
@@ -794,7 +793,7 @@ NUMBER     = ///
   ^ \d*\.?\d+ (?:e[+-]?\d+)?  # decimal
 ///i
 
-LITBLOCK   = /// ^ '''' ///
+LITDOC   = /// ^(?:\n[^\n\S]*)* \n([^\n\S]*) '''' [^\n\S]* ( (?:\n (\1[^\n]* | [^\n\S]*) )* ) ///
 
 HEREDOC    = /// ^ ("""|''') ((?: \\[\s\S] | [^\\] )*?) (?:\n[^\n\S]*)? \1 ///
 
