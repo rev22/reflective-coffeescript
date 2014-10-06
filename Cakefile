@@ -15,11 +15,13 @@ unless process.env.NODE_DISABLE_COLORS
 # Built file header.
 header = """
   /**
-   * CoffeeScript Compiler v#{CoffeeScript.VERSION}
+   * Reflective-CoffeeScript Compiler v#{CoffeeScript.VERSION}
    * http://coffeescript.org
    *
    * Copyright 2011, Jeremy Ashkenas
+   * Copyright 2013, 2014 Michele Bini <michele.bini@gmail.com>
    * Released under the MIT License
+   *
    */
 """
 
