@@ -497,12 +497,10 @@ exports.Lexer = class Lexer
     { tokens } = @
     i = tokens.length
     return if i <= 0
-    if tokens[i-1] is 'INDENT'
-      return
     while tok = tokens[--i]
       ttt = tok[0]
       if !stack.length
-        if ttt in [ 'IF', 'WHEN', 'UNLESS', 'LEADING_WHEN', 'CLASS', 'WHILE', 'CATCH', 'TRY', 'FINALLY' ]
+        if ttt in [ 'IF', 'WHEN', 'UNLESS', 'LEADING_WHEN', 'CLASS', 'WHILE', 'CATCH', 'TRY', 'FINALLY', 'FOR' ]
           return
         if ttt in [ 'THEN', 'ELSE' ]
           break
