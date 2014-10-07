@@ -14,7 +14,7 @@
 #   * Function Invocations
 #   * String Literals
 
-doesNotThrow -> CoffeeScript.compile "a = then b"
+# doesNotThrow -> CoffeeScript.compile "a = then b" # This makes no sense!
 
 test "multiple semicolon-separated statements in parentheticals", ->
   nonce = {}
@@ -144,7 +144,7 @@ test "indented array literals don't trigger whitespace rewriting", ->
 # Function Invocations
 
 doesNotThrow -> CoffeeScript.compile """
-  obj = then fn 1,
+  obj = fn 1,
     1: 1
     a:
       b: ->
