@@ -118,7 +118,9 @@ exports.Lexer = class Lexer
 
     if not forcedIdentifier and (id in JS_KEYWORDS or id in COFFEE_KEYWORDS)
       tag = id.toUpperCase()
-      if tag is 'WHEN' and @tag() in LINE_BREAK
+      if tag is 'THEN'
+        @addImplicitIf()
+      else if tag is 'WHEN' and @tag() in LINE_BREAK
         tag = 'LEADING_WHEN'
       else if tag is 'FOR'
         @seenFor = yes
@@ -488,6 +490,33 @@ exports.Lexer = class Lexer
             return this
           else return this
     this
+
+  # Add if when there is a 'then' without 'if'
+  addImplicitIf: ->
+    stack = []
+    { tokens } = @
+    i = tokens.length
+    return if i <= 0
+    if tokens[i-1] is 'INDENT'
+      return
+    while tok = tokens[--i]
+      ttt = tok[0]
+      if !stack.length
+        if ttt in [ 'IF', 'WHEN', 'UNLESS', 'LEADING_WHEN', 'CLASS', 'WHILE', 'CATCH', 'TRY', 'FINALLY' ]
+          return
+        if ttt in [ 'THEN', 'ELSE' ]
+          break
+      if ttt in [ '\n', ';', 'INDENT', 'CODE' ]
+          break
+      else if ttt in [ ')', 'CALL_END', ']', '}', 'PARAM_END' ]
+        stack.push tok
+      else if ttt in [ '(', 'CALL_START', 'INDEX_START', '[', '{', 'PARAM_START' ]
+        if stack.length
+          stack.pop()
+        else
+          break
+    i++
+    tokens.splice i, 0, [ 'IF', 'IF', tokens[i][2] ]
 
   # Close up all remaining open blocks at the end of the file.
   closeIndentation: ->
