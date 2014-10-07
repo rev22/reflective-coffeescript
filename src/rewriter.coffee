@@ -29,6 +29,7 @@ class exports.Rewriter
     @closeOpenCalls()
     @closeOpenIndexes()
     @normalizeLines()
+    @removeStrayThens()
     @tagPostfixConditionals()
     @addImplicitBracesAndParens()
     @addLocationDataToGeneratedTokens()
@@ -399,6 +400,12 @@ class exports.Rewriter
         @detectEnd i + 2, condition, action
         tokens.splice i, 1 if tag is 'THEN'
         return 1
+      return 1
+
+  removeStrayThens: ->
+    @scanTokens (token, i, tokens)->
+      if token[0] is 'THEN' and @tag(i + 1) is 'INDENT'
+        tokens.splice i, 1
       return 1
 
   # Tag postfix conditionals as such, so that we can parse them with a
