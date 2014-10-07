@@ -118,8 +118,8 @@ exports.Lexer = class Lexer
 
     if not forcedIdentifier and (id in JS_KEYWORDS or id in COFFEE_KEYWORDS)
       tag = id.toUpperCase()
-      if tag is 'THEN'
-        @addImplicitIf()
+      if tag in [ 'THEN', 'CATCH', 'FINALLY' ]
+        @addImplicitStart(tag)
       else if tag is 'WHEN' and @tag() in LINE_BREAK
         tag = 'LEADING_WHEN'
       else if tag is 'FOR'
@@ -491,19 +491,36 @@ exports.Lexer = class Lexer
           else return this
     this
 
-  # Add if when there is a 'then' without 'if'
-  addImplicitIf: ->
+  # Add 'if' when there is a 'then' without one
+  # Likewise, add 'try' when there is a 'finally' or a 'catch' without one
+  addImplicitStart: (tag)->
     stack = []
     { tokens } = @
     i = tokens.length
     return if i <= 0
+    if tokens[i-1]?[0] in [ 'TERMINATOR' ]
+      return
     while tok = tokens[--i]
       ttt = tok[0]
       if !stack.length
-        if ttt in [ 'IF', 'WHEN', 'UNLESS', 'LEADING_WHEN', 'CLASS', 'WHILE', 'CATCH', 'TRY', 'FINALLY', 'FOR' ]
-          return
-        if ttt in [ 'THEN', 'ELSE' ]
-          break
+        if tag is 'THEN'
+          if ttt in [ 'IF', 'WHEN', 'UNLESS', 'LEADING_WHEN', 'CLASS', 'WHILE', 'CATCH', 'TRY', 'FOR' ]
+            return
+          if ttt in [ 'THEN', 'ELSE', 'FINALLY' ]
+            break
+        else if tag is 'CATCH'
+          if ttt in [ 'TRY' ]
+            return
+          if ttt in [ 'CATCH' ]
+            i++
+            break
+          if ttt in [ 'FINALLY' ]
+            break
+        else if tag is 'FINALLY'
+          if ttt in [ 'TRY', 'CATCH' ]
+            return
+          if ttt in [ 'FINALLY' ]
+            break        
       if ttt in [ '\n', ';', 'INDENT', 'CODE' ]
           break
       else if ttt in [ ')', 'CALL_END', ']', '}', 'PARAM_END' ]
@@ -514,7 +531,14 @@ exports.Lexer = class Lexer
         else
           break
     i++
-    tokens.splice i, 0, [ 'IF', 'IF', tokens[i][2] ]
+    do (r = { })->
+      r[k] = v for k,v of tokens[i][2]
+      r.implicitStart = true # Annotate that this tag was added implicity; this may be used by the rewriter or the grammar code, for example
+      tag = if tag is 'THEN'
+        'IF'
+      else
+        'TRY'
+      tokens.splice i, 0, [ tag, tag.toLowerCase(), r ]
 
   # Close up all remaining open blocks at the end of the file.
   closeIndentation: ->

@@ -372,6 +372,7 @@ class exports.Rewriter
       token[1] isnt ';' and token[0] in SINGLE_CLOSERS and
       not (token[0] is 'TERMINATOR' and @tag(i + 1) in EXPRESSION_CLOSE) and
       not (token[0] is 'ELSE' and starter isnt 'THEN') and
+      not (token[0] in ['CATCH', 'FINALLY'] and starter isnt 'TRY' and starter isnt 'THEN') and
       not (token[0] in ['CATCH', 'FINALLY'] and starter in ['->', '=>', '@>']) or
       token[0] in CALL_CLOSERS and @tokens[i - 1].newLine
 
