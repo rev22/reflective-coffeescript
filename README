@@ -14,11 +14,10 @@
     |                 | )  )  (  ( |  / ____|        :(_)     | |
     |                 |/  /    \  \| | (___   ___ _ __ _ _ __ | |_
     |                 /  /      \  \  \___ \ / __| '__| | '_ \| __|
-    |                (_/          \_) ____) | (__| | :| | |_) | |_
+    |                 _/          \_  ____) | (__| | :| | |_) | |_
     |                 |            | |_____/ \___|_| :|_| .__/ \__|
      `-.._________..-'              `-.._________..-'   | |
 							|_|
-
 
   This experimental fork adds reflective features to Coffeescript
 
@@ -27,11 +26,22 @@
 
   Features added to reflective-coffeescript:
 
-  * Pure methods
+  * Reflective function
   
-  The syntax @> is added to create pure methods that can only access
-  'this' and arguments (no global variables or outer lexically scoped
-  variables).
+  The syntax @> introduces reflective functions:
+
+    square = (x) @> x * x
+
+  Reflective functions work similarly to standard CoffeeScript
+  functions:
+
+    square(2) is 4
+
+  but have their own CoffeeScript source code as a property:
+
+    square.coffee is "(x) @> x * x"
+    
+  Reflective functions can only access 'this' and arguments.
 
   Attempting to access a global variable or a lexical variable defined
   in an outer scope will result in a compiler error.
@@ -39,11 +49,7 @@
      x = 1
      @> x   # Compiler error
 
-  This makes the function easily reusable in different contexts, and,
-  when used consistently, makes it easier to create objects without
-  hidden state, by simply making sure that all their methods are pure.
-
-  As an automatic bonus feature, the 'do @>' syntax can be used to
+  As an automatic extra feature, the 'do @>' syntax can be used to
   fully isolate the lexical scope of a block of code.
 
     x = 1 		        x = 1
@@ -57,6 +63,20 @@
                                 console.log x    # prints 1
   
   Additional ideas are included in ROADMAP.org
+
+  Licensing and Copyright status
+  --------------------------------------------------------------------
+
+  The original CoffeeScript is:
+
+    Copyright (c) 2009-2013 Jeremy Ashkenas
+
+  The Reflection-related modifications are:
+
+    Copyright (c) 2013,2014 Michele Bini
+
+  Please consult LICENSE for licensing details and about the lack of
+  explicit or implied warranty.
 
   CoffeeScript's README follows:
   --------------------------------------------------------------------
@@ -88,5 +108,5 @@
   The source repository:
   git://github.com/jashkenas/coffee-script.git
 
-  All contributors are listed here:
+  Top 100 contributors are listed here:
   http://github.com/jashkenas/coffee-script/contributors

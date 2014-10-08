@@ -201,7 +201,7 @@ test "invoking functions with implicit object literals", ->
 
 test "some weird indentation in YAML-style object literals", ->
   two = (a, b) -> b
-  obj = then two 1,
+  obj = two 1,
     1: 1
     a:
       b: ->

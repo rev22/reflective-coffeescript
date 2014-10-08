@@ -35,18 +35,19 @@ exports.Lexer = class Lexer
   # Before returning the token stream, run it through the [Rewriter](rewriter.html)
   # unless explicitly asked not to.
   tokenize: (code, opts = {}) ->
-    @literate = opts.literate  # Are we lexing literate CoffeeScript?
-    @indent   = 0              # The current indentation level.
-    @indebt   = 0              # The over-indentation at the current level.
-    @outdebt  = 0              # The under-outdentation at the current level.
-    @indents  = []             # The stack of all current indentation levels.
-    @ends     = []             # The stack for pairing up tokens.
-    @tokens   = []             # Stream of parsed tokens in the form `['TYPE', value, location data]`.
+    @literate   = opts.literate  # Are we lexing literate CoffeeScript?
+    @indent     = 0              # The current indentation level.
+    @baseIndent = 0              # The overall minimum indentation level
+    @indebt     = 0              # The over-indentation at the current level.
+    @outdebt    = 0              # The under-outdentation at the current level.
+    @indents    = []             # The stack of all current indentation levels.
+    @ends       = []             # The stack for pairing up tokens.
+    @tokens     = []             # Stream of parsed tokens in the form `['TYPE', value, location data]`.
 
     @chunkLine =
-        opts.line or 0         # The start line for the current @chunk.
+      opts.line or 0         # The start line for the current @chunk.
     @chunkColumn =
-        opts.column or 0       # The start column of the current @chunk.
+      opts.column or 0       # The start column of the current @chunk.
     code = @clean code         # The stripped, cleaned original source code.
 
     # At every position, run through this list of attempted matches,
@@ -58,6 +59,7 @@ exports.Lexer = class Lexer
            @identifierToken() or
            @commentToken()    or
            @whitespaceToken() or
+           @litdocToken()     or
            @lineToken()       or
            @heredocToken()    or
            @stringToken()     or
@@ -81,10 +83,11 @@ exports.Lexer = class Lexer
   # by removing all lines that aren't indented by at least four spaces or a tab.
   clean: (code) ->
     code = code.slice(1) if code.charCodeAt(0) is BOM
-    code = code.replace(/\r/g, '').replace TRAILING_SPACES, ''
+    code = code.replace(/\r/g, '')
+    # .replace TRAILING_SPACES, '' # this would strip literal string blocks at the end of the file
     if WHITESPACE.test code
-        code = "\n#{code}"
-        @chunkLine--
+      code = "\n#{code}"
+      @chunkLine--
     code = invertLiterate code if @literate
     code
 
@@ -115,7 +118,9 @@ exports.Lexer = class Lexer
 
     if not forcedIdentifier and (id in JS_KEYWORDS or id in COFFEE_KEYWORDS)
       tag = id.toUpperCase()
-      if tag is 'WHEN' and @tag() in LINE_BREAK
+      if tag in [ 'THEN', 'CATCH', 'FINALLY' ]
+        @addImplicitStart(tag)
+      else if tag is 'WHEN' and @tag() in LINE_BREAK
         tag = 'LEADING_WHEN'
       else if tag is 'FOR'
         @seenFor = yes
@@ -185,19 +190,15 @@ exports.Lexer = class Lexer
   # Matches strings, including multi-line strings. Ensures that quotation marks
   # are balanced within the string's contents, and within nested interpolations.
   stringToken: ->
-    switch @chunk.charAt 0
-      when "'"
-        return 0 unless match = SIMPLESTR.exec @chunk
-        string = match[0]
-        @token 'STRING', string.replace(MULTILINER, '\\\n'), 0, string.length
-      when '"'
-        return 0 unless string = @balancedString @chunk, '"'
-        if 0 < string.indexOf '#{', 1
-          @interpolateString string[1...-1], strOffset: 1, lexedLength: string.length
-        else
-          @token 'STRING', @escapeLines string, 0, string.length
-      else
-        return 0
+    switch quote = @chunk.charAt 0
+      when "'" then [string] = SIMPLESTR.exec @chunk
+      when '"' then string = @balancedString @chunk, '"'
+    return 0 unless string
+    trimmed = @removeNewlines string[1...-1]
+    if quote is '"' and 0 < string.indexOf '#{', 1
+      @interpolateString trimmed, strOffset: 1, lexedLength: string.length
+    else
+      @token 'STRING', quote + @escapeLines(trimmed) + quote, 0, string.length
     if octalEsc = /^(?:\\.|[^\\])*\\(?:0[0-7]|[1-7])/.test string
       @error "octal escape sequences #{string} are not allowed"
     string.length
@@ -254,7 +255,7 @@ exports.Lexer = class Lexer
   heregexToken: (match) ->
     [heregex, body, flags] = match
     if 0 > body.indexOf '#{'
-      re = body.replace(HEREGEX_OMIT, '').replace(/\//g, '\\/')
+      re = @escapeLines body.replace(HEREGEX_OMIT, '$1$2').replace(/\//g, '\\/'), yes
       if re.match /^\*/ then @error 'regular expressions cannot begin with `*`'
       @token 'REGEX', "/#{ re or '(?:)' }/#{flags}", 0, heregex.length
       return heregex.length
@@ -266,7 +267,7 @@ exports.Lexer = class Lexer
       if tag is 'TOKENS'
         tokens.push value...
       else if tag is 'NEOSTRING'
-        continue unless value = value.replace HEREGEX_OMIT, ''
+        continue unless value = value.replace HEREGEX_OMIT, '$1$2'
         # Convert NEOSTRING into STRING
         value = value.replace /\\/g, '\\\\'
         token[0] = 'STRING'
@@ -297,6 +298,29 @@ exports.Lexer = class Lexer
     @token ')', ')', heregex.length-1, 0
     heregex.length
 
+  litdocToken: ->
+    return 0 unless match = LITDOC.exec @chunk
+    indent = match[1].length
+    string = match[2]
+
+    length = match[0].length
+
+    length -= string.length
+    string = string.replace /\n[^\n\S]*$/, ""
+    length += string.length
+
+    string = string.replace /// \n [^\n\S]{0,#{indent}} ///g, "\n"
+    string = string.substring(1)
+    string = string.replace /\\/g, "\\\\"
+    string = string.replace /\n/g, "\\n"
+    string = string.replace /\"/g, "\\\""
+    string = '"' + string + '"'
+
+    last(@tokens)?.spaced = true
+
+    @token 'STRING', string, 0, length
+    length
+
   # Matches newlines, indents, and outdents, and determines which is which.
   # If we can detect that the current line is continued onto the the next line,
   # then the newline is suppressed:
@@ -322,11 +346,16 @@ exports.Lexer = class Lexer
         @indebt = size - @indent
         @suppressNewlines()
         return indent.length
+      unless @tokens.length
+        @baseIndent = @indent = size
+        return indent.length
       diff = size - @indent + @outdebt
       @token 'INDENT', diff, indent.length - size, size
       @indents.push diff
       @ends.push 'OUTDENT'
       @outdebt = @indebt = 0
+    else if size < @baseIndent and indent.length isnt @chunk.length
+      @error 'missing indentation', indent.length
     else
       @indebt = 0
       @outdentToken @indent - size, noNewlines, indent.length
@@ -462,6 +491,55 @@ exports.Lexer = class Lexer
           else return this
     this
 
+  # Add 'if' when there is a 'then' without one
+  # Likewise, add 'try' when there is a 'finally' or a 'catch' without one
+  addImplicitStart: (tag)->
+    stack = []
+    { tokens } = @
+    i = tokens.length
+    return if i <= 0
+    if tokens[i-1]?[0] in [ 'TERMINATOR' ]
+      return
+    while tok = tokens[--i]
+      ttt = tok[0]
+      if !stack.length
+        if tag is 'THEN'
+          if ttt in [ 'IF', 'WHEN', 'UNLESS', 'LEADING_WHEN', 'CLASS', 'WHILE', 'CATCH', 'TRY', 'FOR' ]
+            return
+          if ttt in [ 'THEN', 'ELSE', 'FINALLY' ]
+            break
+        else if tag is 'CATCH'
+          if ttt in [ 'TRY' ]
+            return
+          if ttt in [ 'CATCH' ]
+            i++
+            break
+          if ttt in [ 'FINALLY' ]
+            break
+        else if tag is 'FINALLY'
+          if ttt in [ 'TRY', 'CATCH' ]
+            return
+          if ttt in [ 'FINALLY' ]
+            break        
+      if ttt in [ '\n', ';', 'INDENT', 'CODE' ]
+          break
+      else if ttt in [ ')', 'CALL_END', ']', '}', 'PARAM_END' ]
+        stack.push tok
+      else if ttt in [ '(', 'CALL_START', 'INDEX_START', '[', '{', 'PARAM_START' ]
+        if stack.length
+          stack.pop()
+        else
+          break
+    i++
+    do (r = { })->
+      r[k] = v for k,v of tokens[i][2]
+      r.implicitStart = true # Annotate that this tag was added implicity; this may be used by the rewriter or the grammar code, for example
+      tag = if tag is 'THEN'
+        'IF'
+      else
+        'TRY'
+      tokens.splice i, 0, [ tag, tag.toLowerCase(), r ]
+
   # Close up all remaining open blocks at the end of the file.
   closeIndentation: ->
     @outdentToken @indent
@@ -521,11 +599,6 @@ exports.Lexer = class Lexer
     offsetInChunk = offsetInChunk || 0
     strOffset = strOffset || 0
     lexedLength = lexedLength || str.length
-
-    # Clip leading \n from heredoc
-    if heredoc and str.length > 0 and str[0] == '\n'
-      str = str[1...]
-      strOffset++
 
     # Parse the string.
     tokens = []
@@ -678,23 +751,36 @@ exports.Lexer = class Lexer
     @tag() in ['\\', '.', '?.', '?::', 'UNARY', 'MATH', '+', '-', 'SHIFT', 'RELATION'
                'COMPARE', 'LOGIC', 'THROW', 'EXTENDS']
 
+  # Remove newlines from beginning and (non escaped) from end of string literals.
+  removeNewlines: (str) ->
+    str.replace(/^\s*\n\s*/, '')
+       .replace(/([^\\]|\\\\)\s*\n\s*$/, '$1')
+
   # Converts newlines for string literals.
   escapeLines: (str, heredoc) ->
-    str.replace MULTILINER, if heredoc then '\\n' else ''
+    # Ignore escaped backslashes and remove escaped newlines
+    str = str.replace /\\[^\S\n]*(\n|\\)\s*/g, (escaped, character) ->
+      if character is '\n' then '' else escaped
+    if heredoc
+      str.replace MULTILINER, '\\n'
+    else
+      str.replace /\s*\n\s*/g, ' '
 
   # Constructs a string token by escaping quotes and newlines.
   makeString: (body, quote, heredoc) ->
     return quote + quote unless body
-    body = body.replace /\\([\s\S])/g, (match, contents) ->
-      if contents in ['\n', quote] then contents else match
+    # Ignore escaped backslashes and unescape quotes
+    body = body.replace /// \\( #{quote} | \\ ) ///g, (match, contents) ->
+      if contents is quote then contents else match
     body = body.replace /// #{quote} ///g, '\\$&'
     quote + @escapeLines(body, heredoc) + quote
 
   # Throws a compiler error on the current position.
-  error: (message) ->
+  error: (message, offset = 0) ->
     # TODO: Are there some cases we could improve the error line number by
     # passing the offset in the chunk where the error happened?
-    throwSyntaxError message, first_line: @chunkLine, first_column: @chunkColumn
+    [first_line, first_column] = @getLineAndColumnFromChunk offset
+    throwSyntaxError message, {first_line, first_column}
 
 # Constants
 # ---------
@@ -760,7 +846,9 @@ NUMBER     = ///
   ^ \d*\.?\d+ (?:e[+-]?\d+)?  # decimal
 ///i
 
-HEREDOC    = /// ^ ("""|''') ([\s\S]*?) (?:\n[^\n\S]*)? \1 ///
+LITDOC   = /// ^(?:\n[^\n\S]*)* \n([^\n\S]*) '''' [^\n\S]* ( (?:\n (\1[^\n]* | [^\n\S]*) )* ) ///
+
+HEREDOC    = /// ^ ("""|''') ((?: \\[\s\S] | [^\\] )*?) (?:\n[^\n\S]*)? \1 ///
 
 OPERATOR   = /// ^ (
   ?: [-=@]>            # function
@@ -774,13 +862,13 @@ OPERATOR   = /// ^ (
 
 WHITESPACE = /^[^\n\S]+/
 
-COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|(?:###)$)|^(?:\s*#(?!##[^#]).*)+/
+COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|###$)|^(?:\s*#(?!##[^#]).*)+/
 
 CODE       = /^[-=@]>/
 
 MULTI_DENT = /^(?:\n[^\n\S]*)+/
 
-SIMPLESTR  = /^'[^\\']*(?:\\.[^\\']*)*'/
+SIMPLESTR  = /^'[^\\']*(?:\\[\s\S][^\\']*)*'/
 
 JSTOKEN    = /^`[^\\`]*(?:\\.[^\\`]*)*`/
 
@@ -799,9 +887,13 @@ REGEX = /// ^
   /) ([imgy]{0,4}) (?!\w)
 ///
 
-HEREGEX      = /// ^ /{3} ([\s\S]+?) /{3} ([imgy]{0,4}) (?!\w) ///
+HEREGEX      = /// ^ /{3} ((?:\\?[\s\S])+?) /{3} ([imgy]{0,4}) (?!\w) ///
 
-HEREGEX_OMIT = /\s+(?:#.*)?/g
+HEREGEX_OMIT = ///
+    ((?:\\\\)+)     # consume (and preserve) an even number of backslashes
+  | \\(\s|/)        # preserve escaped whitespace and "de-escape" slashes
+  | \s+(?:#.*)?     # remove whitespace and comments
+///g
 
 # Token cleaning regexes.
 MULTILINER      = /\n/g

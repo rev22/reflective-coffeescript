@@ -15,11 +15,13 @@ unless process.env.NODE_DISABLE_COLORS
 # Built file header.
 header = """
   /**
-   * CoffeeScript Compiler v#{CoffeeScript.VERSION}
+   * Reflective-CoffeeScript Compiler v#{CoffeeScript.VERSION}
    * http://coffeescript.org
    *
    * Copyright 2011, Jeremy Ashkenas
+   * Copyright 2013, 2014 Michele Bini <michele.bini@gmail.com>
    * Released under the MIT License
+   *
    */
 """
 
@@ -95,10 +97,11 @@ task 'build:browser', 'rebuild the merged script for inclusion in the browser', 
   code = ''
   for name in ['helpers', 'rewriter', 'lexer', 'parser', 'scope', 'nodes', 'sourcemap', 'coffee-script', 'browser']
     code += """
-      require['./#{name}'] = new function() {
-        var exports = this;
+      require['./#{name}'] = (function() {
+        var exports = {}, module = {exports: exports};
         #{fs.readFileSync "lib/coffee-script/#{name}.js"}
-      };
+        return module.exports;
+      })();
     """
   code = """
     (function(root) {
@@ -126,9 +129,8 @@ task 'doc:site', 'watch and continually rebuild the documentation for the websit
   exec 'rake doc', (err) ->
     throw err if err
 
-
 task 'doc:source', 'rebuild the internal documentation', ->
-  exec 'docco src/*.*coffee && cp -rf docs documentation && rm -r docs', (err) ->
+  exec 'docco src/*.*coffee && cp -rf docs documentation && rm -r docs && (cat documentation/css/hljs.css >>documentation/docs/docco.css)', (err) ->
     throw err if err
 
 
@@ -160,6 +162,7 @@ task 'bench', 'quick benchmark of compilation time', ->
 
 # Run the CoffeeScript test suite.
 runTests = (CoffeeScript) ->
+  CoffeeScript.register()
   startTime   = Date.now()
   currentFile = null
   passedTests = 0
@@ -211,20 +214,15 @@ runTests = (CoffeeScript) ->
     log "failed #{failures.length} and #{message}", red
     for fail in failures
       {error, filename, description, source}  = fail
-      jsFilename         = filename.replace(/\.coffee$/,'.js')
-      match              = error.stack?.match(new RegExp(fail.file+":(\\d+):(\\d+)"))
-      match              = error.stack?.match(/on line (\d+):/) unless match
-      [match, line, col] = match if match
       console.log ''
       log "  #{description}", red if description
       log "  #{error.stack}", red
-      log "  #{jsFilename}: line #{line ? 'unknown'}, column #{col ? 'unknown'}", red
       console.log "  #{source}" if source
     return
 
   # Run every test in the `test` folder, recording failures.
   files = fs.readdirSync 'test'
-  for file in files when file.match /\.(lit)?coffee$/i
+  for file in files when helpers.isCoffee file
     literate = helpers.isLiterate file
     currentFile = filename = path.join 'test', file
     code = fs.readFileSync filename
@@ -245,3 +243,32 @@ task 'test:browser', 'run the test suite against the merged browser script', ->
   global.testingBrowser = yes
   (-> eval source).call result
   runTests result.CoffeeScript
+
+task 'doc:eco', "regenerate index.html from index.html.eco", ->
+  do ->
+      toplevel = eval "this"
+      fs = require 'fs'
+      hl = require 'highlight.js'
+      # require 'json'
+      counter = 0
+      toplevel.code_for = (file, executable=false, show_load=true)->
+        counter++
+        return '' unless fs.existsSync("documentation/js/#{file}.js")
+        cs = fs.readFileSync("documentation/coffee/#{file}.coffee").toString()
+        js = fs.readFileSync("documentation/js/#{file}.js").toString()
+        js = js.replace(/^\/\/ generated.*?\n/i, '')
+        precode = (x) -> "<pre><code>#{x}</code></pre>"
+        cshtml = precode(hl.highlight("coffeescript", cs).value)
+        jshtml = precode(hl.highlight("javascript", js).value)
+        append = if executable == true then '' else "alert(#{executable});"
+        if executable and executable != true
+          cs = cs.replace(/(\S)\s*\Z/m, "\\1\n\nalert #{executable}")
+        run    = if executable  == true ? 'run' then "run: #{executable}"
+        name   = "example#{@counter}"
+        script = "<script>window.#{name} = #{cs.to_json}</script>"
+        doload = if show_load then "<div class='minibutton load' onclick='javascript: loadConsole(#{name});'>load</div>" else ''
+        button = if executable then "<div class='minibutton ok' onclick='javascript: #{js};#{append}'>#{run}</div>" else ''
+        "<div class='code'>#{cshtml}#{jshtml}#{script}#{doload}#{button}<br class='clear' /></div>"
+  eco = require "eco"
+  template = fs.readFileSync "documentation/index.html.eco", "utf-8"
+  fs.writeFileSync "index.html", eco.render(template)
