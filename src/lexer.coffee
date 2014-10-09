@@ -521,7 +521,7 @@ exports.Lexer = class Lexer
             return
           if ttt in [ 'FINALLY' ]
             break        
-      if ttt in [ '\n', ';', 'INDENT', 'CODE' ]
+      if ttt in [ '\n', ';', 'INDENT', '->', '=>', '@>' ]
           break
       else if ttt in [ ')', 'CALL_END', ']', '}', 'PARAM_END' ]
         stack.push tok

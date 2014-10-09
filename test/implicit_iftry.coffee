@@ -198,4 +198,53 @@ test "Then without If, Catch and Finally without Try", ->
     finally
       baz()
       q()
+  .a
+    ''''
+    -> a() then
+      b()
+  .b
+    ''''
+    -> if a()
+      b()
+  .a
+    ''''
+    -> a() finally b()
+  .b
+    ''''
+    -> try a() finally
+      b()
+  .a
+    ''''
+    => a() finally b()
+  .b
+    ''''
+    => try a() finally
+      b()
+  .a
+    ''''
+    => a() catch err then b()
+  .b
+    ''''
+    => try a() catch err
+      b()
+  .a
+    ''''
+    => a() then b() finally c()
+  .b
+    ''''
+    =>
+      try
+        if a()
+          b()
+      finally
+        c()
+  .a
+    ''''
+    do => a() then do => b()
+  .b
+    ''''
+    do =>
+      if a()
+        do =>
+          b()
   .finish()
