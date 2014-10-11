@@ -247,4 +247,12 @@ test "Then without If, Catch and Finally without Try", ->
       if a()
         do =>
           b()
+  .a
+    ''''
+    d()
+    a() then b()
+  .b
+    ''''
+    d()
+    if a() then b()
   .finish()
