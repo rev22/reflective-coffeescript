@@ -1352,7 +1352,6 @@ exports.Code = class Code extends Base
       lecode = locationDataToSource @locationData
       lecode = lecode
       .replace(/[\"\\]/g, (((x)->"\\"+x)))
-      .replace(/(\n[ \t]*)*$/, "")
       .replace(/\n/g, "\\n")
       wrapper = new Code [new Param new Literal "x"], new Block [(new Assign(new Value(new Literal("x"), [new Access(new Literal("coffee"))]), new Literal('"'+lecode+'"'))), new Literal("x")]
       @pure = true
