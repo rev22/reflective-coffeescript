@@ -22,7 +22,7 @@ test "Verify reflective functions source", ->
   ok (((x)@>x).coffee is "(x)@>x")
   foo = @>
     @console.log "hello"
-  fooString = "@>\n    @console.log \"hello\""
+  fooString = "@>\n    @console.log \"hello\"\n  "
   ok (foo.coffee is fooString)
 
 test "Declaration of variables in 'while' statements", ->
