@@ -10,3 +10,18 @@
 ** Calculate domain and codomains of functions
 ** Partial evaluation
 ** Continuations and coroutines (useful for loading libraries dynamically)
+** Extraction, insertion into objects (transignment)
+
+   foo <. x  -->  foo = x.foo
+   foo >. x  -->  x.foo = foo
+
+   x .> foo  -->  foo = x.foo
+   x .< foo  -->   x.foo = foo
+   
+   .> foo  -->  foo = @foo
+   .< foo  -->  @foo = foo
+
+   a.bar <. b  -->  a.bar = b.bar
+   a.bar >. b  -->  b.bar = a.bar
+   b .> a.bar  -->  a.bar = b.bar
+   b .< a.bar  -->  b.bar = a.bar

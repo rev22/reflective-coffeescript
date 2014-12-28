@@ -853,6 +853,7 @@ HEREDOC    = /// ^ ("""|''') ((?: \\[\s\S] | [^\\] )*?) (?:\n[^\n\S]*)? \1 ///
 OPERATOR   = /// ^ (
   ?: [-=@]>            # function
    | [-+*/%<>&|^!?=]=  # compound assign / compare
+   | (?:\.[<>]|[<>]\.) # transignment operators
    | >>>=?             # zero-fill right shift
    | ([-+:])\1         # doubles
    | ([&|<>])\2=?      # logic / shift
@@ -908,11 +909,11 @@ TRAILING_SPACES = /\s+$/
 
 # Compound assignment tokens.
 COMPOUND_ASSIGN = [
-  '-=', '+=', '/=', '*=', '%=', '||=', '&&=', '?=', '<<=', '>>=', '>>>=', '&=', '^=', '|='
+  '-=', '+=', '/=', '*=', '%=', '||=', '&&=', '?=', '<<=', '>>=', '>>>=', '&=', '^=', '|=', '.<', '.>', '>.', '<.'
 ]
 
 # Unary tokens.
-UNARY   = ['!', '~', 'NEW', 'TYPEOF', 'DELETE', 'DO']
+UNARY   = ['!', '~', 'NEW', 'TYPEOF', 'DELETE', 'DO', '<', '>']
 
 # Logical tokens.
 LOGIC   = ['&&', '||', '&', '|', '^']

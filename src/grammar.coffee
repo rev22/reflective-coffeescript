@@ -563,6 +563,12 @@ grammar =
        INDENT Expression OUTDENT',              -> new Assign $1, $4, $2
     o 'SimpleAssignable COMPOUND_ASSIGN TERMINATOR
        Expression',                             -> new Assign $1, $4, $2
+    o 'This COMPOUND_ASSIGN
+       SimpleAssignable',                       -> new Assign $1, $3, $2
+    o 'This COMPOUND_ASSIGN
+       INDENT SimpleAssignable OUTDENT',        -> new Assign $1, $4, $2
+    o 'This COMPOUND_ASSIGN TERMINATOR
+       SimpleAssignable',                       -> new Assign $1, $4, $2
     o 'SimpleAssignable EXTENDS Expression',    -> new Extends $1, $3
   ]
 

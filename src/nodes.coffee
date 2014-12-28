@@ -1160,12 +1160,15 @@ exports.Assign = class Assign extends Base
   unfoldSoak: (o) ->
     unfoldSoak o, this, 'variable'
 
+  isTransignment: -> /\.[<>]|[<>]\./.test @context
+
   # Compile an assignment, delegating to `compilePatternMatch` or
   # `compileSplice` if appropriate. Keep track of the name of the base object
   # we've been assigned to, for correct internal references. If the variable
   # has not been seen yet within the current scope, declare it.
   compileNode: (o) ->
     if isValue = @variable instanceof Value
+      return @compileTransignment o if @isTransignment()
       return @compilePatternMatch o if @variable.isArray() or @variable.isObject()
       return @compileSplice       o if @variable.isSplice()
       return @compileConditional  o if @context in ['||=', '&&=', '?=']
@@ -1190,6 +1193,77 @@ exports.Assign = class Assign extends Base
     return (compiledName.concat @makeCode(": "), val) if @context is 'object'
     answer = compiledName.concat @makeCode(" #{ @context or '=' } "), val
     if o.level <= LEVEL_LIST then answer else @wrapInBraces answer
+
+  compileTransignment: (o)->
+    x = @context
+    a = @variable
+    b = @value
+
+    if x is '>.'
+      y = a
+      a = b
+      b = y
+      x = '.<'
+    else if x is '.>'
+      y = a
+      a = b
+      b = y
+      x = '<.'
+    if x is '.<'
+      # Compile
+      #   a .< b.bar
+      # into
+      #   a.bar = b.bar
+      
+      idx = new Literal(if b.properties.length then b.properties[a.properties.length-1].name.value else b.base.value)
+      acc   = IDENTIFIER.test idx.unwrap().value or 0
+      a = new Value a
+      a.properties.push new (if acc then Access else Index) idx
+      
+      if maybestrict = o.scope.strict
+        o.scope.strict = false
+      compiledName = a.compileToFragments o, LEVEL_LIST
+      name = fragmentsToText compiledName
+      o.scope.strict = true if maybestrict
+      
+      val = b.compileToFragments o, LEVEL_LIST
+      return (compiledName.concat @makeCode(": "), val) if x is 'object'
+      answer = compiledName.concat @makeCode(" = "), val
+      if o.level <= LEVEL_LIST then answer else @wrapInBraces answer
+      
+    else
+      # Compile
+      #   a.bar <. b
+      # into:
+      #   a.bar = b.bar
+
+      if maybestrict = o.scope.strict
+        o.scope.strict = false
+      compiledName = a.compileToFragments o, LEVEL_LIST
+      name = fragmentsToText compiledName
+      o.scope.strict = true if maybestrict
+
+      varBase = a.unwrapAll()
+      unless varBase.isAssignable()
+          a.error "\"#{a.compile o}\" cannot be assigned"
+      unless varBase.hasProperties?()
+          if @param
+            o.scope.add name, 'var'
+          else
+            o.scope.find name
+
+      if b instanceof Code and match = METHOD_DEF.exec name
+        b.klass = match[1] if match[2]
+        b.name  = match[3] ? match[4] ? match[5]
+
+      idx = new Literal(if a.properties.length then a.properties[a.properties.length-1].name.value else a.base.value)
+      acc   = IDENTIFIER.test idx.unwrap().value or 0
+      b = new Value b
+      b.properties.push new (if acc then Access else Index) idx
+
+      val = b.compileToFragments o, LEVEL_LIST
+      answer = compiledName.concat @makeCode(" = "), val
+      if o.level <= LEVEL_LIST then answer else @wrapInBraces answer
 
   # Brief implementation of recursive pattern matching, when assigning array or
   # object literals to a value. Peeks at their properties to assign inner names.
