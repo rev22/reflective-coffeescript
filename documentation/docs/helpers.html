@@ -453,13 +453,14 @@ else if &quot;first_line&quot; of obj then locationData = obj</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">baseFileName</span> = <span class="hljs-params">(file, stripExt = <span class="hljs-literal">no</span>, useWinPathSep = <span class="hljs-literal">no</span>)</span> -&gt;</span>
+  <span class="hljs-function"><span class="hljs-title">isExt</span> = <span class="hljs-params">(x)</span>-&gt;</span> x <span class="hljs-keyword">is</span> <span class="hljs-string">'coffee'</span> <span class="hljs-keyword">or</span> x <span class="hljs-keyword">is</span> <span class="hljs-string">'refcoffee'</span>
   pathSep = <span class="hljs-keyword">if</span> useWinPathSep <span class="hljs-keyword">then</span> <span class="hljs-regexp">/\\|\//</span> <span class="hljs-keyword">else</span> <span class="hljs-regexp">/\/</span>/
   parts = file.split(pathSep)
   file = parts[parts.length - <span class="hljs-number">1</span>]
   <span class="hljs-keyword">return</span> file <span class="hljs-keyword">unless</span> stripExt <span class="hljs-keyword">and</span> file.indexOf(<span class="hljs-string">'.'</span>) &gt;= <span class="hljs-number">0</span>
   parts = file.split(<span class="hljs-string">'.'</span>)
   parts.pop()
-  parts.pop() <span class="hljs-keyword">if</span> parts[parts.length - <span class="hljs-number">1</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'coffee'</span> <span class="hljs-keyword">and</span> parts.length &gt; <span class="hljs-number">1</span>
+  parts.pop() <span class="hljs-keyword">if</span> isExt(parts[parts.length - <span class="hljs-number">1</span>]) <span class="hljs-keyword">and</span> parts.length &gt; <span class="hljs-number">1</span>
   parts.join(<span class="hljs-string">'.'</span>)</pre></div></div>
             
         </li>
@@ -475,7 +476,7 @@ else if &quot;first_line&quot; of obj then locationData = obj</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">isCoffee</span> = <span class="hljs-params">(file)</span> -&gt;</span> <span class="hljs-regexp">/\.((lit)?coffee|coffee\.md)$/</span>.test file</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">isCoffee</span> = <span class="hljs-params">(file)</span> -&gt;</span> <span class="hljs-regexp">/\.((lit)?(ref)?coffee|(ref)?coffee\.md)$/</span>.test file</pre></div></div>
             
         </li>
         
@@ -490,7 +491,7 @@ else if &quot;first_line&quot; of obj then locationData = obj</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">isLiterate</span> = <span class="hljs-params">(file)</span> -&gt;</span> <span class="hljs-regexp">/\.(litcoffee|coffee\.md)$/</span>.test file</pre></div></div>
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">isLiterate</span> = <span class="hljs-params">(file)</span> -&gt;</span> <span class="hljs-regexp">/\.(lit(ref)?coffee|(ref)?coffee\.md)$/</span>.test file</pre></div></div>
             
         </li>
         
@@ -592,7 +593,7 @@ it already.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  end      = <span class="hljs-keyword">if</span> first_line <span class="hljs-keyword">is</span> last_line <span class="hljs-keyword">then</span> last_column + <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> codeLine.length
-  marker   = repeat(<span class="hljs-string">' '</span>, start) + repeat(<span class="hljs-string">'^'</span>, end - start)</pre></div></div>
+  marker   = codeLine[...start].replace(<span class="hljs-regexp">/[^\s]/g</span>, <span class="hljs-string">' '</span>) + repeat(<span class="hljs-string">'^'</span>, end - start)</pre></div></div>
             
         </li>
         
@@ -619,7 +620,15 @@ it already.</p>
     <span class="hljs-subst">#{filename}</span>:<span class="hljs-subst">#{first_line + <span class="hljs-number">1</span>}</span>:<span class="hljs-subst">#{first_column + <span class="hljs-number">1</span>}</span>: error: <span class="hljs-subst">#{<span class="hljs-property">@message</span>}</span>
     <span class="hljs-subst">#{codeLine}</span>
     <span class="hljs-subst">#{marker}</span>
-  """</span></pre></div></div>
+  """</span>
+
+<span class="hljs-built_in">exports</span>.<span class="hljs-function"><span class="hljs-title">nameWhitespaceCharacter</span> = <span class="hljs-params">(string)</span> -&gt;</span>
+  <span class="hljs-keyword">switch</span> string
+    <span class="hljs-keyword">when</span> <span class="hljs-string">' '</span> <span class="hljs-keyword">then</span> <span class="hljs-string">'space'</span>
+    <span class="hljs-keyword">when</span> <span class="hljs-string">'\n'</span> <span class="hljs-keyword">then</span> <span class="hljs-string">'newline'</span>
+    <span class="hljs-keyword">when</span> <span class="hljs-string">'\r'</span> <span class="hljs-keyword">then</span> <span class="hljs-string">'carriage return'</span>
+    <span class="hljs-keyword">when</span> <span class="hljs-string">'\t'</span> <span class="hljs-keyword">then</span> <span class="hljs-string">'tab'</span>
+    <span class="hljs-keyword">else</span> string</pre></div></div>
             
         </li>
         

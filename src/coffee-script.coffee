@@ -15,7 +15,7 @@ helpers       = require './helpers'
 SourceMap     = require './sourcemap'
 
 # The current CoffeeScript version number.
-exports.VERSION = '1.6.3-reflective'
+exports.VERSION = '1.8.0-reflective.24'
 
 exports.FILE_EXTENSIONS = ['.refcoffee', '.litrefcoffee', '.refcoffee.md', '.coffee', '.litcoffee', '.coffee.md']
 
@@ -120,7 +120,7 @@ exports.run = (code, options = {}) ->
   mainModule.moduleCache and= {}
 
   # Assign paths for node_modules loading
-  dir = if options.fileName
+  dir = if options.filename
     path.dirname fs.realpathSync options.filename
   else
     fs.realpathSync '.'
@@ -171,6 +171,14 @@ exports.eval = (code, options = {}) ->
 
 exports.register = -> require './register'
 
+# Throw error with deprecation warning when depending upon implicit `require.extensions` registration
+if require.extensions
+  for ext in @FILE_EXTENSIONS
+    require.extensions[ext] ?= ->
+      throw new Error """
+      Use CoffeeScript.register() or require the coffee-script/register module to require #{ext} files.
+      """
+
 exports._compileFile = (filename, sourceMap = no) ->
   raw = fs.readFileSync filename, 'utf8'
   stripped = if raw.charCodeAt(0) is 0xFEFF then raw.substring 1 else raw
@@ -196,6 +204,7 @@ parser.lexer =
     token = @tokens[@pos++]
     if token
       [tag, @yytext, @yylloc] = token
+      @errorToken = token.origin or token
       @yylineno = @yylloc.first_line
     else
       tag = ''
@@ -211,12 +220,23 @@ parser.yy = require './nodes'
 # Override Jison's default error handling function.
 parser.yy.parseError = (message, {token}) ->
   # Disregard Jison's message, it contains redundant line numer information.
-  message = "unexpected #{if token is 1 then 'end of input' else token}"
+  # Disregard the token, we take its value directly from the lexer in case
+  # the error is caused by a generated token which might refer to its origin.
+  {errorToken, tokens} = parser.lexer
+  [errorTag, errorText, errorLoc] = errorToken
+
+  errorText = if errorToken is tokens[tokens.length - 1]
+    'end of input'
+  else if errorTag in ['INDENT', 'OUTDENT']
+    'indentation'
+  else
+    helpers.nameWhitespaceCharacter errorText
+
   # The second argument has a `loc` property, which should have the location
   # data for this token. Unfortunately, Jison seems to send an outdated `loc`
   # (from the previous token), so we take the location information directly
   # from the lexer.
-  helpers.throwSyntaxError message, parser.lexer.yylloc
+  helpers.throwSyntaxError "unexpected #{errorText}", errorLoc
 
 # Based on http://v8.googlecode.com/svn/branches/bleeding_edge/src/messages.js
 # Modified to handle sourceMap
@@ -292,5 +312,5 @@ Error.prepareStackTrace = (err, stack) ->
     break if frame.getFunction() is exports.run
     "  at #{formatSourcePosition frame, getSourceMapping}"
 
-  "#{err.name}: #{err.message ? ''}\n#{frames.join '\n'}\n"
+  "#{err.toString()}\n#{frames.join '\n'}\n"
 

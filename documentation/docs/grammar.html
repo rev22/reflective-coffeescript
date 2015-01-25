@@ -629,6 +629,7 @@ that hoovers up the remaining arguments.</p>
     o <span class="hljs-string">'ParamVar'</span>,<span class="hljs-function">                               -&gt;</span> <span class="hljs-keyword">new</span> Param $<span class="hljs-number">1</span>
     o <span class="hljs-string">'ParamVar ...'</span>,<span class="hljs-function">                           -&gt;</span> <span class="hljs-keyword">new</span> Param $<span class="hljs-number">1</span>, <span class="hljs-literal">null</span>, <span class="hljs-literal">on</span>
     o <span class="hljs-string">'ParamVar = Expression'</span>,<span class="hljs-function">                  -&gt;</span> <span class="hljs-keyword">new</span> Param $<span class="hljs-number">1</span>, $<span class="hljs-number">3</span>
+    o <span class="hljs-string">'...'</span>,<span class="hljs-function">                                    -&gt;</span> <span class="hljs-keyword">new</span> Expansion
   ]</pre></div></div>
             
         </li>
@@ -1042,6 +1043,7 @@ as well as the contents of an array literal
             <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">Arg</span>: [
     o <span class="hljs-string">'Expression'</span>
     o <span class="hljs-string">'Splat'</span>
+    o <span class="hljs-string">'...'</span>,<span class="hljs-function">                                     -&gt;</span> <span class="hljs-keyword">new</span> Expansion
   ]</pre></div></div>
             
         </li>
@@ -1375,8 +1377,9 @@ rules are necessary.</p>
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">Operation</span>: [
     o <span class="hljs-string">'UNARY Expression'</span>,<span class="hljs-function">                       -&gt;</span> <span class="hljs-keyword">new</span> Op $<span class="hljs-number">1</span> , $<span class="hljs-number">2</span>
-    o <span class="hljs-string">'-     Expression'</span>,                      (<span class="hljs-function">-&gt;</span> <span class="hljs-keyword">new</span> Op <span class="hljs-string">'-'</span>, $<span class="hljs-number">2</span>), <span class="hljs-attribute">prec</span>: <span class="hljs-string">'UNARY'</span>
-    o <span class="hljs-string">'+     Expression'</span>,                      (<span class="hljs-function">-&gt;</span> <span class="hljs-keyword">new</span> Op <span class="hljs-string">'+'</span>, $<span class="hljs-number">2</span>), <span class="hljs-attribute">prec</span>: <span class="hljs-string">'UNARY'</span>
+    o <span class="hljs-string">'UNARY_MATH Expression'</span>,<span class="hljs-function">                  -&gt;</span> <span class="hljs-keyword">new</span> Op $<span class="hljs-number">1</span> , $<span class="hljs-number">2</span>
+    o <span class="hljs-string">'-     Expression'</span>,                      (<span class="hljs-function">-&gt;</span> <span class="hljs-keyword">new</span> Op <span class="hljs-string">'-'</span>, $<span class="hljs-number">2</span>), <span class="hljs-attribute">prec</span>: <span class="hljs-string">'UNARY_MATH'</span>
+    o <span class="hljs-string">'+     Expression'</span>,                      (<span class="hljs-function">-&gt;</span> <span class="hljs-keyword">new</span> Op <span class="hljs-string">'+'</span>, $<span class="hljs-number">2</span>), <span class="hljs-attribute">prec</span>: <span class="hljs-string">'UNARY_MATH'</span>
 
     o <span class="hljs-string">'-- SimpleAssignable'</span>,<span class="hljs-function">                    -&gt;</span> <span class="hljs-keyword">new</span> Op <span class="hljs-string">'--'</span>, $<span class="hljs-number">2</span>
     o <span class="hljs-string">'++ SimpleAssignable'</span>,<span class="hljs-function">                    -&gt;</span> <span class="hljs-keyword">new</span> Op <span class="hljs-string">'++'</span>, $<span class="hljs-number">2</span>
@@ -1402,6 +1405,7 @@ rules are necessary.</p>
     o <span class="hljs-string">'Expression -  Expression'</span>,<span class="hljs-function">               -&gt;</span> <span class="hljs-keyword">new</span> Op <span class="hljs-string">'-'</span> , $<span class="hljs-number">1</span>, $<span class="hljs-number">3</span>
 
     o <span class="hljs-string">'Expression MATH     Expression'</span>,<span class="hljs-function">         -&gt;</span> <span class="hljs-keyword">new</span> Op $<span class="hljs-number">2</span>, $<span class="hljs-number">1</span>, $<span class="hljs-number">3</span>
+    o <span class="hljs-string">'Expression **       Expression'</span>,<span class="hljs-function">         -&gt;</span> <span class="hljs-keyword">new</span> Op $<span class="hljs-number">2</span>, $<span class="hljs-number">1</span>, $<span class="hljs-number">3</span>
     o <span class="hljs-string">'Expression SHIFT    Expression'</span>,<span class="hljs-function">         -&gt;</span> <span class="hljs-keyword">new</span> Op $<span class="hljs-number">2</span>, $<span class="hljs-number">1</span>, $<span class="hljs-number">3</span>
     o <span class="hljs-string">'Expression COMPARE  Expression'</span>,<span class="hljs-function">         -&gt;</span> <span class="hljs-keyword">new</span> Op $<span class="hljs-number">2</span>, $<span class="hljs-number">1</span>, $<span class="hljs-number">3</span>
     o <span class="hljs-string">'Expression LOGIC    Expression'</span>,<span class="hljs-function">         -&gt;</span> <span class="hljs-keyword">new</span> Op $<span class="hljs-number">2</span>, $<span class="hljs-number">1</span>, $<span class="hljs-number">3</span>
@@ -1417,6 +1421,12 @@ rules are necessary.</p>
        INDENT Expression OUTDENT'</span>,<span class="hljs-function">              -&gt;</span> <span class="hljs-keyword">new</span> Assign $<span class="hljs-number">1</span>, $<span class="hljs-number">4</span>, $<span class="hljs-number">2</span>
     o <span class="hljs-string">'SimpleAssignable COMPOUND_ASSIGN TERMINATOR
        Expression'</span>,<span class="hljs-function">                             -&gt;</span> <span class="hljs-keyword">new</span> Assign $<span class="hljs-number">1</span>, $<span class="hljs-number">4</span>, $<span class="hljs-number">2</span>
+    o <span class="hljs-string">'This COMPOUND_ASSIGN
+       SimpleAssignable'</span>,<span class="hljs-function">                       -&gt;</span> <span class="hljs-keyword">new</span> Assign $<span class="hljs-number">1</span>, $<span class="hljs-number">3</span>, $<span class="hljs-number">2</span>
+    o <span class="hljs-string">'This COMPOUND_ASSIGN
+       INDENT SimpleAssignable OUTDENT'</span>,<span class="hljs-function">        -&gt;</span> <span class="hljs-keyword">new</span> Assign $<span class="hljs-number">1</span>, $<span class="hljs-number">4</span>, $<span class="hljs-number">2</span>
+    o <span class="hljs-string">'This COMPOUND_ASSIGN TERMINATOR
+       SimpleAssignable'</span>,<span class="hljs-function">                       -&gt;</span> <span class="hljs-keyword">new</span> Assign $<span class="hljs-number">1</span>, $<span class="hljs-number">4</span>, $<span class="hljs-number">2</span>
     o <span class="hljs-string">'SimpleAssignable EXTENDS Expression'</span>,<span class="hljs-function">    -&gt;</span> <span class="hljs-keyword">new</span> Extends $<span class="hljs-number">1</span>, $<span class="hljs-number">3</span>
   ]</pre></div></div>
             
@@ -1456,6 +1466,8 @@ down. Following these rules is what makes <code>2 + 3 * 4</code> parse as:</p>
   [<span class="hljs-string">'nonassoc'</span>,  <span class="hljs-string">'++'</span>, <span class="hljs-string">'--'</span>]
   [<span class="hljs-string">'left'</span>,      <span class="hljs-string">'?'</span>]
   [<span class="hljs-string">'right'</span>,     <span class="hljs-string">'UNARY'</span>]
+  [<span class="hljs-string">'right'</span>,     <span class="hljs-string">'**'</span>]
+  [<span class="hljs-string">'right'</span>,     <span class="hljs-string">'UNARY_MATH'</span>]
   [<span class="hljs-string">'left'</span>,      <span class="hljs-string">'MATH'</span>]
   [<span class="hljs-string">'left'</span>,      <span class="hljs-string">'+'</span>, <span class="hljs-string">'-'</span>]
   [<span class="hljs-string">'left'</span>,      <span class="hljs-string">'SHIFT'</span>]
