@@ -8,7 +8,7 @@
     "compiler"
   ],
   "author": "Michele Bini, Jeremy Ashkenas",
-  "version": "1.8.0-reflective.23",
+  "version": "1.8.0-reflective.24",
   "license": "MIT",
   "engines": {
     "node": ">=0.8.0"

@@ -324,6 +324,8 @@ task 'doc:eco', "regenerate index.html from index.html.eco", ->
         doload = if show_load then "<div class='minibutton load' onclick='javascript: loadConsole(#{name});'>load</div>" else ''
         button = if executable then "<div class='minibutton ok' onclick='javascript: #{js};#{append}'>#{run}</div>" else ''
         "<div class='code'>#{cshtml}#{jshtml}#{script}#{doload}#{button}<br class='clear' /></div>"
+      toplevel.codeFor = codeFor()
+      toplevel.releaseHeader = releaseHeader
   eco = require "eco"
   template = fs.readFileSync "documentation/index.html.eco", "utf-8"
   fs.writeFileSync "index.html", eco.render(template)
