@@ -226,6 +226,7 @@ short-circuiting if any of them succeed. Their order determines precedence:
             
             <div class="content"><div class='highlight'><pre>    i = <span class="hljs-number">0</span>
     <span class="hljs-keyword">while</span> <span class="hljs-property">@chunk</span> = code[i..]
+      <span class="hljs-keyword">break</span> <span class="hljs-keyword">if</span> <span class="hljs-regexp">/^(\s*\n)*\s*$/</span>.test <span class="hljs-property">@chunk</span>
       consumed = \
            <span class="hljs-property">@identifierToken</span>() <span class="hljs-keyword">or</span>
            <span class="hljs-property">@commentToken</span>()    <span class="hljs-keyword">or</span>
@@ -457,12 +458,16 @@ are balanced within the string&#39;s contents, and within nested interpolations.
             
             <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">stringToken</span>:<span class="hljs-function"> -&gt;</span>
     <span class="hljs-keyword">switch</span> quote = <span class="hljs-property">@chunk</span>.charAt <span class="hljs-number">0</span>
-      <span class="hljs-keyword">when</span> <span class="hljs-string">"'"</span> <span class="hljs-keyword">then</span> [string] = SIMPLESTR.exec <span class="hljs-property">@chunk</span>
+      <span class="hljs-keyword">when</span> <span class="hljs-string">"'"</span> <span class="hljs-keyword">then</span> [string] = SIMPLESTR.exec(<span class="hljs-property">@chunk</span>) || []
       <span class="hljs-keyword">when</span> <span class="hljs-string">'"'</span> <span class="hljs-keyword">then</span> string = <span class="hljs-property">@balancedString</span> <span class="hljs-property">@chunk</span>, <span class="hljs-string">'"'</span>
     <span class="hljs-keyword">return</span> <span class="hljs-number">0</span> <span class="hljs-keyword">unless</span> string
-    trimmed = <span class="hljs-property">@removeNewlines</span> string[<span class="hljs-number">1.</span>..-<span class="hljs-number">1</span>]
+    inner = string[<span class="hljs-number">1.</span>..-<span class="hljs-number">1</span>]
+    trimmed = <span class="hljs-property">@removeNewlines</span> inner
     <span class="hljs-keyword">if</span> quote <span class="hljs-keyword">is</span> <span class="hljs-string">'"'</span> <span class="hljs-keyword">and</span> <span class="hljs-number">0</span> &lt; string.indexOf <span class="hljs-string">'#{'</span>, <span class="hljs-number">1</span>
-      <span class="hljs-property">@interpolateString</span> trimmed, <span class="hljs-attribute">strOffset</span>: <span class="hljs-number">1</span>, <span class="hljs-attribute">lexedLength</span>: string.length
+      numBreak = pos = <span class="hljs-number">0</span>
+      innerLen = inner.length
+      numBreak++ <span class="hljs-keyword">while</span> inner.charAt(pos++) <span class="hljs-keyword">is</span> <span class="hljs-string">'\n'</span> <span class="hljs-keyword">and</span> pos &lt; innerLen
+      <span class="hljs-property">@interpolateString</span> trimmed, <span class="hljs-attribute">strOffset</span>: <span class="hljs-number">1</span> + numBreak, <span class="hljs-attribute">lexedLength</span>: string.length
     <span class="hljs-keyword">else</span>
       <span class="hljs-property">@token</span> <span class="hljs-string">'STRING'</span>, quote + <span class="hljs-property">@escapeLines</span>(trimmed) + quote, <span class="hljs-number">0</span>, string.length
     <span class="hljs-keyword">if</span> octalEsc = <span class="hljs-regexp">/^(?:\\.|[^\\])*\\(?:0[0-7]|[1-7])/</span>.test string
@@ -489,7 +494,8 @@ preserve whitespace, but ignore indentation to the left.</p>
     quote = heredoc.charAt <span class="hljs-number">0</span>
     doc = <span class="hljs-property">@sanitizeHeredoc</span> match[<span class="hljs-number">2</span>], <span class="hljs-attribute">quote</span>: quote, <span class="hljs-attribute">indent</span>: <span class="hljs-literal">null</span>
     <span class="hljs-keyword">if</span> quote <span class="hljs-keyword">is</span> <span class="hljs-string">'"'</span> <span class="hljs-keyword">and</span> <span class="hljs-number">0</span> &lt;= doc.indexOf <span class="hljs-string">'#{'</span>
-      <span class="hljs-property">@interpolateString</span> doc, <span class="hljs-attribute">heredoc</span>: <span class="hljs-literal">yes</span>, <span class="hljs-attribute">strOffset</span>: <span class="hljs-number">3</span>, <span class="hljs-attribute">lexedLength</span>: heredoc.length
+      strOffset = <span class="hljs-keyword">if</span> match[<span class="hljs-number">2</span>].charAt(<span class="hljs-number">0</span>) <span class="hljs-keyword">is</span> <span class="hljs-string">'\n'</span> <span class="hljs-keyword">then</span> <span class="hljs-number">4</span> <span class="hljs-keyword">else</span> <span class="hljs-number">3</span>
+      <span class="hljs-property">@interpolateString</span> doc, <span class="hljs-attribute">heredoc</span>: <span class="hljs-literal">yes</span>, <span class="hljs-attribute">strOffset</span>: strOffset, <span class="hljs-attribute">lexedLength</span>: heredoc.length
     <span class="hljs-keyword">else</span>
       <span class="hljs-property">@token</span> <span class="hljs-string">'STRING'</span>, <span class="hljs-property">@makeString</span>(doc, quote, <span class="hljs-literal">yes</span>), <span class="hljs-number">0</span>, heredoc.length
     heredoc.length</pre></div></div>
@@ -601,7 +607,7 @@ JavaScript and Ruby.</p>
     @token '</span>IDENTIFIER<span class="hljs-string">', '</span>RegExp<span class="hljs-string">', 0, 0
     @token '</span>CALL_START<span class="hljs-string">', '</span>(<span class="hljs-string">', 0, 0
     tokens = []
-    for token in @interpolateString(body, regex: yes)
+    for token in @interpolateString(body, regex: yes, strOffset: 3)
       [tag, value] = token
       if tag is '</span>TOKENS<span class="hljs-string">'
         tokens.push value...
@@ -744,7 +750,7 @@ can close multiple indents, so we need to know how far in we happen to be.</p>
       <span class="hljs-property">@outdebt</span> = <span class="hljs-property">@indebt</span> = <span class="hljs-number">0</span>
       <span class="hljs-property">@indent</span> = size
     <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> size &lt; <span class="hljs-property">@baseIndent</span>
-      <span class="hljs-property">@error</span> <span class="hljs-string">"missing indentation"</span>, indent.length
+      <span class="hljs-property">@error</span> <span class="hljs-string">'missing indentation'</span>, indent.length
     <span class="hljs-keyword">else</span>
       <span class="hljs-property">@indebt</span> = <span class="hljs-number">0</span>
       <span class="hljs-property">@outdentToken</span> <span class="hljs-property">@indent</span> - size, noNewlines, indent.length
@@ -1191,7 +1197,7 @@ current chunk.</li>
         errorToken = <span class="hljs-property">@makeToken</span> <span class="hljs-string">''</span>, <span class="hljs-string">'string interpolation'</span>, offsetInChunk + i + <span class="hljs-number">1</span>, <span class="hljs-number">2</span>
       inner = expr[<span class="hljs-number">1.</span>..-<span class="hljs-number">1</span>]
       <span class="hljs-keyword">if</span> inner.length
-        [line, column] = <span class="hljs-property">@getLineAndColumnFromChunk</span>(strOffset + i + <span class="hljs-number">1</span>)
+        [line, column] = <span class="hljs-property">@getLineAndColumnFromChunk</span>(strOffset + i + <span class="hljs-number">2</span>)
         nested = <span class="hljs-keyword">new</span> Lexer().tokenize inner, <span class="hljs-attribute">line</span>: line, <span class="hljs-attribute">column</span>: column, <span class="hljs-attribute">rewrite</span>: <span class="hljs-literal">off</span>
         popped = nested.pop()
         popped = nested.shift() <span class="hljs-keyword">if</span> nested[<span class="hljs-number">0</span>]?[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'TERMINATOR'</span>

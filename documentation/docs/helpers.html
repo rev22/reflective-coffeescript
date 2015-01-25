@@ -114,7 +114,7 @@
                 <a class="pilcrow" href="#section-1">&#182;</a>
               </div>
               <p>Copyright (c) 2009-2013 Jeremy Ashkenas
-Copyright (c) 2013,2014,2015 Michele Bini</p>
+Copyright (c) 2013,2014 Michele Bini</p>
 <p>This file contains the common helper functions that we&#39;d like to share among
 the <strong>Lexer</strong>, <strong>Rewriter</strong>, and the <strong>Nodes</strong>. Merge objects, flatten
 arrays, count characters, that sort of thing.</p>
@@ -346,7 +346,6 @@ can be compiled &quot;normally&quot;.</p>
       line
     <span class="hljs-keyword">else</span>
       <span class="hljs-string">'# '</span> + line
-  lines.pop() <span class="hljs-keyword">while</span> lines.length <span class="hljs-keyword">and</span> <span class="hljs-regexp">/^\s*$/</span>.test lines[lines.length - <span class="hljs-number">1</span>]
   lines.join <span class="hljs-string">'\n'</span></pre></div></div>
             
         </li>
@@ -594,7 +593,7 @@ it already.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre>  end      = <span class="hljs-keyword">if</span> first_line <span class="hljs-keyword">is</span> last_line <span class="hljs-keyword">then</span> last_column + <span class="hljs-number">1</span> <span class="hljs-keyword">else</span> codeLine.length
-  marker   = repeat(<span class="hljs-string">' '</span>, start) + repeat(<span class="hljs-string">'^'</span>, end - start)</pre></div></div>
+  marker   = codeLine[...start].replace(<span class="hljs-regexp">/[^\s]/g</span>, <span class="hljs-string">' '</span>) + repeat(<span class="hljs-string">'^'</span>, end - start)</pre></div></div>
             
         </li>
         

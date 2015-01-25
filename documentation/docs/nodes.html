@@ -972,8 +972,7 @@ make sense.</p>
             </div>
             
             <div class="content"><div class='highlight'><pre><span class="hljs-built_in">exports</span>.Return = <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Return</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Base</span></span>
-  <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(expr)</span> -&gt;</span>
-    <span class="hljs-property">@expression</span> = expr <span class="hljs-keyword">if</span> expr <span class="hljs-keyword">and</span> <span class="hljs-keyword">not</span> expr.unwrap().isUndefined
+  <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@expression</span>)</span> -&gt;</span>
 
   <span class="hljs-attribute">children</span>: [<span class="hljs-string">'expression'</span>]
 
@@ -4119,7 +4118,7 @@ to the superclass for <code>super()</code> calls, and copies of any static prope
   "</span>
 
   <span class="hljs-attribute">modulo</span>:<span class="hljs-function"> -&gt;</span> <span class="hljs-string">"""
-    function(a, b) { return (a % b + +b) % b; }
+    function(a, b) { return (+a % (b = +b) + b) % b; }
   """</span></pre></div></div>
             
         </li>

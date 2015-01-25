@@ -15,7 +15,7 @@ helpers       = require './helpers'
 SourceMap     = require './sourcemap'
 
 # The current CoffeeScript version number.
-exports.VERSION = '1.7.0-reflective.23'
+exports.VERSION = '1.8.0-reflective.23'
 
 exports.FILE_EXTENSIONS = ['.refcoffee', '.litrefcoffee', '.refcoffee.md', '.coffee', '.litcoffee', '.coffee.md']
 
@@ -120,7 +120,7 @@ exports.run = (code, options = {}) ->
   mainModule.moduleCache and= {}
 
   # Assign paths for node_modules loading
-  dir = if options.fileName
+  dir = if options.filename
     path.dirname fs.realpathSync options.filename
   else
     fs.realpathSync '.'
@@ -170,6 +170,14 @@ exports.eval = (code, options = {}) ->
     vm.runInContext js, sandbox
 
 exports.register = -> require './register'
+
+# Throw error with deprecation warning when depending upon implicit `require.extensions` registration
+if require.extensions
+  for ext in @FILE_EXTENSIONS
+    require.extensions[ext] ?= ->
+      throw new Error """
+      Use CoffeeScript.register() or require the coffee-script/register module to require #{ext} files.
+      """
 
 exports._compileFile = (filename, sourceMap = no) ->
   raw = fs.readFileSync filename, 'utf8'
@@ -304,5 +312,5 @@ Error.prepareStackTrace = (err, stack) ->
     break if frame.getFunction() is exports.run
     "  at #{formatSourcePosition frame, getSourceMapping}"
 
-  "#{err.name}: #{err.message ? ''}\n#{frames.join '\n'}\n"
+  "#{err.toString()}\n#{frames.join '\n'}\n"
 
