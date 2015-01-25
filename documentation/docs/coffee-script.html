@@ -143,9 +143,9 @@ SourceMap     = <span class="hljs-built_in">require</span> <span class="hljs-str
 
             </div>
             
-            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">exports</span>.VERSION = <span class="hljs-string">'1.6.3-reflective'</span>
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">exports</span>.VERSION = <span class="hljs-string">'1.7.0-reflective.22'</span>
 
-<span class="hljs-built_in">exports</span>.FILE_EXTENSIONS = [<span class="hljs-string">'.coffee'</span>, <span class="hljs-string">'.litcoffee'</span>, <span class="hljs-string">'.coffee.md'</span>]</pre></div></div>
+<span class="hljs-built_in">exports</span>.FILE_EXTENSIONS = [<span class="hljs-string">'.refcoffee'</span>, <span class="hljs-string">'.litrefcoffee'</span>, <span class="hljs-string">'.refcoffee.md'</span>, <span class="hljs-string">'.coffee'</span>, <span class="hljs-string">'.litcoffee'</span>, <span class="hljs-string">'.coffee.md'</span>]</pre></div></div>
             
         </li>
         
@@ -195,6 +195,21 @@ lexer/parser/compiler.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-5">&#182;</a>
               </div>
+              <p>Map of filenames -&gt; sourceMap object.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-built_in">exports</span>.sourceMaps = sourceMaps = {}</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
               <p>Compile CoffeeScript code to JavaScript, using the Coffee/Jison compiler.</p>
 <p>If <code>options.sourceMap</code> is specified, then <code>options.filename</code> must also be specified.  All
 options that can be passed to <code>SourceMap#generate</code> may also be passed here.</p>
@@ -224,11 +239,11 @@ lookups.</p>
         </li>
         
         
-        <li id="section-6">
+        <li id="section-7">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-6">&#182;</a>
+                <a class="pilcrow" href="#section-7">&#182;</a>
               </div>
               <p>Update the sourcemap with data from each fragment</p>
 
@@ -250,11 +265,11 @@ lookups.</p>
         </li>
         
         
-        <li id="section-7">
+        <li id="section-8">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-7">&#182;</a>
+                <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
               <p>Copy the code from each fragment into the final JavaScript.</p>
 
@@ -267,6 +282,9 @@ lookups.</p>
     js = <span class="hljs-string">"// <span class="hljs-subst">#{header}</span>\n<span class="hljs-subst">#{js}</span>"</span>
 
   <span class="hljs-keyword">if</span> options.sourceMap
+    <span class="hljs-keyword">if</span> (filename = options.filename)?
+      filename = fs.realpathSync filename
+      <span class="hljs-keyword">delete</span> sourceMaps[filename]
     answer = {js}
     answer.sourceMap = map
     answer.v3SourceMap = map.generate(options, code)
@@ -277,11 +295,11 @@ lookups.</p>
         </li>
         
         
-        <li id="section-8">
+        <li id="section-9">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-8">&#182;</a>
+                <a class="pilcrow" href="#section-9">&#182;</a>
               </div>
               <p>Tokenize a string of CoffeeScript code, and return the array of tokens.</p>
 
@@ -293,11 +311,11 @@ lookups.</p>
         </li>
         
         
-        <li id="section-9">
+        <li id="section-10">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-9">&#182;</a>
+                <a class="pilcrow" href="#section-10">&#182;</a>
               </div>
               <p>Parse a string of CoffeeScript code or an array of lexed tokens, and
 return the AST. You can then compile it by calling <code>.compile()</code> on the root,
@@ -314,11 +332,11 @@ or traverse it by using <code>.traverseChildren()</code> with a callback.</p>
         </li>
         
         
-        <li id="section-10">
+        <li id="section-11">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Compile and execute a string of CoffeeScript (on the server), correctly
 setting <code>__filename</code>, <code>__dirname</code>, and relative <code>require()</code>.</p>
@@ -331,11 +349,11 @@ setting <code>__filename</code>, <code>__dirname</code>, and relative <code>requ
         </li>
         
         
-        <li id="section-11">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>Set the filename.</p>
 
@@ -347,11 +365,11 @@ setting <code>__filename</code>, <code>__dirname</code>, and relative <code>requ
         </li>
         
         
-        <li id="section-12">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Clear the module cache.</p>
 
@@ -362,11 +380,11 @@ setting <code>__filename</code>, <code>__dirname</code>, and relative <code>requ
         </li>
         
         
-        <li id="section-13">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Assign paths for node_modules loading</p>
 
@@ -381,11 +399,11 @@ setting <code>__filename</code>, <code>__dirname</code>, and relative <code>requ
         </li>
         
         
-        <li id="section-14">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Compile.</p>
 
@@ -400,11 +418,11 @@ setting <code>__filename</code>, <code>__dirname</code>, and relative <code>requ
         </li>
         
         
-        <li id="section-15">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <p>Compile and evaluate a string of CoffeeScript (in a Node.js-like environment).
 The CoffeeScript REPL uses this to run the input.</p>
@@ -424,28 +442,8 @@ The CoffeeScript REPL uses this to run the input.</p>
       sandbox.<span class="hljs-built_in">global</span> = sandbox.root = sandbox.GLOBAL = sandbox
     <span class="hljs-keyword">else</span>
       sandbox = <span class="hljs-built_in">global</span>
-    sandbox.__filename = options.filename || <span class="hljs-string">'eval'</span>
-    sandbox.__dirname  = path.dirname sandbox.__filename</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-16">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
-              </div>
-              <p>define module/require only if they chose not to specify their own</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">unless</span> sandbox <span class="hljs-keyword">isnt</span> <span class="hljs-built_in">global</span> <span class="hljs-keyword">or</span> sandbox.<span class="hljs-built_in">module</span> <span class="hljs-keyword">or</span> sandbox.<span class="hljs-built_in">require</span>
-      Module = <span class="hljs-built_in">require</span> <span class="hljs-string">'module'</span>
-      sandbox.<span class="hljs-built_in">module</span>  = _module  = <span class="hljs-keyword">new</span> Module(options.modulename || <span class="hljs-string">'eval'</span>)
-      sandbox.<span class="hljs-built_in">require</span> = <span class="hljs-function"><span class="hljs-title">_require</span> = <span class="hljs-params">(path)</span> -&gt;</span>  Module._load path, _module, <span class="hljs-literal">true</span>
-      _module.filename = sandbox.__filename
-      _require[r] = <span class="hljs-built_in">require</span>[r] <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> Object.getOwnPropertyNames <span class="hljs-built_in">require</span> <span class="hljs-keyword">when</span> r <span class="hljs-keyword">isnt</span> <span class="hljs-string">'paths'</span></pre></div></div>
+    sandbox.__filename = filename = options.filename ? <span class="hljs-string">'eval'</span>
+    sandbox.__dirname  = path.dirname filename</pre></div></div>
             
         </li>
         
@@ -455,6 +453,26 @@ The CoffeeScript REPL uses this to run the input.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>define module/require only if they chose not to specify their own</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">unless</span> sandbox <span class="hljs-keyword">isnt</span> <span class="hljs-built_in">global</span> <span class="hljs-keyword">or</span> sandbox.<span class="hljs-built_in">module</span> <span class="hljs-keyword">or</span> sandbox.<span class="hljs-built_in">require</span>
+      Module = <span class="hljs-built_in">require</span> <span class="hljs-string">'module'</span>
+      sandbox.<span class="hljs-built_in">module</span>  = _module  = <span class="hljs-keyword">new</span> Module(options.modulename || <span class="hljs-string">'eval'</span>)
+      sandbox.<span class="hljs-built_in">require</span> = <span class="hljs-function"><span class="hljs-title">_require</span> = <span class="hljs-params">(path)</span> -&gt;</span>  Module._load path, _module, <span class="hljs-literal">true</span>
+      _module.filename = filename
+      _require[r] = <span class="hljs-built_in">require</span>[r] <span class="hljs-keyword">for</span> r <span class="hljs-keyword">in</span> Object.getOwnPropertyNames <span class="hljs-built_in">require</span> <span class="hljs-keyword">when</span> r <span class="hljs-keyword">isnt</span> <span class="hljs-string">'paths'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>use the same hack node currently uses for their own REPL</p>
 
@@ -484,11 +502,11 @@ The CoffeeScript REPL uses this to run the input.</p>
         </li>
         
         
-        <li id="section-18">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <p>As the filename and code of a dynamically loaded file will be different
 from the original file compiled with CoffeeScript.run, add that
@@ -503,11 +521,11 @@ information to error so it can be pretty-printed later.</p>
         </li>
         
         
-        <li id="section-19">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>Instantiate a Lexer for our use here.</p>
 
@@ -518,11 +536,11 @@ information to error so it can be pretty-printed later.</p>
         </li>
         
         
-        <li id="section-20">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>The real Lexer produces a generic stream of tokens. This object provides a
 thin wrapper around it, compatible with the Jison API. We can then pass it
@@ -535,6 +553,7 @@ directly as a &quot;Jison lexer&quot;.</p>
     token = <span class="hljs-property">@tokens</span>[<span class="hljs-property">@pos</span>++]
     <span class="hljs-keyword">if</span> token
       [tag, <span class="hljs-property">@yytext</span>, <span class="hljs-property">@yylloc</span>] = token
+      <span class="hljs-property">@errorToken</span> = token.origin <span class="hljs-keyword">or</span> token
       <span class="hljs-property">@yylineno</span> = <span class="hljs-property">@yylloc</span>.first_line
     <span class="hljs-keyword">else</span>
       tag = <span class="hljs-string">''</span>
@@ -548,11 +567,11 @@ directly as a &quot;Jison lexer&quot;.</p>
         </li>
         
         
-        <li id="section-21">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Make all the AST nodes visible to the parser.</p>
 
@@ -563,11 +582,11 @@ directly as a &quot;Jison lexer&quot;.</p>
         </li>
         
         
-        <li id="section-22">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <p>Override Jison&#39;s default error handling function.</p>
 
@@ -578,35 +597,27 @@ directly as a &quot;Jison lexer&quot;.</p>
         </li>
         
         
-        <li id="section-23">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
-              </div>
-              <p>Disregard Jison&#39;s message, it contains redundant line numer information.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>  message = <span class="hljs-string">"unexpected <span class="hljs-subst">#{<span class="hljs-keyword">if</span> token <span class="hljs-keyword">is</span> <span class="hljs-number">1</span> <span class="hljs-keyword">then</span> <span class="hljs-string">'end of input'</span> <span class="hljs-keyword">else</span> token}</span>"</span></pre></div></div>
-            
-        </li>
-        
-        
         <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
-              <p>The second argument has a <code>loc</code> property, which should have the location
-data for this token. Unfortunately, Jison seems to send an outdated <code>loc</code>
-(from the previous token), so we take the location information directly
-from the lexer.</p>
+              <p>Disregard Jison&#39;s message, it contains redundant line numer information.
+Disregard the token, we take its value directly from the lexer in case
+the error is caused by a generated token which might refer to its origin.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  helpers.throwSyntaxError message, parser.lexer.yylloc</pre></div></div>
+            <div class="content"><div class='highlight'><pre>  {errorToken, tokens} = parser.lexer
+  [errorTag, errorText, errorLoc] = errorToken
+
+  errorText = <span class="hljs-keyword">if</span> errorToken <span class="hljs-keyword">is</span> tokens[tokens.length - <span class="hljs-number">1</span>]
+    <span class="hljs-string">'end of input'</span>
+  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> errorTag <span class="hljs-keyword">in</span> [<span class="hljs-string">'INDENT'</span>, <span class="hljs-string">'OUTDENT'</span>]
+    <span class="hljs-string">'indentation'</span>
+  <span class="hljs-keyword">else</span>
+    helpers.nameWhitespaceCharacter errorText</pre></div></div>
             
         </li>
         
@@ -616,6 +627,24 @@ from the lexer.</p>
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-25">&#182;</a>
+              </div>
+              <p>The second argument has a <code>loc</code> property, which should have the location
+data for this token. Unfortunately, Jison seems to send an outdated <code>loc</code>
+(from the previous token), so we take the location information directly
+from the lexer.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  helpers.throwSyntaxError <span class="hljs-string">"unexpected <span class="hljs-subst">#{errorText}</span>"</span>, errorLoc</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-26">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <p>Based on <a href="http://v8.googlecode.com/svn/branches/bleeding_edge/src/messages.js">http://v8.googlecode.com/svn/branches/bleeding_edge/src/messages.js</a>
 Modified to handle sourceMap</p>
@@ -643,11 +672,11 @@ Modified to handle sourceMap</p>
         </li>
         
         
-        <li id="section-26">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <p>Check for a sourceMap position</p>
 
@@ -684,21 +713,6 @@ Modified to handle sourceMap</p>
     <span class="hljs-string">"<span class="hljs-subst">#{functionName}</span> (<span class="hljs-subst">#{fileLocation}</span>)"</span>
   <span class="hljs-keyword">else</span>
     fileLocation</pre></div></div>
-            
-        </li>
-        
-        
-        <li id="section-27">
-            <div class="annotation">
-              
-              <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
-              </div>
-              <p>Map of filenames -&gt; sourceMap object.</p>
-
-            </div>
-            
-            <div class="content"><div class='highlight'><pre>sourceMaps = {}</pre></div></div>
             
         </li>
         

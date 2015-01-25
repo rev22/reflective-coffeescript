@@ -121,7 +121,7 @@ path = <span class="hljs-built_in">require</span> <span class="hljs-string">'pat
 vm = <span class="hljs-built_in">require</span> <span class="hljs-string">'vm'</span>
 nodeREPL = <span class="hljs-built_in">require</span> <span class="hljs-string">'repl'</span>
 CoffeeScript = <span class="hljs-built_in">require</span> <span class="hljs-string">'./coffee-script'</span>
-{merge, updateSyntaxError} = <span class="hljs-built_in">require</span> <span class="hljs-string">'./helpers'</span>
+{merge, updateSyntaxError} = helpers = <span class="hljs-built_in">require</span> <span class="hljs-string">'./helpers'</span>
 
 replDefaults =
   <span class="hljs-attribute">prompt</span>: <span class="hljs-string">'coffee&gt; '</span>,
@@ -208,6 +208,7 @@ parens. Unwrap all that.</p>
             <div class="content"><div class='highlight'><pre>      ast = <span class="hljs-keyword">new</span> Block [
         <span class="hljs-keyword">new</span> Assign (<span class="hljs-keyword">new</span> Value <span class="hljs-keyword">new</span> Literal <span class="hljs-string">'_'</span>), ast, <span class="hljs-string">'='</span>
       ]
+      helpers.code = <span class="hljs-attribute">full</span>: input
       js = ast.compile <span class="hljs-attribute">bare</span>: <span class="hljs-literal">yes</span>, <span class="hljs-attribute">locals</span>: Object.keys(context)
       result = <span class="hljs-keyword">if</span> context <span class="hljs-keyword">is</span> <span class="hljs-built_in">global</span>
         vm.runInThisContext js, filename 
@@ -231,6 +232,8 @@ parens. Unwrap all that.</p>
             
             <div class="content"><div class='highlight'><pre>      updateSyntaxError err, input
       cb err
+    <span class="hljs-keyword">finally</span>
+      <span class="hljs-keyword">delete</span> helpers.code
 
 <span class="hljs-function"><span class="hljs-title">addMultilineHandler</span> = <span class="hljs-params">(repl)</span> -&gt;</span>
   {rli, inputStream, outputStream} = repl

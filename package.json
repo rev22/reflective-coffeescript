@@ -1,33 +1,40 @@
 {
-  "name":         "reflective-coffeescript",
-  "description":  "Reflection-augmented CoffeeScript",
-  "keywords":     ["reflection", "language", "coffeescript", "compiler"],
-  "author":       "Michele Bini, Jeremy Ashkenas",
-  "version":      "1.6.3-reflective.22",
-  "license":      "MIT",
-  "engines":      {
-    "node":       ">=0.8.0"
+  "name": "reflective-coffeescript",
+  "description": "Reflection-augmented CoffeeScript",
+  "keywords": [
+    "reflection",
+    "language",
+    "coffeescript",
+    "compiler"
+  ],
+  "author": "Michele Bini, Jeremy Ashkenas",
+  "version": "1.7.0-reflective.22",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.8.0"
   },
-  "directories" : {
-    "lib" : "./lib/coffee-script"
+  "directories": {
+    "lib": "./lib/coffee-script"
   },
-  "main" : "./lib/coffee-script/coffee-script",
-  "bin":          {
-    "coffee":     "./bin/coffee",
-    "cake":       "./bin/cake"
+  "main": "./lib/coffee-script/coffee-script",
+  "bin": {
+    "coffee": "./bin/coffee",
+    "cake": "./bin/cake"
   },
   "scripts": {
     "test": "node ./bin/cake test"
   },
-  "homepage":     "http://rev22.github.io/reflective-coffeescript",
-  "bugs":         "https://github.com/rev22/reflective-coffeescript/issues",
-  "repository":   {
+  "homepage": "http://rev22.github.io/reflective-coffeescript",
+  "bugs": "https://github.com/rev22/reflective-coffeescript/issues",
+  "repository": {
     "type": "git",
     "url": "git://github.com/rev22/reflective-coffeescript.git"
   },
   "devDependencies": {
-    "uglify-js":  "~2.2",
-    "jison":      ">=0.2.0"
+    "uglify-js": "~2.2",
+    "jison": ">=0.2.0",
+    "highlight.js": "~8.0.0",
+    "underscore": "~1.5.2"
   },
   "dependencies": {
     "mkdirp": "~0.3.5",
