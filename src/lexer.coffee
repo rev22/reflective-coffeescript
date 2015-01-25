@@ -55,6 +55,7 @@ exports.Lexer = class Lexer
     # `@literalToken` is the fallback catch-all.
     i = 0
     while @chunk = code[i..]
+      break if /^(\s*\n)*\s*$/.test @chunk
       consumed = \
            @identifierToken() or
            @commentToken()    or
