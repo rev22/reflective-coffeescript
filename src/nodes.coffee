@@ -1,5 +1,5 @@
 # Copyright (c) 2009-2013 Jeremy Ashkenas
-# Copyright (c) 2013,2014 Michele Bini
+# Copyright (c) 2013,2014,2015 Michele Bini
 
 # `nodes.coffee` contains all of the node classes for the syntax tree. Most
 # nodes are created as the result of actions in the [grammar](grammar.html),
@@ -1446,8 +1446,10 @@ exports.Code = class Code extends Base
       wrapper = new Code [new Param new Literal "x"], new Block [(new Assign(new Value(new Literal("x"), [new Access(new Literal("coffee"))]), new Literal('"'+lecode+'"'))), new Literal("x")]
       @pure = true
       @reflective = false
-      boundfunc = new Call(wrapper, [new Code(@params, @body, "purefunc")])
-      boundfunc = (new Assign(new Value(new Literal(@name)), boundfunc)) if @ctor
+      wrappedCode = new Code(@params, @body, "purefunc")
+      wrappedCode.noReturn = @noReturn
+      boundfunc = new Call(wrapper, [wrappedCode])
+      boundfunc = new Block [ new Assign(new Value(new Literal(@name)), boundfunc) ] if @ctor
       boundfunc.updateLocationDataIfMissing @locationData
       return boundfunc.compileNode(o)
 
