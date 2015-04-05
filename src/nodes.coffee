@@ -1447,6 +1447,7 @@ exports.Code = class Code extends Base
       @pure = true
       @reflective = false
       boundfunc = new Call(wrapper, [new Code(@params, @body, "purefunc")])
+      boundfunc = (new Assign(new Value(new Literal(@name)), boundfunc)) if @ctor
       boundfunc.updateLocationDataIfMissing @locationData
       return boundfunc.compileNode(o)
 
