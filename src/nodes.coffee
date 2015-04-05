@@ -1451,6 +1451,7 @@ exports.Code = class Code extends Base
       boundfunc = new Call(wrapper, [wrappedCode])
       boundfunc = new Block [ new Assign(new Value(new Literal(@name)), boundfunc) ] if @ctor
       boundfunc.updateLocationDataIfMissing @locationData
+      o.scope.add @name, 'var'
       return boundfunc.compileNode(o)
 
     o.scope = null if @pure
