@@ -33,6 +33,7 @@ BANNER = '''
 
 # The list of all the valid option flags that `coffee` knows how to handle.
 SWITCHES = [
+  [      '--no-coffee-meta',  'omit coffee source metadata']
   ['-b', '--bare',            'compile without a top-level function wrapper']
   ['-c', '--compile',         'compile to JavaScript and save as .js files']
   ['-e', '--eval',            'pass a string from the command line as input']
@@ -388,6 +389,7 @@ compileOptions = (filename, base) ->
     literate: opts.literate or helpers.isLiterate(filename)
     bare: opts.bare
     header: opts.compile and not opts['no-header']
+    noCoffeeMeta: !!opts['no-coffee-meta']
     sourceMap: opts.map
   }
   if filename
