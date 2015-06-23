@@ -114,7 +114,7 @@ exports.Lexer = class Lexer
       return id.length
     forcedIdentifier = colon or
       (prev = last @tokens) and (prev[0] in ['.', '?.', '::', '?::'] or
-      not prev.spaced and prev[0] is '@')
+      not prev.spaced and prev[0] in [ '@@', '@' ])
     tag = 'IDENTIFIER'
 
     if not forcedIdentifier and (id in JS_KEYWORDS or id in COFFEE_KEYWORDS)
@@ -876,6 +876,7 @@ OPERATOR   = /// ^ (
    | ([&|<>*/%])\2=?   # logic / shift / power / floor division / modulo
    | \?(\.|::)         # soak access
    | \.{2,3}           # range or splat
+   | @@                # global variables
 ) ///
 
 WHITESPACE = /^[^\n\S]+/

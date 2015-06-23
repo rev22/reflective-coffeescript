@@ -1,4 +1,4 @@
-# Copyright (c) 2013,2014 Michele Bini
+# Copyright (c) 2013, 2014, 2015 Michele Bini
 
 test "Verify catching impure reflective functions", ->
   CoffeeScript.compile "@>@foo"
@@ -37,4 +37,14 @@ test "Declaration of variables in 'while' statements", ->
       c = false
     !!c
 
+test "Verify globals marked with @@", ->
+  CoffeeScript.compile "@>@@Math"
+  CoffeeScript.compile "->Math"
+  CoffeeScript.compile "->@@Math"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>Math"
+    catch
+      caught = true
+    caught
 

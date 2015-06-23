@@ -398,6 +398,8 @@ exports.Literal = class Literal extends Base
 
   isComplex: NO
 
+  isGlobal: -> @global ? 0
+
   assigns: (name) ->
     name is @value
 
@@ -417,6 +419,11 @@ exports.Literal = class Literal extends Base
 
   toString: ->
     ' "' + @value + '"'
+
+class exports.GlobalLiteral extends Literal
+  constructor: (x) ->
+    @global = 1
+    super x
 
 class exports.Undefined extends Base
   isAssignable: NO
@@ -548,7 +555,7 @@ exports.Value = class Value extends Base
   compileNode: (o) ->
     @base.front = @front
     props = @properties
-    if o.scope.strict and @base instanceof Literal
+    if o.scope.strict and @base instanceof Literal and !@base.isGlobal()
       do (val = @base.value) =>
         if IDENTIFIER.test val
           # Check that variable is declared in the strict scope

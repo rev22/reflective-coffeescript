@@ -126,6 +126,7 @@ grammar =
   # A literal identifier, a variable name or property.
   Identifier: [
     o 'IDENTIFIER',                             -> new Literal $1
+    o '@@ IDENTIFIER',                          -> new GlobalLiteral($2)
   ]
 
   # Alphanumerics are separated from the other **Literal** matchers because

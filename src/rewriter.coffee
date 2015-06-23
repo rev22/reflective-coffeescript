@@ -254,7 +254,7 @@ class exports.Rewriter
       # Implicit objects start here
       if tag is ':'
         # Go back to the (implicit) start of the object
-        if @tag(i - 2) is '@' then s = i - 2 else s = i - 1
+        if @tag(i - 2) in [ '@', '@@' ] then s = i - 2 else s = i - 1
         s -= 2 while @tag(s - 2) is 'HERECOMMENT'
 
         # Mark if the value is a for loop
@@ -470,13 +470,13 @@ for [left, rite] in BALANCED_PAIRS
 EXPRESSION_CLOSE = ['CATCH', 'THEN', 'ELSE', 'FINALLY'].concat EXPRESSION_END
 
 # Tokens that, if followed by an `IMPLICIT_CALL`, indicate a function invocation.
-IMPLICIT_FUNC    = ['IDENTIFIER', 'SUPER', ')', 'CALL_END', ']', 'INDEX_END', '@', 'THIS']
+IMPLICIT_FUNC    = ['IDENTIFIER', 'SUPER', ')', 'CALL_END', ']', 'INDEX_END', '@', '@@', 'THIS']
 
 # If preceded by an `IMPLICIT_FUNC`, indicates a function invocation.
 IMPLICIT_CALL    = [
   'IDENTIFIER', 'NUMBER', 'STRING', 'JS', 'REGEX', 'NEW', 'PARAM_START', 'CLASS'
   'IF', 'TRY', 'SWITCH', 'THIS', 'BOOL', 'NULL', 'UNDEFINED', 'UNARY',
-  'UNARY_MATH', 'SUPER', 'THROW', '@', '->', '=>', '@>', '[', '(', '{', '--', '++'
+  'UNARY_MATH', 'SUPER', 'THROW', '@', '@@', '->', '=>', '@>', '[', '(', '{', '--', '++'
 ]
 
 IMPLICIT_UNSPACED_CALL = ['+', '-']
