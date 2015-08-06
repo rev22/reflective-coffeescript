@@ -1,0 +1,22 @@
+Known Bugs:
+
+The following code compiles, even though it shouldn't:
+
+  @> foo.bar = 1
+
+
+Ditto:
+  
+  @> x in x for dirs
+
+  @> z for y of @x
+
+Does not seem to execute properly:
+
+     (x...)-> @tag 'td', x...
+
+(__slice is not defined! error)
+
+This works:
+
+     (x...)-> @tag 'td', x...
