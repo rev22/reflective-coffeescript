@@ -24,7 +24,7 @@ it belongs to.
         @strict = forceStrict or parent?.strict
         @variables = [{name: 'arguments', type: 'arguments'}]
         @positions = {}
-        Scope.root = this unless @parent
+        Scope.root = this unless @parent or forceStrict
 
 Adds a new variable or overrides an existing one.
 
