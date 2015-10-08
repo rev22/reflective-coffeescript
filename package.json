@@ -8,7 +8,7 @@
     "compiler"
   ],
   "author": "Michele Bini, Jeremy Ashkenas",
-  "version": "1.8.0-reflective.32",
+  "version": "1.10.0-reflective.32",
   "license": "MIT",
   "engines": {
     "node": ">=0.8.0"
@@ -23,7 +23,8 @@
   },
   "preferGlobal": true,
   "scripts": {
-    "test": "node ./bin/cake test"
+    "test":         "node ./bin/cake test",
+    "test-harmony": "node --harmony ./bin/cake test"
   },
   "homepage": "http://rev22.github.io/reflective-coffeescript",
   "bugs": "https://github.com/rev22/reflective-coffeescript/issues",
@@ -36,10 +37,7 @@
     "jison": ">=0.2.0",
     "highlight.js": "~8.0.0",
     "underscore": "~1.5.2",
-    "docco": "~0.6.2"
-  },
-  "dependencies": {
-    "mkdirp": "~0.3.5",
     "highlight.js": "~8.0"
+    "docco": "~0.7.0"
   }
 }

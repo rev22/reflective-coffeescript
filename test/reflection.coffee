@@ -1,8 +1,12 @@
 # Copyright (c) 2013, 2014, 2015 Michele Bini
 
-test "Verify catching impure reflective functions", ->
+test "Compiling basic reflective function 1", ->
   CoffeeScript.compile "@>@foo"
+
+test "Compiling basic reflection function 2", ->
   CoffeeScript.compile "->foo"
+
+test "Verify catching impure reflective functions", ->
   ok do (caught = false)->
     try
       CoffeeScript.compile "@>foo"
