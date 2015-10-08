@@ -21,7 +21,7 @@ and therefore should be avoided when generating variables.
 
 The `@root` is the top-level **Scope** object for a given file.
 
-        @root = @parent?.root ? this unless forceStrict
+        @root = if forceStrict then this else @parent?.root ? this
 
 Adds a new variable or overrides an existing one.
 

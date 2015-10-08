@@ -1490,7 +1490,7 @@ exports.Code = class Code extends Base
 
   jumps: NO
 
-  makeScope: (parentScope) -> new Scope parentScope, @body, this, null, !!@pure
+  makeScope: (parentScope) -> new Scope parentScope, @body, this, [ ], !!@pure
 
   # Compilation creates a new scope unless explicitly asked to share with the
   # outer scope. Handles splat parameters in the parameter list by peeking at
