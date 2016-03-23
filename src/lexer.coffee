@@ -34,7 +34,7 @@ exports.Lexer = class Lexer
   #
   # Before returning the token stream, run it through the [Rewriter](rewriter.html)
   # unless explicitly asked not to.
-  tokenize: (code, opts = {}) ->
+  doTokenize: (code, opts = {}) ->
     @literate   = opts.literate  # Are we lexing literate CoffeeScript?
     @indent     = 0              # The current indentation level.
     @baseIndent = 0              # The overall minimum indentation level
@@ -78,6 +78,45 @@ exports.Lexer = class Lexer
     @error "missing #{tag}" if tag = @ends.pop()
     return @tokens if opts.rewrite is off
     (new Rewriter).rewrite @tokens
+
+  CompilerRepresentation: class
+
+  # A tokenize method that processes lexer and compiler directives before compiling
+  tokenize: (code, opts)->
+    compiler = @compiler ?= new @CompilerRepresentation
+    compiler.lexer = @
+    compiler.code = code
+    compiler.tokenizeOptions = opts
+    code.processDirectives(code)
+    @applyReify compiler.lexer, -> @doTokenize(code, opts)
+
+  # Run cb with 'this' set to val
+  # If val is a promise, run cb with the fulfilled value
+  applyReify: (val, cb)->
+    if val? and typeof val in [ 'object', 'function' ] and (th = val.then)? and typeof th is 'function'
+      then.call val, (res)-> cb(res)
+    else
+      cb(val)
+
+  # Run directives to be executed before lexing
+  processDirectives: (code)->
+    code = code.replace ///
+    (^|\n)
+      @@@@
+    (?:
+        \W*\r?\n((\r?\n\W+.*)+)
+      |
+        ( .* )
+    ) ///g, (m, start, multiline, singleline)->
+      compiler = new @compiler.constructor
+      if multiline?
+        compiler.eval(multiline).call @compiler
+        start + multiline.replace /.+/g, ''
+      else
+        singleline = singleline.replace /^\w/, (m)-> '@lexer.' + m
+        compiler.eval(singleline).call @compiler.lexer
+        start + "# Pre-lexer directive: #{ singleline }"
+    code
 
   # Preprocess the code to remove leading and trailing whitespace, carriage
   # returns, etc. If we're lexing literate CoffeeScript, strip external Markdown
