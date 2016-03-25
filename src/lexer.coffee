@@ -79,42 +79,51 @@ exports.Lexer = class Lexer
     return @tokens if opts.rewrite is off
     (new Rewriter).rewrite @tokens
 
-  CompilerRepresentation: class
+  clone: ->
+    newLexer = new Lexer
+    newLexer.Compiler = @Compiler
+    newLexer
 
   # A tokenize method that processes lexer and compiler directives before compiling
   tokenize: (code, opts)->
-    compiler = @compiler ?= new @CompilerRepresentation
+    compiler = @compiler ?= new @Compiler
+    # return @doTokenize code, opts
     compiler.lexer = @
     compiler.code = code
     compiler.tokenizeOptions = opts
-    code.processDirectives(code)
+    code = @processDirectives(code)
+    compiler = @compiler
+    compiler.code = code
     @applyReify compiler.lexer, -> @doTokenize(code, opts)
 
   # Run cb with 'this' set to val
   # If val is a promise, run cb with the fulfilled value
   applyReify: (val, cb)->
     if val? and typeof val in [ 'object', 'function' ] and (th = val.then)? and typeof th is 'function'
-      then.call val, (res)-> cb(res)
+      th.call val, (res)-> cb.call(res)
     else
-      cb(val)
+      cb.call(val)
 
   # Run directives to be executed before lexing
   processDirectives: (code)->
-    code = code.replace ///
-    (^|\n)
+    m = ///
+      (^|\n)
       @@@@
-    (?:
-        \W*\r?\n((\r?\n\W+.*)+)
+      (?:
+        \W*\r?\n((?:\r?\n\W+.*)+)
       |
         ( .* )
-    ) ///g, (m, start, multiline, singleline)->
-      compiler = new @compiler.constructor
+      )
+      ///g
+    code = code.replace m, (m, start, multiline, singleline)=>
+      # console.log { m, start, multiline, singleline }; return m
+      compiler = @compiler.clone() # Generate a subcompiler
       if multiline?
-        compiler.eval(multiline).call @compiler
+        compiler.eval('@> ' + multiline).call compiler
         start + multiline.replace /.+/g, ''
       else
         singleline = singleline.replace /^\w/, (m)-> '@lexer.' + m
-        compiler.eval(singleline).call @compiler.lexer
+        compiler.eval('@> ' + singleline).call compiler
         start + "# Pre-lexer directive: #{ singleline }"
     code
 
@@ -670,7 +679,7 @@ exports.Lexer = class Lexer
       inner = expr[1...-1]
       if inner.length
         [line, column] = @getLineAndColumnFromChunk(strOffset + i + 2)
-        nested = new Lexer().tokenize inner, line: line, column: column, rewrite: off
+        nested = @clone().tokenize inner, line: line, column: column, rewrite: off
         popped = nested.pop()
         popped = nested.shift() if nested[0]?[0] is 'TERMINATOR'
         if len = nested.length
