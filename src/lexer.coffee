@@ -109,22 +109,27 @@ exports.Lexer = class Lexer
     m = ///
       (^|\n)
       @@@@
-      (?:
-        \W*\r?\n((?:\r?\n\W+.*)+)
-      |
-        ( .* )
+      (
+        .*\r?(:?\n|$) # Head line of directives
+        (?:
+          (:?
+            \r?\n
+          )* # Any empty lines in-between
+          (?:
+            \s.*\r?(:?\n|$) # Any more indented lines
+          )+
+        )*
       )
       ///g
-    code = code.replace m, (m, start, multiline, singleline)=>
-      # console.log { m, start, multiline, singleline }; return m
-      compiler = @compiler.clone() # Generate a subcompiler
-      if multiline?
-        compiler.eval('@> ' + multiline).call compiler
-        start + multiline.replace /.+/g, ''
-      else
-        singleline = singleline.replace /^\w/, (m)-> '@lexer.' + m
-        compiler.eval('@> ' + singleline).call compiler
-        start + "# Pre-lexer directive: #{ singleline }"
+    # m = /(^|\n)@@@@(.*)/g;
+    code = code.replace m, (m, start, line)=>
+      # @@console.log @@JSON.stringify { m, start, line }
+      # compiler = @compiler.clone() # Generate a subcompiler
+      @ .> compiler
+      # console.log '@>' + line.replace(/^\S/, (m)-> ' @lexer.' + m)
+      compiler.eval('@>' + line.replace(/^\S/, (m)-> ' @lexer.' + m)).call compiler
+      start + line.replace /.+/g, (x)-> '# Processed: ' + x
+    # @@console.log  @@JSON.stringify( { code } )
     code
 
   # Preprocess the code to remove leading and trailing whitespace, carriage
