@@ -130,3 +130,12 @@ test "#3325: implicit indentation errors", ->
                  ^^^^
   '''
 
+test "explicit indentation errors", ->
+  assertErrorFormat '''
+    a = b
+      c
+  ''', '''
+    [stdin]:2:1: error: unexpected indentation
+      c
+    ^^
+  '''

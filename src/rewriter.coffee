@@ -244,7 +244,7 @@ class exports.Rewriter
       # which is probably always unintended.
       # Furthermore don't allow this in literal arrays, as
       # that creates grammatical ambiguities.
-      if tag in IMPLICIT_FUNC and @matchTags(i + 1, 'INDENT') and
+      if tag in IMPLICIT_FUNC and @matchTags(i + 1, 'INDENT', null, ':') and
          not @findTagsBackwards(i, ['CLASS', 'EXTENDS', 'IF', 'CATCH',
           'SWITCH', 'LEADING_WHEN', 'FOR', 'WHILE', 'UNTIL'])
         startImplicitCall i + 1
@@ -470,7 +470,7 @@ for [left, rite] in BALANCED_PAIRS
 EXPRESSION_CLOSE = ['CATCH', 'THEN', 'ELSE', 'FINALLY'].concat EXPRESSION_END
 
 # Tokens that, if followed by an `IMPLICIT_CALL`, indicate a function invocation.
-IMPLICIT_FUNC    = ['IDENTIFIER', 'SUPER', ')', 'CALL_END', 'INDEX_END', '@', 'THIS']
+IMPLICIT_FUNC    = ['IDENTIFIER', 'SUPER', ')', 'CALL_END', ']', 'INDEX_END', '@', '@@', 'THIS']
 
 # If preceded by an `IMPLICIT_FUNC`, indicates a function invocation.
 IMPLICIT_CALL    = [

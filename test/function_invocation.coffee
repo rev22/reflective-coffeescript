@@ -645,9 +645,9 @@ test "Loose tokens inside of explicit call lists", ->
   second = (x, y) -> y
   one = 1
 
-  foo = first( one +
+  foo = second( one
                 2)
-  eq foo, 3
+  eq foo, 2
 
   bar = first( first
                one: 1)
