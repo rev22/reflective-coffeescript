@@ -1410,14 +1410,12 @@ exports.Assign = class Assign extends Base
 # has no *children* -- they're within the inner scope.
 exports.Code = class Code extends Base
   constructor: (params, body, tag) ->
-    @params  = params or []
-    @body    = body or new Block
-    @bound   = tag is 'boundfunc'
-    @reflective = tag is 'reflectivefunc'
+    @params    = params or []
+    @body      = body or new Block
+    @bound     = tag in [ 'boundfunc', 'boundgenerator' ]
+    @generator = tag in [ 'generator', 'boundgenerator', 'reflectivegenerator' ]
+    @reflective = tag in [ 'reflectivefunc', 'reflectivegenerator' ]
     @pure = tag is 'purefunc'
-    @isGenerator = false
-    @body.traverseChildren false, (child) =>
-      @isGenerator = true if child.operator is 'yield'
 
   children: ['params', 'body']
 
@@ -1509,10 +1507,10 @@ exports.Code = class Code extends Base
       node.error "multiple parameters named '#{name}'" if name in uniqs
       uniqs.push name
     @body.makeReturn() unless wasEmpty or @noReturn
-    code  = 'function'
-    code += '*' if @isGenerator
-    code  += ' ' + @name if @ctor
-    code  += '('
+    code = 'function'
+    code += '*' if @generator
+    code += ' ' + @name if @ctor
+    code += '('
     answer = [@makeCode(code)]
     for p, i in params
       if i then answer.push @makeCode ", "
@@ -1864,8 +1862,8 @@ exports.Op = class Op extends Base
     if o.level >= LEVEL_ACCESS
       return (new Parens this).compileToFragments o
     plusMinus = op in ['+', '-']
-    parts.push [@makeCode(' ')] if op in ['new', 'typeof', 'delete', 'yield'] or
-                      plusMinus and @first instanceof Op and @first.operator is op
+    parts.push [@makeCode(' ')] if op in ['new', 'typeof', 'delete', 'yield'
+      'yield*'] or plusMinus and @first instanceof Op and @first.operator is op
     if (plusMinus and @first instanceof Op) or (op is 'new' and @first.isStatement o)
       @first = new Parens @first
     parts.push @first.compileToFragments o, LEVEL_OP

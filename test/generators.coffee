@@ -1,17 +1,18 @@
 # Generators
 # -----------------
-
+#
 # * Generator Definition
 
-# Using the keyword yield should not cause a syntax error.
--> yield 0
+test "generator as argument", ->
+  ok ->* 1
 
-test "Generator Definition", ->
-  x = ->
+test "generator definition", ->
+  x = ->*
     yield 0
     yield 1
     yield 2
-  y = x()
+  y = do ->*
+    yield* x()
   z = y.next()
   eq z.value, 0
   eq z.done, false
@@ -24,3 +25,21 @@ test "Generator Definition", ->
   z = y.next()
   eq z.value, undefined
   eq z.done, true
+
+test "bound generator", ->
+  obj =
+    bound: ->
+      do =>*
+        this
+    unbound: ->
+      do ->*
+        this
+    nested: ->
+      do =>*
+        do =>*
+          do =>*
+            this
+
+  eq obj, obj.bound().next().value
+  ok obj isnt obj.unbound().next().value
+  eq obj, obj.nested().next().value.next().value.next().value
