@@ -33,7 +33,7 @@
         <a href="#operators">Operators and Aliases</a>
         <a href="#classes">Classes, Inheritance, and Super</a>
         <a href="#destructuring">Destructuring Assignment</a>
-        <a href="#fat-arrow">Function Binding</a>
+        <a href="#fat-arrow">Bound and Generator Functions</a>
         <a href="#embedded">Embedded JavaScript</a>
         <a href="#switch">Switch and Try/Catch</a>
         <a href="#comparisons">Chained Comparisons</a>
@@ -188,7 +188,13 @@ x = <span class="number">1</span>
 
     <p>
       <b>Latest Version:</b>
+<<<<<<< HEAD
       <a href="http://github.com/jashkenas/coffee-script/tarball/1.6.3">1.6.3</a>
+||||||| merged common ancestors
+      <a href="http://github.com/jashkenas/coffeescript/tarball/1.8.0">1.8.0</a>
+=======
+      <a href="http://github.com/jashkenas/coffeescript/tarball/1.9.3">1.9.3</a>
+>>>>>>> 1.9.3
     </p>
 
     <pre>
@@ -229,9 +235,21 @@ alert <span class="string">"I knew it!"</span> <span class="keyword">if</span> e
 
 <span class="comment"># Array comprehensions:</span>
 cubes = (math.cube num <span class="keyword">for</span> num <span class="keyword">in</span> list)
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> cubes, list, math, num, number, opposite, race, square,
     __slice = [].slice;
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> cubes, list, math, num, number, opposite, race, square,
+  __slice = [].slice;
+
+number = <span class="number">42</span>;
+=======
+</code></pre><pre><code><span class="keyword">var</span> cubes, list, math, num, number, opposite, race, square,
+  slice = [].slice;
+
+number = <span class="number">42</span>;
+>>>>>>> 1.9.3
 
   number = <span class="number">42</span>;
 
@@ -247,6 +265,7 @@ cubes = (math.cube num <span class="keyword">for</span> num <span class="keyword
 
   list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>];
 
+<<<<<<< HEAD
   math = {
     root: <span class="built_in">Math</span>.sqrt,
     square: square,
@@ -254,6 +273,19 @@ cubes = (math.cube num <span class="keyword">for</span> num <span class="keyword
       <span class="keyword">return</span> x * square(x);
     }
   };
+||||||| merged common ancestors
+race = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> runners, winner;
+  winner = <span class="built_in">arguments</span>[<span class="number">0</span>], runners = <span class="number">2</span> &lt;= <span class="built_in">arguments</span>.length ? __slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>) : [];
+  <span class="keyword">return</span> print(winner, runners);
+};
+=======
+race = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> runners, winner;
+  winner = <span class="built_in">arguments</span>[<span class="number">0</span>], runners = <span class="number">2</span> &lt;= <span class="built_in">arguments</span>.length ? slice.call(<span class="built_in">arguments</span>, <span class="number">1</span>) : [];
+  <span class="keyword">return</span> print(winner, runners);
+};
+>>>>>>> 1.9.3
 
   race = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> runners, winner;
@@ -261,9 +293,37 @@ cubes = (math.cube num <span class="keyword">for</span> num <span class="keyword
     <span class="keyword">return</span> print(winner, runners);
   };
 
+<<<<<<< HEAD
   <span class="keyword">if</span> (<span class="keyword">typeof</span> elvis !== <span class="string">"undefined"</span> &amp;&amp; elvis !== <span class="literal">null</span>) {
     alert(<span class="string">"I knew it!"</span>);
+||||||| merged common ancestors
+cubes = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> _i, _len, _results;
+  _results = [];
+  <span class="keyword">for</span> (_i = <span class="number">0</span>, _len = list.length; _i &lt; _len; _i++) {
+    num = list[_i];
+    _results.push(math.cube(num));
+=======
+cubes = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> i, len, results;
+  results = [];
+  <span class="keyword">for</span> (i = <span class="number">0</span>, len = list.length; i &lt; len; i++) {
+    num = list[i];
+    results.push(math.cube(num));
+>>>>>>> 1.9.3
   }
+<<<<<<< HEAD
+||||||| merged common ancestors
+  <span class="keyword">return</span> _results;
+})();
+</code></pre><script>window.example1 = "# Assignment:\nnumber   = 42\nopposite = true\n\n# Conditions:\nnumber = -42 if opposite\n\n# Functions:\nsquare = (x) -> x * x\n\n# Arrays:\nlist = [1, 2, 3, 4, 5]\n\n# Objects:\nmath =\n  root:   Math.sqrt\n  square: square\n  cube:   (x) -> x * square x\n\n# Splats:\nrace = (winner, runners...) ->\n  print winner, runners\n\n# Existence:\nalert \"I knew it!\" if elvis?\n\n# Array comprehensions:\ncubes = (math.cube num for num in list)\n"</script><div class='minibutton ok' onclick='javascript: var cubes, list, math, num, number, opposite, race, square,
+  __slice = [].slice;
+=======
+  <span class="keyword">return</span> results;
+})();
+</code></pre><script>window.example1 = "# Assignment:\nnumber   = 42\nopposite = true\n\n# Conditions:\nnumber = -42 if opposite\n\n# Functions:\nsquare = (x) -> x * x\n\n# Arrays:\nlist = [1, 2, 3, 4, 5]\n\n# Objects:\nmath =\n  root:   Math.sqrt\n  square: square\n  cube:   (x) -> x * square x\n\n# Splats:\nrace = (winner, runners...) ->\n  print winner, runners\n\n# Existence:\nalert \"I knew it!\" if elvis?\n\n# Array comprehensions:\ncubes = (math.cube num for num in list)\n"</script><div class='minibutton ok' onclick='javascript: var cubes, list, math, num, number, opposite, race, square,
+  slice = [].slice;
+>>>>>>> 1.9.3
 
   cubes = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> _i, _len, _results;
@@ -288,12 +348,27 @@ cubes = (math.cube num <span class="keyword">for</span> num <span class="keyword
     number = -42;
   }
 
+<<<<<<< HEAD
   square = function(x) {
     return x * x;
   };
+||||||| merged common ancestors
+race = function() {
+  var runners, winner;
+  winner = arguments[0], runners = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+  return print(winner, runners);
+};
+=======
+race = function() {
+  var runners, winner;
+  winner = arguments[0], runners = 2 <= arguments.length ? slice.call(arguments, 1) : [];
+  return print(winner, runners);
+};
+>>>>>>> 1.9.3
 
   list = [1, 2, 3, 4, 5];
 
+<<<<<<< HEAD
   math = {
     root: Math.sqrt,
     square: square,
@@ -310,7 +385,23 @@ cubes = (math.cube num <span class="keyword">for</span> num <span class="keyword
 
   if (typeof elvis !== "undefined" && elvis !== null) {
     alert("I knew it!");
+||||||| merged common ancestors
+cubes = (function() {
+  var _i, _len, _results;
+  _results = [];
+  for (_i = 0, _len = list.length; _i < _len; _i++) {
+    num = list[_i];
+    _results.push(math.cube(num));
+=======
+cubes = (function() {
+  var i, len, results;
+  results = [];
+  for (i = 0, len = list.length; i < len; i++) {
+    num = list[i];
+    results.push(math.cube(num));
+>>>>>>> 1.9.3
   }
+<<<<<<< HEAD
 
   cubes = (function() {
     var _i, _len, _results;
@@ -324,6 +415,15 @@ cubes = (math.cube num <span class="keyword">for</span> num <span class="keyword
 
 }).call(this);
 ;alert(cubes);'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+  return _results;
+})();
+;alert(cubes);'>run: cubes</div><br class='clear' /></div>
+=======
+  return results;
+})();
+;alert(cubes);'>run: cubes</div><br class='clear' /></div>
+>>>>>>> 1.9.3
 
     <h2>
       <span id="installation" class="bookmark"></span>
@@ -343,8 +443,16 @@ cubes = (math.cube num <span class="keyword">for</span> num <span class="keyword
 
     <p>
       To install, first make sure you have a working copy of the latest stable version of
+<<<<<<< HEAD
       <a href="http://nodejs.org/">Node.js</a>, and <a href="http://npmjs.org">npm</a>
       (the Node Package Manager). You can then install CoffeeScript with npm:
+||||||| merged common ancestors
+      <a href="http://nodejs.org/">Node.js</a>, and <a href="http://npmjs.org">npm</a>
+      (the Node Package Manager). You can then install CoffeeScript globally with npm:
+=======
+      <a href="http://nodejs.org/">Node.js</a>. You can then install CoffeeScript globally
+      with <a href="http://npmjs.org">npm</a>:
+>>>>>>> 1.9.3
     </p>
 
     <pre>
@@ -918,12 +1026,21 @@ alert <span class="string">"Silver: "</span> + silver
 alert <span class="string">"The Field: "</span> + rest
 
 
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> awardMedals, contenders, gold, rest, silver,
     __slice = [].slice;
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> awardMedals, contenders, gold, rest, silver,
+  __slice = [].slice;
+=======
+</code></pre><pre><code><span class="keyword">var</span> awardMedals, contenders, gold, rest, silver,
+  slice = [].slice;
+>>>>>>> 1.9.3
 
   gold = silver = rest = <span class="string">"unknown"</span>;
 
+<<<<<<< HEAD
   awardMedals = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> first, others, second;
     first = <span class="built_in">arguments</span>[<span class="number">0</span>], second = <span class="built_in">arguments</span>[<span class="number">1</span>], others = <span class="number">3</span> &lt;= <span class="built_in">arguments</span>.length ? __slice.call(<span class="built_in">arguments</span>, <span class="number">2</span>) : [];
@@ -931,6 +1048,23 @@ alert <span class="string">"The Field: "</span> + rest
     silver = second;
     <span class="keyword">return</span> rest = others;
   };
+||||||| merged common ancestors
+awardMedals = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> first, others, second;
+  first = <span class="built_in">arguments</span>[<span class="number">0</span>], second = <span class="built_in">arguments</span>[<span class="number">1</span>], others = <span class="number">3</span> &lt;= <span class="built_in">arguments</span>.length ? __slice.call(<span class="built_in">arguments</span>, <span class="number">2</span>) : [];
+  gold = first;
+  silver = second;
+  <span class="keyword">return</span> rest = others;
+};
+=======
+awardMedals = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> first, others, second;
+  first = <span class="built_in">arguments</span>[<span class="number">0</span>], second = <span class="built_in">arguments</span>[<span class="number">1</span>], others = <span class="number">3</span> &lt;= <span class="built_in">arguments</span>.length ? slice.call(<span class="built_in">arguments</span>, <span class="number">2</span>) : [];
+  gold = first;
+  silver = second;
+  <span class="keyword">return</span> rest = others;
+};
+>>>>>>> 1.9.3
 
   contenders = [<span class="string">"Michael Phelps"</span>, <span class="string">"Liu Xiang"</span>, <span class="string">"Yao Ming"</span>, <span class="string">"Allyson Felix"</span>, <span class="string">"Shawn Johnson"</span>, <span class="string">"Roman Sebrle"</span>, <span class="string">"Guo Jingjing"</span>, <span class="string">"Tyson Gay"</span>, <span class="string">"Asafa Powell"</span>, <span class="string">"Usain Bolt"</span>];
 
@@ -940,14 +1074,42 @@ alert <span class="string">"The Field: "</span> + rest
 
   alert(<span class="string">"Silver: "</span> + silver);
 
+<<<<<<< HEAD
   alert(<span class="string">"The Field: "</span> + rest);
+||||||| merged common ancestors
+alert(<span class="string">"The Field: "</span> + rest);
+</code></pre><script>window.example8 = "gold = silver = rest = \"unknown\"\n\nawardMedals = (first, second, others...) ->\n  gold   = first\n  silver = second\n  rest   = others\n\ncontenders = [\n  \"Michael Phelps\"\n  \"Liu Xiang\"\n  \"Yao Ming\"\n  \"Allyson Felix\"\n  \"Shawn Johnson\"\n  \"Roman Sebrle\"\n  \"Guo Jingjing\"\n  \"Tyson Gay\"\n  \"Asafa Powell\"\n  \"Usain Bolt\"\n]\n\nawardMedals contenders...\n\nalert \"Gold: \" + gold\nalert \"Silver: \" + silver\nalert \"The Field: \" + rest\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example8);'>load</div><div class='minibutton ok' onclick='javascript: var awardMedals, contenders, gold, rest, silver,
+  __slice = [].slice;
+=======
+alert(<span class="string">"The Field: "</span> + rest);
+</code></pre><script>window.example8 = "gold = silver = rest = \"unknown\"\n\nawardMedals = (first, second, others...) ->\n  gold   = first\n  silver = second\n  rest   = others\n\ncontenders = [\n  \"Michael Phelps\"\n  \"Liu Xiang\"\n  \"Yao Ming\"\n  \"Allyson Felix\"\n  \"Shawn Johnson\"\n  \"Roman Sebrle\"\n  \"Guo Jingjing\"\n  \"Tyson Gay\"\n  \"Asafa Powell\"\n  \"Usain Bolt\"\n]\n\nawardMedals contenders...\n\nalert \"Gold: \" + gold\nalert \"Silver: \" + silver\nalert \"The Field: \" + rest\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example8);'>load</div><div class='minibutton ok' onclick='javascript: var awardMedals, contenders, gold, rest, silver,
+  slice = [].slice;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
   var awardMedals, contenders, gold, rest, silver,
     __slice = [].slice;
 
+<<<<<<< HEAD
   gold = silver = rest = "unknown";
+||||||| merged common ancestors
+awardMedals = function() {
+  var first, others, second;
+  first = arguments[0], second = arguments[1], others = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
+  gold = first;
+  silver = second;
+  return rest = others;
+};
+=======
+awardMedals = function() {
+  var first, others, second;
+  first = arguments[0], second = arguments[1], others = 3 <= arguments.length ? slice.call(arguments, 2) : [];
+  gold = first;
+  silver = second;
+  return rest = others;
+};
+>>>>>>> 1.9.3
 
   awardMedals = function() {
     var first, others, second;
@@ -989,29 +1151,73 @@ menu i + <span class="number">1</span>, dish <span class="keyword">for</span> di
 <span class="comment"># Health conscious meal.</span>
 foods = [<span class="string">'broccoli'</span>, <span class="string">'spinach'</span>, <span class="string">'chocolate'</span>]
 eat food <span class="keyword">for</span> food <span class="keyword">in</span> foods <span class="keyword">when</span> food <span class="keyword">isnt</span> <span class="string">'chocolate'</span>
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> courses, dish, food, foods, i, _i, _j, _k, _len, _len1, _len2, _ref;
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> courses, dish, food, foods, i, _i, _j, _k, _len, _len1, _len2, _ref;
+=======
+</code></pre><pre><code><span class="keyword">var</span> courses, dish, food, foods, i, j, k, l, len, len1, len2, ref;
+>>>>>>> 1.9.3
 
+<<<<<<< HEAD
   _ref = [<span class="string">'toast'</span>, <span class="string">'cheese'</span>, <span class="string">'wine'</span>];
   <span class="keyword">for</span> (_i = <span class="number">0</span>, _len = _ref.length; _i &lt; _len; _i++) {
     food = _ref[_i];
     eat(food);
   }
+||||||| merged common ancestors
+_ref = [<span class="string">'toast'</span>, <span class="string">'cheese'</span>, <span class="string">'wine'</span>];
+<span class="keyword">for</span> (_i = <span class="number">0</span>, _len = _ref.length; _i &lt; _len; _i++) {
+  food = _ref[_i];
+  eat(food);
+}
+=======
+ref = [<span class="string">'toast'</span>, <span class="string">'cheese'</span>, <span class="string">'wine'</span>];
+<span class="keyword">for</span> (j = <span class="number">0</span>, len = ref.length; j &lt; len; j++) {
+  food = ref[j];
+  eat(food);
+}
+>>>>>>> 1.9.3
 
   courses = [<span class="string">'greens'</span>, <span class="string">'caviar'</span>, <span class="string">'truffles'</span>, <span class="string">'roast'</span>, <span class="string">'cake'</span>];
 
+<<<<<<< HEAD
   <span class="keyword">for</span> (i = _j = <span class="number">0</span>, _len1 = courses.length; _j &lt; _len1; i = ++_j) {
     dish = courses[i];
     menu(i + <span class="number">1</span>, dish);
   }
+||||||| merged common ancestors
+<span class="keyword">for</span> (i = _j = <span class="number">0</span>, _len1 = courses.length; _j &lt; _len1; i = ++_j) {
+  dish = courses[i];
+  menu(i + <span class="number">1</span>, dish);
+}
+=======
+<span class="keyword">for</span> (i = k = <span class="number">0</span>, len1 = courses.length; k &lt; len1; i = ++k) {
+  dish = courses[i];
+  menu(i + <span class="number">1</span>, dish);
+}
+>>>>>>> 1.9.3
 
   foods = [<span class="string">'broccoli'</span>, <span class="string">'spinach'</span>, <span class="string">'chocolate'</span>];
 
+<<<<<<< HEAD
   <span class="keyword">for</span> (_k = <span class="number">0</span>, _len2 = foods.length; _k &lt; _len2; _k++) {
     food = foods[_k];
     <span class="keyword">if</span> (food !== <span class="string">'chocolate'</span>) {
       eat(food);
     }
+||||||| merged common ancestors
+<span class="keyword">for</span> (_k = <span class="number">0</span>, _len2 = foods.length; _k &lt; _len2; _k++) {
+  food = foods[_k];
+  <span class="keyword">if</span> (food !== <span class="string">'chocolate'</span>) {
+    eat(food);
+=======
+<span class="keyword">for</span> (l = <span class="number">0</span>, len2 = foods.length; l &lt; len2; l++) {
+  food = foods[l];
+  <span class="keyword">if</span> (food !== <span class="string">'chocolate'</span>) {
+    eat(food);
+>>>>>>> 1.9.3
   }
 
 }).call(<span class="keyword">this</span>);
@@ -1029,6 +1235,7 @@ eat food <span class="keyword">for</span> food <span class="keyword">in</span> f
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> countdown, num;
 
+<<<<<<< HEAD
   countdown = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> _i, _results;
     _results = [];
@@ -1053,6 +1260,47 @@ eat food <span class="keyword">for</span> food <span class="keyword">in</span> f
 
 }).call(this);
 ;alert(countdown);'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+countdown = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> _i, _results;
+  _results = [];
+  <span class="keyword">for</span> (num = _i = <span class="number">10</span>; _i &gt;= <span class="number">1</span>; num = --_i) {
+    _results.push(num);
+  }
+  <span class="keyword">return</span> _results;
+})();
+</code></pre><script>window.example10 = "countdown = (num for num in [10..1])\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example10);'>load</div><div class='minibutton ok' onclick='javascript: var countdown, num;
+
+countdown = (function() {
+  var _i, _results;
+  _results = [];
+  for (num = _i = 10; _i >= 1; num = --_i) {
+    _results.push(num);
+  }
+  return _results;
+})();
+;alert(countdown);'>run: countdown</div><br class='clear' /></div>
+=======
+countdown = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> i, results;
+  results = [];
+  <span class="keyword">for</span> (num = i = <span class="number">10</span>; i &gt;= <span class="number">1</span>; num = --i) {
+    results.push(num);
+  }
+  <span class="keyword">return</span> results;
+})();
+</code></pre><script>window.example10 = "countdown = (num for num in [10..1])\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example10);'>load</div><div class='minibutton ok' onclick='javascript: var countdown, num;
+
+countdown = (function() {
+  var i, results;
+  results = [];
+  for (num = i = 10; i >= 1; num = --i) {
+    results.push(num);
+  }
+  return results;
+})();
+;alert(countdown);'>run: countdown</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       Note how because we are assigning the value of the comprehensions to a
       variable in the example above, CoffeeScript is collecting the result of
@@ -1066,6 +1314,10 @@ eat food <span class="keyword">for</span> food <span class="keyword">in</span> f
       To step through a range comprehension in fixed-size chunks,
       use <tt>by</tt>, for example:<br />
       <tt>evens = (x for x in [0..10] by 2)</tt>
+    </p>
+    <p>
+      If you don't need the current iteration value you may omit it:<br />
+      <tt>browser.closeCurrentTab() for [0...count]</tt>
     </p>
     <p>
       Comprehensions can also be used to iterate over the keys and values in
@@ -1085,6 +1337,7 @@ ages = <span class="keyword">for</span> child, age <span class="keyword">of</spa
     tim: <span class="number">11</span>
   };
 
+<<<<<<< HEAD
   ages = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> _results;
     _results = [];
@@ -1094,7 +1347,43 @@ ages = <span class="keyword">for</span> child, age <span class="keyword">of</spa
     }
     <span class="keyword">return</span> _results;
   })();
+||||||| merged common ancestors
+ages = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> _results;
+  _results = [];
+  <span class="keyword">for</span> (child <span class="keyword">in</span> yearsOld) {
+    age = yearsOld[child];
+    _results.push(<span class="string">""</span> + child + <span class="string">" is "</span> + age);
+  }
+  <span class="keyword">return</span> _results;
+})();
+</code></pre><script>window.example11 = "yearsOld = max: 10, ida: 9, tim: 11\n\nages = for child, age of yearsOld\n  \"#{child} is #{age}\"\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example11);'>load</div><div class='minibutton ok' onclick='javascript: var age, ages, child, yearsOld;
 
+yearsOld = {
+  max: 10,
+  ida: 9,
+  tim: 11
+};
+=======
+ages = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> results;
+  results = [];
+  <span class="keyword">for</span> (child <span class="keyword">in</span> yearsOld) {
+    age = yearsOld[child];
+    results.push(child + <span class="string">" is "</span> + age);
+  }
+  <span class="keyword">return</span> results;
+})();
+</code></pre><script>window.example11 = "yearsOld = max: 10, ida: 9, tim: 11\n\nages = for child, age of yearsOld\n  \"#{child} is #{age}\"\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example11);'>load</div><div class='minibutton ok' onclick='javascript: var age, ages, child, yearsOld;
+
+yearsOld = {
+  max: 10,
+  ida: 9,
+  tim: 11
+};
+>>>>>>> 1.9.3
+
+<<<<<<< HEAD
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
   var age, ages, child, yearsOld;
@@ -1117,6 +1406,29 @@ ages = <span class="keyword">for</span> child, age <span class="keyword">of</spa
 
 }).call(this);
 ;alert(ages.join(", "));'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+ages = (function() {
+  var _results;
+  _results = [];
+  for (child in yearsOld) {
+    age = yearsOld[child];
+    _results.push("" + child + " is " + age);
+  }
+  return _results;
+})();
+;alert(ages.join(", "));'>run: ages.join(", ")</div><br class='clear' /></div>
+=======
+ages = (function() {
+  var results;
+  results = [];
+  for (child in yearsOld) {
+    age = yearsOld[child];
+    results.push(child + " is " + age);
+  }
+  return results;
+})();
+;alert(ages.join(", "));'>run: ages.join(", ")</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       If you would like to iterate over just the keys that are defined on the
       object itself, by adding a <tt>hasOwnProperty</tt>
@@ -1153,6 +1465,7 @@ lyrics = <span class="keyword">while</span> num -= <span class="number">1</span>
 
   num = <span class="number">6</span>;
 
+<<<<<<< HEAD
   lyrics = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> _results;
     _results = [];
@@ -1161,6 +1474,27 @@ lyrics = <span class="keyword">while</span> num -= <span class="number">1</span>
     }
     <span class="keyword">return</span> _results;
   })();
+||||||| merged common ancestors
+lyrics = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> _results;
+  _results = [];
+  <span class="keyword">while</span> (num -= <span class="number">1</span>) {
+    _results.push(<span class="string">""</span> + num + <span class="string">" little monkeys, jumping on the bed. One fell out and bumped his head."</span>);
+  }
+  <span class="keyword">return</span> _results;
+})();
+</code></pre><script>window.example12 = "# Econ 101\nif this.studyingEconomics\n  buy()  while supply > demand\n  sell() until supply > demand\n\n# Nursery Rhyme\nnum = 6\nlyrics = while num -= 1\n  \"#{num} little monkeys, jumping on the bed.\n    One fell out and bumped his head.\"\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example12);'>load</div><div class='minibutton ok' onclick='javascript: var lyrics, num;
+=======
+lyrics = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> results;
+  results = [];
+  <span class="keyword">while</span> (num -= <span class="number">1</span>) {
+    results.push(num + <span class="string">" little monkeys, jumping on the bed. One fell out and bumped his head."</span>);
+  }
+  <span class="keyword">return</span> results;
+})();
+</code></pre><script>window.example12 = "# Econ 101\nif this.studyingEconomics\n  buy()  while supply > demand\n  sell() until supply > demand\n\n# Nursery Rhyme\nnum = 6\nlyrics = while num -= 1\n  \"#{num} little monkeys, jumping on the bed.\n    One fell out and bumped his head.\"\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example12);'>load</div><div class='minibutton ok' onclick='javascript: var lyrics, num;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
@@ -1177,6 +1511,7 @@ lyrics = <span class="keyword">while</span> num -= <span class="number">1</span>
 
   num = 6;
 
+<<<<<<< HEAD
   lyrics = (function() {
     var _results;
     _results = [];
@@ -1187,6 +1522,25 @@ lyrics = <span class="keyword">while</span> num -= <span class="number">1</span>
   })();
 
 }).call(this);
+||||||| merged common ancestors
+lyrics = (function() {
+  var _results;
+  _results = [];
+  while (num -= 1) {
+    _results.push("" + num + " little monkeys, jumping on the bed. One fell out and bumped his head.");
+  }
+  return _results;
+})();
+=======
+lyrics = (function() {
+  var results;
+  results = [];
+  while (num -= 1) {
+    results.push(num + " little monkeys, jumping on the bed. One fell out and bumped his head.");
+  }
+  return results;
+})();
+>>>>>>> 1.9.3
 ;alert(lyrics.join("
 "));'>undefined</div><br class='clear' /></div>
     <p>
@@ -1203,9 +1557,16 @@ lyrics = <span class="keyword">while</span> num -= <span class="number">1</span>
     <div class='code'><pre><code><span class="keyword">for</span> filename <span class="keyword">in</span> list
   <span class="keyword">do</span> <span class="function"><span class="params">(filename)</span> -&gt;</span>
     fs.readFile filename, <span class="function"><span class="params">(err, contents)</span> -&gt;</span>
+<<<<<<< HEAD
       compile filename, contents.toString()</code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> filename, _fn, _i, _len;
+||||||| merged common ancestors
+      compile filename, contents.toString()</code></pre><pre><code><span class="keyword">var</span> filename, _fn, _i, _len;
+=======
+      compile filename, contents.toString()</code></pre><pre><code><span class="keyword">var</span> filename, fn, i, len;
+>>>>>>> 1.9.3
 
+<<<<<<< HEAD
   _fn = <span class="function"><span class="keyword">function</span><span class="params">(filename)</span> {</span>
     <span class="keyword">return</span> fs.readFile(filename, <span class="function"><span class="keyword">function</span><span class="params">(err, contents)</span> {</span>
       <span class="keyword">return</span> compile(filename, contents.toString());
@@ -1218,6 +1579,29 @@ lyrics = <span class="keyword">while</span> num -= <span class="number">1</span>
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+_fn = <span class="function"><span class="keyword">function</span><span class="params">(filename)</span> {</span>
+  <span class="keyword">return</span> fs.readFile(filename, <span class="function"><span class="keyword">function</span><span class="params">(err, contents)</span> {</span>
+    <span class="keyword">return</span> compile(filename, contents.toString());
+  });
+};
+<span class="keyword">for</span> (_i = <span class="number">0</span>, _len = list.length; _i &lt; _len; _i++) {
+  filename = list[_i];
+  _fn(filename);
+}
+</code></pre><script>window.example13 = "for filename in list\n  do (filename) ->\n    fs.readFile filename, (err, contents) ->\n      compile filename, contents.toString()"</script><div class='minibutton load' onclick='javascript: loadConsole(example13);'>load</div><br class='clear' /></div>
+=======
+fn = <span class="function"><span class="keyword">function</span><span class="params">(filename)</span> {</span>
+  <span class="keyword">return</span> fs.readFile(filename, <span class="function"><span class="keyword">function</span><span class="params">(err, contents)</span> {</span>
+    <span class="keyword">return</span> compile(filename, contents.toString());
+  });
+};
+<span class="keyword">for</span> (i = <span class="number">0</span>, len = list.length; i &lt; len; i++) {
+  filename = list[i];
+  fn(filename);
+}
+</code></pre><script>window.example13 = "for filename in list\n  do (filename) ->\n    fs.readFile filename, (err, contents) ->\n      compile filename, contents.toString()"</script><div class='minibutton load' onclick='javascript: loadConsole(example13);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
 
     <p>
       <span id="slices" class="bookmark"></span>
@@ -1276,23 +1660,45 @@ numbers[<span class="number">3.</span><span class="number">.6</span>] = [-<span 
 
 
 
+<<<<<<< HEAD
  </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> numbers, _ref;
 
   numbers = [<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>];
+||||||| merged common ancestors
+ </code></pre><pre><code><span class="keyword">var</span> numbers, _ref;
+=======
+ </code></pre><pre><code><span class="keyword">var</span> numbers, ref;
+>>>>>>> 1.9.3
 
   [].splice.apply(numbers, [<span class="number">3</span>, <span class="number">4</span>].concat(_ref = [-<span class="number">3</span>, -<span class="number">4</span>, -<span class="number">5</span>, -<span class="number">6</span>])), _ref;
 
+<<<<<<< HEAD
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
   var numbers, _ref;
+||||||| merged common ancestors
+[].splice.apply(numbers, [<span class="number">3</span>, <span class="number">4</span>].concat(_ref = [-<span class="number">3</span>, -<span class="number">4</span>, -<span class="number">5</span>, -<span class="number">6</span>])), _ref;
+</code></pre><script>window.example15 = "numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n\nnumbers[3..6] = [-3, -4, -5, -6]\n\n\n\n "</script><div class='minibutton load' onclick='javascript: loadConsole(example15);'>load</div><div class='minibutton ok' onclick='javascript: var numbers, _ref;
+=======
+[].splice.apply(numbers, [<span class="number">3</span>, <span class="number">4</span>].concat(ref = [-<span class="number">3</span>, -<span class="number">4</span>, -<span class="number">5</span>, -<span class="number">6</span>])), ref;
+</code></pre><script>window.example15 = "numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]\n\nnumbers[3..6] = [-3, -4, -5, -6]\n\n\n\n "</script><div class='minibutton load' onclick='javascript: loadConsole(example15);'>load</div><div class='minibutton ok' onclick='javascript: var numbers, ref;
+>>>>>>> 1.9.3
 
   numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
+<<<<<<< HEAD
   [].splice.apply(numbers, [3, 4].concat(_ref = [-3, -4, -5, -6])), _ref;
 
 }).call(this);
 ;alert(numbers);'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+[].splice.apply(numbers, [3, 4].concat(_ref = [-3, -4, -5, -6])), _ref;
+;alert(numbers);'>run: numbers</div><br class='clear' /></div>
+=======
+[].splice.apply(numbers, [3, 4].concat(ref = [-3, -4, -5, -6])), ref;
+;alert(numbers);'>run: numbers</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       Note that JavaScript strings are immutable, and can't be spliced.
     </p>
@@ -1391,6 +1797,7 @@ eldest = <span class="keyword">if</span> <span class="number">24</span> &gt; <sp
 globals = (name <span class="keyword">for</span> name <span class="keyword">of</span> <span class="built_in">window</span>)[<span class="number">0.</span>.<span class="number">.10</span>]</code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> globals, name;
 
+<<<<<<< HEAD
   globals = ((<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="keyword">var</span> _results;
     _results = [];
@@ -1415,6 +1822,47 @@ globals = (name <span class="keyword">for</span> name <span class="keyword">of</
 
 }).call(this);
 ;alert(globals);'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+globals = ((<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> _results;
+  _results = [];
+  <span class="keyword">for</span> (name <span class="keyword">in</span> window) {
+    _results.push(name);
+  }
+  <span class="keyword">return</span> _results;
+})()).slice(<span class="number">0</span>, <span class="number">10</span>);
+</code></pre><script>window.example18 = "# The first ten global properties.\n\nglobals = (name for name of window)[0...10]"</script><div class='minibutton load' onclick='javascript: loadConsole(example18);'>load</div><div class='minibutton ok' onclick='javascript: var globals, name;
+
+globals = ((function() {
+  var _results;
+  _results = [];
+  for (name in window) {
+    _results.push(name);
+  }
+  return _results;
+})()).slice(0, 10);
+;alert(globals);'>run: globals</div><br class='clear' /></div>
+=======
+globals = ((<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">var</span> results;
+  results = [];
+  <span class="keyword">for</span> (name <span class="keyword">in</span> window) {
+    results.push(name);
+  }
+  <span class="keyword">return</span> results;
+})()).slice(<span class="number">0</span>, <span class="number">10</span>);
+</code></pre><script>window.example18 = "# The first ten global properties.\n\nglobals = (name for name of window)[0...10]"</script><div class='minibutton load' onclick='javascript: loadConsole(example18);'>load</div><div class='minibutton ok' onclick='javascript: var globals, name;
+
+globals = ((function() {
+  var results;
+  results = [];
+  for (name in window) {
+    results.push(name);
+  }
+  return results;
+})()).slice(0, 10);
+;alert(globals);'>run: globals</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       As well as silly things, like passing a <b>try/catch</b> statement directly
       into a function call:
@@ -1496,7 +1944,32 @@ globals = (name <span class="keyword">for</span> name <span class="keyword">of</
       You can use <tt>in</tt> to test for array presence, and <tt>of</tt> to
       test for JavaScript object-key presence.
     </p>
+<<<<<<< HEAD
 
+||||||| merged common ancestors
+    <p>
+      To simplify math expressions, <tt>**</tt> can be used for exponentiation, <tt>//</tt> performs integer division and <tt>%%</tt> provides true mathematical modulo.
+    </p>
+=======
+    <p>
+      To simplify math expressions, <tt>**</tt> can be used for exponentiation
+      and <tt>//</tt> performs integer division. <tt>%</tt> works just like in
+      JavaScript, while <tt>%%</tt> provides
+      <a href="http://en.wikipedia.org/wiki/Modulo_operation">“dividend dependent modulo”</a>:
+    </p>
+    <div class='code'><pre><code>-<span class="number">7</span> % <span class="number">5</span> == -<span class="number">2</span> <span class="comment"># The remainder of 7 / 5</span>
+-<span class="number">7</span> %% <span class="number">5</span> == <span class="number">3</span> <span class="comment"># n %% 5 is always between 0 and 4</span>
+
+tabs.selectTabAtIndex((tabs.currentIndex - count) %% tabs.length)
+</code></pre><pre><code><span class="keyword">var</span> modulo = <span class="function"><span class="keyword">function</span><span class="params">(a, b)</span> {</span> <span class="keyword">return</span> (+a % (b = +b) + b) % b; };
+
+-<span class="number">7</span> % <span class="number">5</span> === -<span class="number">2</span>;
+
+modulo(-<span class="number">7</span>, <span class="number">5</span>) === <span class="number">3</span>;
+
+tabs.selectTabAtIndex(modulo(tabs.currentIndex - count, tabs.length));
+</code></pre><script>window.example20 = "-7 % 5 == -2 # The remainder of 7 / 5\n-7 %% 5 == 3 # n %% 5 is always between 0 and 4\n\ntabs.selectTabAtIndex((tabs.currentIndex - count) %% tabs.length)\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example20);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       All together now:
     </p>
@@ -1551,8 +2024,16 @@ winner = <span class="literal">yes</span> <span class="keyword">if</span> pick <
 
   print(inspect(<span class="string">"My name is "</span> + <span class="keyword">this</span>.name));
 
+<<<<<<< HEAD
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+print(inspect(<span class="string">"My name is "</span> + <span class="keyword">this</span>.name));
+</code></pre><script>window.example20 = "launch() if ignition is on\n\nvolume = 10 if band isnt SpinalTap\n\nletTheWildRumpusBegin() unless answer is no\n\nif car.speed < limit then accelerate()\n\nwinner = yes if pick in [47, 92, 13]\n\nprint inspect \"My name is #{@name}\"\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example20);'>load</div><br class='clear' /></div>
+=======
+print(inspect(<span class="string">"My name is "</span> + <span class="keyword">this</span>.name));
+</code></pre><script>window.example21 = "launch() if ignition is on\n\nvolume = 10 if band isnt SpinalTap\n\nletTheWildRumpusBegin() unless answer is no\n\nif car.speed < limit then accelerate()\n\nwinner = yes if pick in [47, 92, 13]\n\nprint inspect \"My name is #{@name}\"\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example21);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
 
     <p>
       <b class="header">The Existential Operator</b>
@@ -1591,7 +2072,15 @@ footprints = yeti ? <span class="string">"bear"</span>
     speed = <span class="number">15</span>;
   }
 
+<<<<<<< HEAD
   footprints = <span class="keyword">typeof</span> yeti !== <span class="string">"undefined"</span> &amp;&amp; yeti !== <span class="literal">null</span> ? yeti : <span class="string">"bear"</span>;
+||||||| merged common ancestors
+footprints = <span class="keyword">typeof</span> yeti !== <span class="string">"undefined"</span> &amp;&amp; yeti !== <span class="literal">null</span> ? yeti : <span class="string">"bear"</span>;
+</code></pre><script>window.example21 = "solipsism = true if mind? and not world?\n\nspeed = 0\nspeed ?= 15\n\nfootprints = yeti ? \"bear\"\n\n\n\n\n\n\n "</script><div class='minibutton load' onclick='javascript: loadConsole(example21);'>load</div><div class='minibutton ok' onclick='javascript: var footprints, solipsism, speed;
+=======
+footprints = <span class="keyword">typeof</span> yeti !== <span class="string">"undefined"</span> &amp;&amp; yeti !== <span class="literal">null</span> ? yeti : <span class="string">"bear"</span>;
+</code></pre><script>window.example22 = "solipsism = true if mind? and not world?\n\nspeed = 0\nspeed ?= 15\n\nfootprints = yeti ? \"bear\"\n\n\n\n\n\n\n "</script><div class='minibutton load' onclick='javascript: loadConsole(example22);'>load</div><div class='minibutton ok' onclick='javascript: var footprints, solipsism, speed;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
@@ -1620,16 +2109,30 @@ footprints = yeti ? <span class="string">"bear"</span>
       the <b>TypeError</b> that would be raised otherwise.
     </p>
     <div class='code'><pre><code>zip = lottery.drawWinner?().address?.zipcode
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> zip, _ref;
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> zip, _ref;
+=======
+</code></pre><pre><code><span class="keyword">var</span> ref, zip;
+>>>>>>> 1.9.3
 
+<<<<<<< HEAD
   zip = <span class="keyword">typeof</span> lottery.drawWinner === <span class="string">"function"</span> ? (_ref = lottery.drawWinner().address) != <span class="literal">null</span> ? _ref.zipcode : <span class="keyword">void</span> <span class="number">0</span> : <span class="keyword">void</span> <span class="number">0</span>;
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+zip = <span class="keyword">typeof</span> lottery.drawWinner === <span class="string">"function"</span> ? (_ref = lottery.drawWinner().address) != <span class="literal">null</span> ? _ref.zipcode : <span class="keyword">void</span> <span class="number">0</span> : <span class="keyword">void</span> <span class="number">0</span>;
+</code></pre><script>window.example22 = "zip = lottery.drawWinner?().address?.zipcode\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example22);'>load</div><br class='clear' /></div>
+=======
+zip = <span class="keyword">typeof</span> lottery.drawWinner === <span class="string">"function"</span> ? (ref = lottery.drawWinner().address) != <span class="literal">null</span> ? ref.zipcode : <span class="keyword">void</span> <span class="number">0</span> : <span class="keyword">void</span> <span class="number">0</span>;
+</code></pre><script>window.example23 = "zip = lottery.drawWinner?().address?.zipcode\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example23);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       Soaking up nulls is similar to Ruby's
-      <a href="http://andand.rubyforge.org/">andand gem</a>, and to the
+      <a href="https://rubygems.org/gems/andand">andand gem</a>, and to the
       <a href="http://groovy.codehaus.org/Operators#Operators-SafeNavigationOperator%28%3F.%29">safe navigation operator</a>
       in Groovy.
     </p>
@@ -1684,10 +2187,20 @@ tom.move()
 
 
 
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> Animal, Horse, Snake, sam, tom,
     __hasProp = {}.hasOwnProperty,
     __extends = <span class="function"><span class="keyword">function</span><span class="params">(child, parent)</span> {</span> <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> parent) { <span class="keyword">if</span> (__hasProp.call(parent, key)) child[key] = parent[key]; } <span class="function"><span class="keyword">function</span> <span class="title">ctor</span><span class="params">()</span> {</span> <span class="keyword">this</span>.constructor = child; } ctor.prototype = parent.prototype; child.prototype = <span class="keyword">new</span> ctor(); child.__super__ = parent.prototype; <span class="keyword">return</span> child; };
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> Animal, Horse, Snake, sam, tom,
+  __hasProp = {}.hasOwnProperty,
+  __extends = <span class="function"><span class="keyword">function</span><span class="params">(child, parent)</span> {</span> <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> parent) { <span class="keyword">if</span> (__hasProp.call(parent, key)) child[key] = parent[key]; } <span class="function"><span class="keyword">function</span> <span class="title">ctor</span><span class="params">()</span> {</span> <span class="keyword">this</span>.constructor = child; } ctor.prototype = parent.prototype; child.prototype = <span class="keyword">new</span> ctor(); child.__super__ = parent.prototype; <span class="keyword">return</span> child; };
+=======
+</code></pre><pre><code><span class="keyword">var</span> Animal, Horse, Snake, sam, tom,
+  extend = <span class="function"><span class="keyword">function</span><span class="params">(child, parent)</span> {</span> <span class="keyword">for</span> (<span class="keyword">var</span> key <span class="keyword">in</span> parent) { <span class="keyword">if</span> (hasProp.call(parent, key)) child[key] = parent[key]; } <span class="function"><span class="keyword">function</span> <span class="title">ctor</span><span class="params">()</span> {</span> <span class="keyword">this</span>.constructor = child; } ctor.prototype = parent.prototype; child.prototype = <span class="keyword">new</span> ctor(); child.__super__ = parent.prototype; <span class="keyword">return</span> child; },
+  hasProp = {}.hasOwnProperty;
+>>>>>>> 1.9.3
 
   Animal = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="function"><span class="keyword">function</span> <span class="title">Animal</span><span class="params">(name)</span> {</span>
@@ -1702,8 +2215,16 @@ tom.move()
 
   })();
 
+<<<<<<< HEAD
   Snake = (<span class="function"><span class="keyword">function</span><span class="params">(_super)</span> {</span>
     __extends(Snake, _super);
+||||||| merged common ancestors
+Snake = (<span class="function"><span class="keyword">function</span><span class="params">(_super)</span> {</span>
+  __extends(Snake, _super);
+=======
+Snake = (<span class="function"><span class="keyword">function</span><span class="params">(superClass)</span> {</span>
+  extend(Snake, superClass);
+>>>>>>> 1.9.3
 
     <span class="function"><span class="keyword">function</span> <span class="title">Snake</span><span class="params">()</span> {</span>
       <span class="keyword">return</span> Snake.__super__.constructor.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
@@ -1718,8 +2239,16 @@ tom.move()
 
   })(Animal);
 
+<<<<<<< HEAD
   Horse = (<span class="function"><span class="keyword">function</span><span class="params">(_super)</span> {</span>
     __extends(Horse, _super);
+||||||| merged common ancestors
+Horse = (<span class="function"><span class="keyword">function</span><span class="params">(_super)</span> {</span>
+  __extends(Horse, _super);
+=======
+Horse = (<span class="function"><span class="keyword">function</span><span class="params">(superClass)</span> {</span>
+  extend(Horse, superClass);
+>>>>>>> 1.9.3
 
     <span class="function"><span class="keyword">function</span> <span class="title">Horse</span><span class="params">()</span> {</span>
       <span class="keyword">return</span> Horse.__super__.constructor.apply(<span class="keyword">this</span>, <span class="built_in">arguments</span>);
@@ -1740,7 +2269,19 @@ tom.move()
 
   sam.move();
 
+<<<<<<< HEAD
   tom.move();
+||||||| merged common ancestors
+tom.move();
+</code></pre><script>window.example23 = "class Animal\n  constructor: (@name) ->\n\n  move: (meters) ->\n    alert @name + \" moved #{meters}m.\"\n\nclass Snake extends Animal\n  move: ->\n    alert \"Slithering...\"\n    super 5\n\nclass Horse extends Animal\n  move: ->\n    alert \"Galloping...\"\n    super 45\n\nsam = new Snake \"Sammy the Python\"\ntom = new Horse \"Tommy the Palomino\"\n\nsam.move()\ntom.move()\n\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example23);'>load</div><div class='minibutton ok' onclick='javascript: var Animal, Horse, Snake, sam, tom,
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+=======
+tom.move();
+</code></pre><script>window.example24 = "class Animal\n  constructor: (@name) ->\n\n  move: (meters) ->\n    alert @name + \" moved #{meters}m.\"\n\nclass Snake extends Animal\n  move: ->\n    alert \"Slithering...\"\n    super 5\n\nclass Horse extends Animal\n  move: ->\n    alert \"Galloping...\"\n    super 45\n\nsam = new Snake \"Sammy the Python\"\ntom = new Horse \"Tommy the Palomino\"\n\nsam.move()\ntom.move()\n\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example24);'>load</div><div class='minibutton ok' onclick='javascript: var Animal, Horse, Snake, sam, tom,
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
@@ -1759,7 +2300,15 @@ tom.move()
 
     return Animal;
 
+<<<<<<< HEAD
   })();
+||||||| merged common ancestors
+Snake = (function(_super) {
+  __extends(Snake, _super);
+=======
+Snake = (function(superClass) {
+  extend(Snake, superClass);
+>>>>>>> 1.9.3
 
   Snake = (function(_super) {
     __extends(Snake, _super);
@@ -1775,7 +2324,15 @@ tom.move()
 
     return Snake;
 
+<<<<<<< HEAD
   })(Animal);
+||||||| merged common ancestors
+Horse = (function(_super) {
+  __extends(Horse, _super);
+=======
+Horse = (function(superClass) {
+  extend(Horse, superClass);
+>>>>>>> 1.9.3
 
   Horse = (function(_super) {
     __extends(Horse, _super);
@@ -1814,6 +2371,7 @@ tom.move()
     <div class='code'><pre><code><span class="attribute">String</span>::<span class="function"><span class="title">dasherize</span> = -&gt;</span>
   <span class="keyword">this</span>.replace <span class="regexp">/_/g</span>, <span class="string">"-"</span>
 
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="built_in">String</span>.prototype.dasherize = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
     <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/_/g</span>, <span class="string">"-"</span>);
@@ -1827,6 +2385,23 @@ tom.move()
 
 }).call(this);
 ;alert("one_two".dasherize());'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+</code></pre><pre><code><span class="built_in">String</span>.prototype.dasherize = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/_/g</span>, <span class="string">"-"</span>);
+};
+</code></pre><script>window.example24 = "String::dasherize = ->\n  this.replace /_/g, \"-\"\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example24);'>load</div><div class='minibutton ok' onclick='javascript: String.prototype.dasherize = function() {
+  return this.replace(/_/g, "-");
+};
+;alert("one_two".dasherize());'>run: "one_two".dasherize()</div><br class='clear' /></div>
+=======
+</code></pre><pre><code><span class="built_in">String</span>.prototype.dasherize = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">return</span> <span class="keyword">this</span>.replace(<span class="regexp">/_/g</span>, <span class="string">"-"</span>);
+};
+</code></pre><script>window.example25 = "String::dasherize = ->\n  this.replace /_/g, \"-\"\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example25);'>load</div><div class='minibutton ok' onclick='javascript: String.prototype.dasherize = function() {
+  return this.replace(/_/g, "-");
+};
+;alert("one_two".dasherize());'>run: "one_two".dasherize()</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       Finally, class definitions are blocks of executable code, which make for interesting
       metaprogramming possibilities. Because in the context of a class definition,
@@ -1854,14 +2429,28 @@ theSwitch = <span class="number">0</span>
 
 
 
+<<<<<<< HEAD
  </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> theBait, theSwitch, _ref;
+||||||| merged common ancestors
+ </code></pre><pre><code><span class="keyword">var</span> theBait, theSwitch, _ref;
+=======
+ </code></pre><pre><code><span class="keyword">var</span> ref, theBait, theSwitch;
+>>>>>>> 1.9.3
 
   theBait = <span class="number">1000</span>;
 
   theSwitch = <span class="number">0</span>;
 
+<<<<<<< HEAD
   _ref = [theSwitch, theBait], theBait = _ref[<span class="number">0</span>], theSwitch = _ref[<span class="number">1</span>];
+||||||| merged common ancestors
+_ref = [theSwitch, theBait], theBait = _ref[<span class="number">0</span>], theSwitch = _ref[<span class="number">1</span>];
+</code></pre><script>window.example25 = "theBait   = 1000\ntheSwitch = 0\n\n[theBait, theSwitch] = [theSwitch, theBait]\n\n\n\n\n "</script><div class='minibutton load' onclick='javascript: loadConsole(example25);'>load</div><div class='minibutton ok' onclick='javascript: var theBait, theSwitch, _ref;
+=======
+ref = [theSwitch, theBait], theBait = ref[<span class="number">0</span>], theSwitch = ref[<span class="number">1</span>];
+</code></pre><script>window.example26 = "theBait   = 1000\ntheSwitch = 0\n\n[theBait, theSwitch] = [theSwitch, theBait]\n\n\n\n\n "</script><div class='minibutton load' onclick='javascript: loadConsole(example26);'>load</div><div class='minibutton ok' onclick='javascript: var ref, theBait, theSwitch;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
@@ -1869,12 +2458,20 @@ theSwitch = <span class="number">0</span>
 
   theBait = 1000;
 
+<<<<<<< HEAD
   theSwitch = 0;
 
   _ref = [theSwitch, theBait], theBait = _ref[0], theSwitch = _ref[1];
 
 }).call(this);
 ;alert(theBait);'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+_ref = [theSwitch, theBait], theBait = _ref[0], theSwitch = _ref[1];
+;alert(theBait);'>run: theBait</div><br class='clear' /></div>
+=======
+ref = [theSwitch, theBait], theBait = ref[0], theSwitch = ref[1];
+;alert(theBait);'>run: theBait</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       But it's also helpful for dealing with functions that return multiple
       values.
@@ -1888,19 +2485,34 @@ theSwitch = <span class="number">0</span>
 
 
 
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> city, forecast, temp, weatherReport, _ref;
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> city, forecast, temp, weatherReport, _ref;
+=======
+</code></pre><pre><code><span class="keyword">var</span> city, forecast, ref, temp, weatherReport;
+>>>>>>> 1.9.3
 
   weatherReport = <span class="function"><span class="keyword">function</span><span class="params">(location)</span> {</span>
     <span class="keyword">return</span> [location, <span class="number">72</span>, <span class="string">"Mostly Sunny"</span>];
   };
 
+<<<<<<< HEAD
   _ref = weatherReport(<span class="string">"Berkeley, CA"</span>), city = _ref[<span class="number">0</span>], temp = _ref[<span class="number">1</span>], forecast = _ref[<span class="number">2</span>];
+||||||| merged common ancestors
+_ref = weatherReport(<span class="string">"Berkeley, CA"</span>), city = _ref[<span class="number">0</span>], temp = _ref[<span class="number">1</span>], forecast = _ref[<span class="number">2</span>];
+</code></pre><script>window.example26 = "weatherReport = (location) ->\n  # Make an Ajax request to fetch the weather...\n  [location, 72, \"Mostly Sunny\"]\n\n[city, temp, forecast] = weatherReport \"Berkeley, CA\"\n\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example26);'>load</div><div class='minibutton ok' onclick='javascript: var city, forecast, temp, weatherReport, _ref;
+=======
+ref = weatherReport(<span class="string">"Berkeley, CA"</span>), city = ref[<span class="number">0</span>], temp = ref[<span class="number">1</span>], forecast = ref[<span class="number">2</span>];
+</code></pre><script>window.example27 = "weatherReport = (location) ->\n  # Make an Ajax request to fetch the weather...\n  [location, 72, \"Mostly Sunny\"]\n\n[city, temp, forecast] = weatherReport \"Berkeley, CA\"\n\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example27);'>load</div><div class='minibutton ok' onclick='javascript: var city, forecast, ref, temp, weatherReport;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
   var city, forecast, temp, weatherReport, _ref;
 
+<<<<<<< HEAD
   weatherReport = function(location) {
     return [location, 72, "Mostly Sunny"];
   };
@@ -1909,6 +2521,13 @@ theSwitch = <span class="number">0</span>
 
 }).call(this);
 ;alert(forecast);'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+_ref = weatherReport("Berkeley, CA"), city = _ref[0], temp = _ref[1], forecast = _ref[2];
+;alert(forecast);'>run: forecast</div><br class='clear' /></div>
+=======
+ref = weatherReport("Berkeley, CA"), city = ref[0], temp = ref[1], forecast = ref[2];
+;alert(forecast);'>run: forecast</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       Destructuring assignment can be used with any depth of array and object nesting,
       to help pull out deeply nested properties.
@@ -1927,8 +2546,14 @@ theSwitch = <span class="number">0</span>
 
 
 
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> city, futurists, name, street, _ref, _ref1;
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> city, futurists, name, street, _ref, _ref1;
+=======
+</code></pre><pre><code><span class="keyword">var</span> city, futurists, name, ref, ref1, street;
+>>>>>>> 1.9.3
 
   futurists = {
     sculptor: <span class="string">"Umberto Boccioni"</span>,
@@ -1939,7 +2564,15 @@ theSwitch = <span class="number">0</span>
     }
   };
 
+<<<<<<< HEAD
   _ref = futurists.poet, name = _ref.name, (_ref1 = _ref.address, street = _ref1[<span class="number">0</span>], city = _ref1[<span class="number">1</span>]);
+||||||| merged common ancestors
+_ref = futurists.poet, name = _ref.name, (_ref1 = _ref.address, street = _ref1[<span class="number">0</span>], city = _ref1[<span class="number">1</span>]);
+</code></pre><script>window.example27 = "futurists =\n  sculptor: \"Umberto Boccioni\"\n  painter:  \"Vladimir Burliuk\"\n  poet:\n    name:   \"F.T. Marinetti\"\n    address: [\n      \"Via Roma 42R\"\n      \"Bellagio, Italy 22021\"\n    ]\n\n{poet: {name, address: [street, city]}} = futurists\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example27);'>load</div><div class='minibutton ok' onclick='javascript: var city, futurists, name, street, _ref, _ref1;
+=======
+ref = futurists.poet, name = ref.name, (ref1 = ref.address, street = ref1[<span class="number">0</span>], city = ref1[<span class="number">1</span>]);
+</code></pre><script>window.example28 = "futurists =\n  sculptor: \"Umberto Boccioni\"\n  painter:  \"Vladimir Burliuk\"\n  poet:\n    name:   \"F.T. Marinetti\"\n    address: [\n      \"Via Roma 42R\"\n      \"Bellagio, Italy 22021\"\n    ]\n\n{poet: {name, address: [street, city]}} = futurists\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example28);'>load</div><div class='minibutton ok' onclick='javascript: var city, futurists, name, ref, ref1, street;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
@@ -1956,8 +2589,16 @@ theSwitch = <span class="number">0</span>
 
   _ref = futurists.poet, name = _ref.name, (_ref1 = _ref.address, street = _ref1[0], city = _ref1[1]);
 
+<<<<<<< HEAD
 }).call(this);
 ;alert(name + " — " + street);'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+_ref = futurists.poet, name = _ref.name, (_ref1 = _ref.address, street = _ref1[0], city = _ref1[1]);
+;alert(name + "-" + street);'>run: name + "-" + street</div><br class='clear' /></div>
+=======
+ref = futurists.poet, name = ref.name, (ref1 = ref.address, street = ref1[0], city = ref1[1]);
+;alert(name + "-" + street);'>run: name + "-" + street</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       Destructuring assignment can even be combined with splats.
     </p>
@@ -1970,11 +2611,57 @@ theSwitch = <span class="number">0</span>
 
 
 
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> close, contents, open, tag, _i, _ref,
     __slice = [].slice;
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> close, contents, open, tag, _i, _ref,
+  __slice = [].slice;
 
+tag = <span class="string">"&lt;impossible&gt;"</span>;
+
+_ref = tag.split(<span class="string">""</span>), open = _ref[<span class="number">0</span>], contents = <span class="number">3</span> &lt;= _ref.length ? __slice.call(_ref, <span class="number">1</span>, _i = _ref.length - <span class="number">1</span>) : (_i = <span class="number">1</span>, []), close = _ref[_i++];
+</code></pre><script>window.example28 = "tag = \"<impossible>\"\n\n[open, contents..., close] = tag.split(\"\")\n\n\n\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example28);'>load</div><div class='minibutton ok' onclick='javascript: var close, contents, open, tag, _i, _ref,
+  __slice = [].slice;
+
+tag = "<impossible>";
+=======
+</code></pre><pre><code><span class="keyword">var</span> close, contents, i, open, ref, tag,
+  slice = [].slice;
+
+tag = <span class="string">"&lt;impossible&gt;"</span>;
+
+ref = tag.split(<span class="string">""</span>), open = ref[<span class="number">0</span>], contents = <span class="number">3</span> &lt;= ref.length ? slice.call(ref, <span class="number">1</span>, i = ref.length - <span class="number">1</span>) : (i = <span class="number">1</span>, []), close = ref[i++];
+</code></pre><script>window.example29 = "tag = \"<impossible>\"\n\n[open, contents..., close] = tag.split(\"\")\n\n\n\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example29);'>load</div><div class='minibutton ok' onclick='javascript: var close, contents, i, open, ref, tag,
+  slice = [].slice;
+
+tag = "<impossible>";
+>>>>>>> 1.9.3
+
+<<<<<<< HEAD
   tag = <span class="string">"&lt;impossible&gt;"</span>;
+||||||| merged common ancestors
+_ref = tag.split(""), open = _ref[0], contents = 3 <= _ref.length ? __slice.call(_ref, 1, _i = _ref.length - 1) : (_i = 1, []), close = _ref[_i++];
+;alert(contents.join(""));'>run: contents.join("")</div><br class='clear' /></div>
+    <p>
+      Expansion can be used to retrieve elements from the end of an array without having to assign the rest of its values. It works in function parameter lists as well.
+    </p>
+    <div class='code'><pre><code>text = <span class="string">"Every literary critic believes he will
+        outwit history and have the last word"</span>
+
+[first, ..., last] = text.split <span class="string">" "</span>
+=======
+ref = tag.split(""), open = ref[0], contents = 3 <= ref.length ? slice.call(ref, 1, i = ref.length - 1) : (i = 1, []), close = ref[i++];
+;alert(contents.join(""));'>run: contents.join("")</div><br class='clear' /></div>
+    <p>
+      Expansion can be used to retrieve elements from the end of an array without having to assign the rest of its values. It works in function parameter lists as well.
+    </p>
+    <div class='code'><pre><code>text = <span class="string">"Every literary critic believes he will
+        outwit history and have the last word"</span>
+
+[first, ..., last] = text.split <span class="string">" "</span>
+>>>>>>> 1.9.3
 
   _ref = tag.split(<span class="string">""</span>), open = _ref[<span class="number">0</span>], contents = <span class="number">3</span> &lt;= _ref.length ? __slice.call(_ref, <span class="number">1</span>, _i = _ref.length - <span class="number">1</span>) : (_i = <span class="number">1</span>, []), close = _ref[_i++];
 
@@ -1983,12 +2670,36 @@ theSwitch = <span class="number">0</span>
   var close, contents, open, tag, _i, _ref,
     __slice = [].slice;
 
+<<<<<<< HEAD
   tag = "<impossible>";
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> first, last, text, _ref;
+=======
+</code></pre><pre><code><span class="keyword">var</span> first, last, ref, text;
+>>>>>>> 1.9.3
 
   _ref = tag.split(""), open = _ref[0], contents = 3 <= _ref.length ? __slice.call(_ref, 1, _i = _ref.length - 1) : (_i = 1, []), close = _ref[_i++];
 
+<<<<<<< HEAD
 }).call(this);
 ;alert(contents.join(""));'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+_ref = text.split(<span class="string">" "</span>), first = _ref[<span class="number">0</span>], last = _ref[_ref.length - <span class="number">1</span>];
+</code></pre><script>window.example29 = "text = \"Every literary critic believes he will\n        outwit history and have the last word\"\n\n[first, ..., last] = text.split \" \"\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example29);'>load</div><div class='minibutton ok' onclick='javascript: var first, last, text, _ref;
+
+text = "Every literary critic believes he will outwit history and have the last word";
+
+_ref = text.split(" "), first = _ref[0], last = _ref[_ref.length - 1];
+;alert(first + " " + last);'>run: first + " " + last</div><br class='clear' /></div>
+=======
+ref = text.split(<span class="string">" "</span>), first = ref[<span class="number">0</span>], last = ref[ref.length - <span class="number">1</span>];
+</code></pre><script>window.example30 = "text = \"Every literary critic believes he will\n        outwit history and have the last word\"\n\n[first, ..., last] = text.split \" \"\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example30);'>load</div><div class='minibutton ok' onclick='javascript: var first, last, ref, text;
+
+text = "Every literary critic believes he will outwit history and have the last word";
+
+ref = text.split(" "), first = ref[0], last = ref[ref.length - 1];
+;alert(first + " " + last);'>run: first + " " + last</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       Destructuring assignment is also useful when combined with class constructors
       to assign properties to your instance from an options object passed to the constructor.
@@ -2011,9 +2722,21 @@ tim = <span class="keyword">new</span> Person <span class="attribute">age</span>
 
   })();
 
+<<<<<<< HEAD
   tim = <span class="keyword">new</span> Person({
     age: <span class="number">4</span>
   });
+||||||| merged common ancestors
+tim = <span class="keyword">new</span> Person({
+  age: <span class="number">4</span>
+});
+</code></pre><script>window.example30 = "class Person\n  constructor: (options) -> \n    {@name, @age, @height} = options\n\ntim = new Person age: 4\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example30);'>load</div><div class='minibutton ok' onclick='javascript: var Person, tim;
+=======
+tim = <span class="keyword">new</span> Person({
+  age: <span class="number">4</span>
+});
+</code></pre><script>window.example31 = "class Person\n  constructor: (options) -> \n    {@name, @age, @height} = options\n\ntim = new Person age: 4\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example31);'>load</div><div class='minibutton ok' onclick='javascript: var Person, tim;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
@@ -2037,7 +2760,7 @@ tim = <span class="keyword">new</span> Person <span class="attribute">age</span>
 
     <p>
       <span id="fat-arrow" class="bookmark"></span>
-      <b class="header">Function binding</b>
+      <b class="header">Bound Functions, Generator Functions</b>
       In JavaScript, the <tt>this</tt> keyword is dynamically scoped to mean the
       object that the current function is attached to. If you pass a function as
       a callback or attach it to a different object, the original value of <tt>this</tt>
@@ -2050,13 +2773,14 @@ tim = <span class="keyword">new</span> Person <span class="attribute">age</span>
       it to the current value of <tt>this</tt>, right on the spot. This is helpful
       when using callback-based libraries like Prototype or jQuery, for creating
       iterator functions to pass to <tt>each</tt>, or event-handler functions
-      to use with <tt>bind</tt>. Functions created with the fat arrow are able to access
+      to use with <tt>on</tt>. Functions created with the fat arrow are able to access
       properties of the <tt>this</tt> where they're defined.
     </p>
     <div class='code'><pre><code><span class="function"><span class="title">Account</span> = <span class="params">(customer, cart)</span> -&gt;</span>
   <span class="property">@customer</span> = customer
   <span class="property">@cart</span> = cart
 
+<<<<<<< HEAD
   $<span class="function"><span class="params">(<span class="string">'.shopping_cart'</span>)</span>.<span class="title">bind</span> '<span class="title">click</span>', <span class="params">(event)</span> =&gt;</span>
     <span class="property">@customer</span>.purchase <span class="property">@cart</span></code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> Account;
@@ -2073,6 +2797,35 @@ tim = <span class="keyword">new</span> Person <span class="attribute">age</span>
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+  $<span class="function"><span class="params">(<span class="string">'.shopping_cart'</span>)</span>.<span class="title">bind</span> '<span class="title">click</span>', <span class="params">(event)</span> =&gt;</span>
+    <span class="property">@customer</span>.purchase <span class="property">@cart</span></code></pre><pre><code><span class="keyword">var</span> Account;
+
+Account = <span class="function"><span class="keyword">function</span><span class="params">(customer, cart)</span> {</span>
+  <span class="keyword">this</span>.customer = customer;
+  <span class="keyword">this</span>.cart = cart;
+  <span class="keyword">return</span> $(<span class="string">'.shopping_cart'</span>).bind(<span class="string">'click'</span>, (<span class="function"><span class="keyword">function</span><span class="params">(_this)</span> {</span>
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(event)</span> {</span>
+      <span class="keyword">return</span> _this.customer.purchase(_this.cart);
+    };
+  })(<span class="keyword">this</span>));
+};
+</code></pre><script>window.example31 = "Account = (customer, cart) ->\n  @customer = customer\n  @cart = cart\n\n  $('.shopping_cart').bind 'click', (event) =>\n    @customer.purchase @cart"</script><div class='minibutton load' onclick='javascript: loadConsole(example31);'>load</div><br class='clear' /></div>
+=======
+  $<span class="function"><span class="params">(<span class="string">'.shopping_cart'</span>)</span>.<span class="title">on</span> '<span class="title">click</span>', <span class="params">(event)</span> =&gt;</span>
+    <span class="property">@customer</span>.purchase <span class="property">@cart</span></code></pre><pre><code><span class="keyword">var</span> Account;
+
+Account = <span class="function"><span class="keyword">function</span><span class="params">(customer, cart)</span> {</span>
+  <span class="keyword">this</span>.customer = customer;
+  <span class="keyword">this</span>.cart = cart;
+  <span class="keyword">return</span> $(<span class="string">'.shopping_cart'</span>).on(<span class="string">'click'</span>, (<span class="function"><span class="keyword">function</span><span class="params">(_this)</span> {</span>
+    <span class="keyword">return</span> <span class="function"><span class="keyword">function</span><span class="params">(event)</span> {</span>
+      <span class="keyword">return</span> _this.customer.purchase(_this.cart);
+    };
+  })(<span class="keyword">this</span>));
+};
+</code></pre><script>window.example32 = "Account = (customer, cart) ->\n  @customer = customer\n  @cart = cart\n\n  $('.shopping_cart').on 'click', (event) =>\n    @customer.purchase @cart"</script><div class='minibutton load' onclick='javascript: loadConsole(example32);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       If we had used <tt>-&gt;</tt> in the callback above, <tt>@customer</tt> would
       have referred to the undefined "customer" property of the DOM element,
@@ -2082,6 +2835,48 @@ tim = <span class="keyword">new</span> Person <span class="attribute">age</span>
       When used in a class definition, methods declared with the fat arrow will
       be automatically bound to each instance of the class when the instance is
       constructed.
+    </p>
+    <p>
+      CoffeeScript functions also support
+      <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function*">ES6 generator functions</a>
+      through the <tt>yield</tt> keyword. There's no <tt>function*(){}</tt>
+      nonsense &mdash; a generator in CoffeeScript is simply a function that yields.
+    </p>
+    <div class='code'><pre><code><span class="function"><span class="title">perfectSquares</span> = -&gt;</span>
+  num = <span class="number">0</span>
+  <span class="keyword">loop</span>
+    num += <span class="number">1</span>
+    yield num * num
+  <span class="keyword">return</span>
+
+<span class="built_in">window</span>.ps <span class="keyword">or</span>= perfectSquares()</code></pre><pre><code><span class="keyword">var</span> perfectSquares;
+
+perfectSquares = <span class="function"><span class="keyword">function</span>*<span class="params">()</span> {</span>
+  <span class="keyword">var</span> num;
+  num = <span class="number">0</span>;
+  <span class="keyword">while</span> (<span class="literal">true</span>) {
+    num += <span class="number">1</span>;
+    (<span class="keyword">yield</span> num * num);
+  }
+};
+
+window.ps || (window.ps = perfectSquares());
+</code></pre><script>window.example33 = "perfectSquares = ->\n  num = 0\n  loop\n    num += 1\n    yield num * num\n  return\n\nwindow.ps or= perfectSquares()"</script><div class='minibutton load' onclick='javascript: loadConsole(example33);'>load</div><div class='minibutton ok' onclick='javascript: var perfectSquares;
+
+perfectSquares = function*() {
+  var num;
+  num = 0;
+  while (true) {
+    num += 1;
+    (yield num * num);
+  }
+};
+
+window.ps || (window.ps = perfectSquares());
+;alert(ps.next().value);'>run: ps.next().value</div><br class='clear' /></div>
+    <p>
+      <tt>yield*</tt> is called <tt>yield from</tt>, and <tt>yield return</tt>
+      may be used if you need to force a generator that doesn't yield.
     </p>
 
     <p>
@@ -2103,6 +2898,12 @@ tim = <span class="keyword">new</span> Person <span class="attribute">age</span>
   hi = <span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">return</span> [document.title, <span class="string">"Hello JavaScript"</span>].join(<span class="string">": "</span>);
 };
+<<<<<<< HEAD
+||||||| merged common ancestors
+</code></pre><script>window.example32 = "hi = `function() {\n  return [document.title, \"Hello JavaScript\"].join(\": \");\n}`\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example32);'>load</div><div class='minibutton ok' onclick='javascript: var hi;
+=======
+</code></pre><script>window.example34 = "hi = `function() {\n  return [document.title, \"Hello JavaScript\"].join(\": \");\n}`\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example34);'>load</div><div class='minibutton ok' onclick='javascript: var hi;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
@@ -2139,6 +2940,7 @@ tim = <span class="keyword">new</span> Person <span class="attribute">age</span>
       go bingo
       go dancing
   <span class="keyword">when</span> <span class="string">"Sun"</span> <span class="keyword">then</span> go church
+<<<<<<< HEAD
   <span class="keyword">else</span> go work</code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">switch</span> (day) {
     <span class="keyword">case</span> <span class="string">"Mon"</span>:
@@ -2166,6 +2968,57 @@ tim = <span class="keyword">new</span> Person <span class="attribute">age</span>
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+  <span class="keyword">else</span> go work</code></pre><pre><code><span class="keyword">switch</span> (day) {
+  <span class="keyword">case</span> <span class="string">"Mon"</span>:
+    go(work);
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="string">"Tue"</span>:
+    go(relax);
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="string">"Thu"</span>:
+    go(iceFishing);
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="string">"Fri"</span>:
+  <span class="keyword">case</span> <span class="string">"Sat"</span>:
+    <span class="keyword">if</span> (day === bingoDay) {
+      go(bingo);
+      go(dancing);
+    }
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="string">"Sun"</span>:
+    go(church);
+    <span class="keyword">break</span>;
+  <span class="keyword">default</span>:
+    go(work);
+}
+</code></pre><script>window.example33 = "switch day\n  when \"Mon\" then go work\n  when \"Tue\" then go relax\n  when \"Thu\" then go iceFishing\n  when \"Fri\", \"Sat\"\n    if day is bingoDay\n      go bingo\n      go dancing\n  when \"Sun\" then go church\n  else go work"</script><div class='minibutton load' onclick='javascript: loadConsole(example33);'>load</div><br class='clear' /></div>
+=======
+  <span class="keyword">else</span> go work</code></pre><pre><code><span class="keyword">switch</span> (day) {
+  <span class="keyword">case</span> <span class="string">"Mon"</span>:
+    go(work);
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="string">"Tue"</span>:
+    go(relax);
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="string">"Thu"</span>:
+    go(iceFishing);
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="string">"Fri"</span>:
+  <span class="keyword">case</span> <span class="string">"Sat"</span>:
+    <span class="keyword">if</span> (day === bingoDay) {
+      go(bingo);
+      go(dancing);
+    }
+    <span class="keyword">break</span>;
+  <span class="keyword">case</span> <span class="string">"Sun"</span>:
+    go(church);
+    <span class="keyword">break</span>;
+  <span class="keyword">default</span>:
+    go(work);
+}
+</code></pre><script>window.example35 = "switch day\n  when \"Mon\" then go work\n  when \"Tue\" then go relax\n  when \"Thu\" then go iceFishing\n  when \"Fri\", \"Sat\"\n    if day is bingoDay\n      go bingo\n      go dancing\n  when \"Sun\" then go church\n  else go work"</script><div class='minibutton load' onclick='javascript: loadConsole(example35);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
 
     <p>
       Switch statements can also be used without a control expression, turning them in to a cleaner alternative to if/else chains.
@@ -2178,6 +3031,7 @@ grade = <span class="keyword">switch</span>
   <span class="keyword">when</span> score &lt; <span class="number">90</span> <span class="keyword">then</span> <span class="string">'B'</span>
   <span class="keyword">else</span> <span class="string">'A'</span>
 <span class="comment"># grade == 'C'</span>
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> grade, score;
 
@@ -2200,12 +3054,54 @@ grade = <span class="keyword">switch</span>
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> grade, score;
+
+score = <span class="number">76</span>;
+
+grade = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">switch</span> (<span class="literal">false</span>) {
+    <span class="keyword">case</span> !(score &lt; <span class="number">60</span>):
+      <span class="keyword">return</span> <span class="string">'F'</span>;
+    <span class="keyword">case</span> !(score &lt; <span class="number">70</span>):
+      <span class="keyword">return</span> <span class="string">'D'</span>;
+    <span class="keyword">case</span> !(score &lt; <span class="number">80</span>):
+      <span class="keyword">return</span> <span class="string">'C'</span>;
+    <span class="keyword">case</span> !(score &lt; <span class="number">90</span>):
+      <span class="keyword">return</span> <span class="string">'B'</span>;
+    <span class="keyword">default</span>:
+      <span class="keyword">return</span> <span class="string">'A'</span>;
+  }
+})();
+</code></pre><script>window.example34 = "score = 76\ngrade = switch\n  when score < 60 then 'F'\n  when score < 70 then 'D'\n  when score < 80 then 'C'\n  when score < 90 then 'B'\n  else 'A'\n# grade == 'C'\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example34);'>load</div><br class='clear' /></div>
+=======
+</code></pre><pre><code><span class="keyword">var</span> grade, score;
+
+score = <span class="number">76</span>;
+
+grade = (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
+  <span class="keyword">switch</span> (<span class="literal">false</span>) {
+    <span class="keyword">case</span> !(score &lt; <span class="number">60</span>):
+      <span class="keyword">return</span> <span class="string">'F'</span>;
+    <span class="keyword">case</span> !(score &lt; <span class="number">70</span>):
+      <span class="keyword">return</span> <span class="string">'D'</span>;
+    <span class="keyword">case</span> !(score &lt; <span class="number">80</span>):
+      <span class="keyword">return</span> <span class="string">'C'</span>;
+    <span class="keyword">case</span> !(score &lt; <span class="number">90</span>):
+      <span class="keyword">return</span> <span class="string">'B'</span>;
+    <span class="keyword">default</span>:
+      <span class="keyword">return</span> <span class="string">'A'</span>;
+  }
+})();
+</code></pre><script>window.example36 = "score = 76\ngrade = switch\n  when score < 60 then 'F'\n  when score < 70 then 'D'\n  when score < 80 then 'C'\n  when score < 90 then 'B'\n  else 'A'\n# grade == 'C'\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example36);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
 
     <p>
       <span id="try" class="bookmark"></span>
       <b class="header">Try/Catch/Finally</b>
-      Try/catch statements are just about the same as JavaScript (although
-      they work as expressions).
+      Try-expressions have the same semantics as try-statements in JavaScript,
+      though in CoffeeScript, you may omit <em>both</em> the catch and finally
+      parts. The catch part may also omit the error parameter if it is not needed.
     </p>
     <div class='code'><pre><code><span class="keyword">try</span>
   allHellBreaksLoose()
@@ -2228,8 +3124,32 @@ grade = <span class="keyword">switch</span>
     cleanUp();
   }
 
+<<<<<<< HEAD
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+<span class="keyword">try</span> {
+  allHellBreaksLoose();
+  catsAndDogsLivingTogether();
+} <span class="keyword">catch</span> (_error) {
+  error = _error;
+  print(error);
+} <span class="keyword">finally</span> {
+  cleanUp();
+}
+</code></pre><script>window.example35 = "try\n  allHellBreaksLoose()\n  catsAndDogsLivingTogether()\ncatch error\n  print error\nfinally\n  cleanUp()\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example35);'>load</div><br class='clear' /></div>
+=======
+<span class="keyword">try</span> {
+  allHellBreaksLoose();
+  catsAndDogsLivingTogether();
+} <span class="keyword">catch</span> (_error) {
+  error = _error;
+  print(error);
+} <span class="keyword">finally</span> {
+  cleanUp();
+}
+</code></pre><script>window.example37 = "try\n  allHellBreaksLoose()\n  catsAndDogsLivingTogether()\ncatch error\n  print error\nfinally\n  cleanUp()\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example37);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
 
     <p>
       <span id="comparisons" class="bookmark"></span>
@@ -2249,7 +3169,15 @@ healthy = <span class="number">200</span> &gt; cholesterol &gt; <span class="num
 
   cholesterol = <span class="number">127</span>;
 
+<<<<<<< HEAD
   healthy = (<span class="number">200</span> &gt; cholesterol &amp;&amp; cholesterol &gt; <span class="number">60</span>);
+||||||| merged common ancestors
+healthy = (<span class="number">200</span> &gt; cholesterol &amp;&amp; cholesterol &gt; <span class="number">60</span>);
+</code></pre><script>window.example36 = "cholesterol = 127\n\nhealthy = 200 > cholesterol > 60\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example36);'>load</div><div class='minibutton ok' onclick='javascript: var cholesterol, healthy;
+=======
+healthy = (<span class="number">200</span> &gt; cholesterol &amp;&amp; cholesterol &gt; <span class="number">60</span>);
+</code></pre><script>window.example38 = "cholesterol = 127\n\nhealthy = 200 > cholesterol > 60\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example38);'>load</div><div class='minibutton ok' onclick='javascript: var cholesterol, healthy;
+>>>>>>> 1.9.3
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
@@ -2267,7 +3195,8 @@ healthy = <span class="number">200</span> &gt; cholesterol &gt; <span class="num
       <b class="header">String Interpolation, Block Strings, and Block Comments</b>
       Ruby-style string interpolation is included in CoffeeScript. Double-quoted
       strings allow for interpolated values, using <tt>#{ ... }</tt>,
-      and single-quoted strings are literal.
+      and single-quoted strings are literal. You may even use interpolation in
+      object keys.
     </p>
     <div class='code'><pre><code>author = <span class="string">"Wittgenstein"</span>
 quote  = <span class="string">"A picture is a fact. -- <span class="subst">#{ author }</span>"</span>
@@ -2277,28 +3206,51 @@ sentence = <span class="string">"<span class="subst">#{ <span class="number">22<
 
 
 
+<<<<<<< HEAD
 
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> author, quote, sentence;
 
   author = <span class="string">"Wittgenstein"</span>;
+||||||| merged common ancestors
+
+</code></pre><pre><code><span class="keyword">var</span> author, quote, sentence;
+=======
+</code></pre><pre><code><span class="keyword">var</span> author, quote, sentence;
+>>>>>>> 1.9.3
 
   quote = <span class="string">"A picture is a fact. -- "</span> + author;
 
   sentence = <span class="string">""</span> + (<span class="number">22</span> / <span class="number">7</span>) + <span class="string">" is a decent approximation of π"</span>;
 
+<<<<<<< HEAD
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
   var author, quote, sentence;
+||||||| merged common ancestors
+sentence = <span class="string">""</span> + (<span class="number">22</span> / <span class="number">7</span>) + <span class="string">" is a decent approximation of π"</span>;
+</code></pre><script>window.example37 = "author = \"Wittgenstein\"\nquote  = \"A picture is a fact. -- #{ author }\"\n\nsentence = \"#{ 22 / 7 } is a decent approximation of π\"\n\n\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example37);'>load</div><div class='minibutton ok' onclick='javascript: var author, quote, sentence;
+=======
+sentence = (<span class="number">22</span> / <span class="number">7</span>) + <span class="string">" is a decent approximation of π"</span>;
+</code></pre><script>window.example39 = "author = \"Wittgenstein\"\nquote  = \"A picture is a fact. -- #{ author }\"\n\nsentence = \"#{ 22 / 7 } is a decent approximation of π\"\n\n\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example39);'>load</div><div class='minibutton ok' onclick='javascript: var author, quote, sentence;
+>>>>>>> 1.9.3
 
   author = "Wittgenstein";
 
   quote = "A picture is a fact. -- " + author;
 
+<<<<<<< HEAD
   sentence = "" + (22 / 7) + " is a decent approximation of π";
 
 }).call(this);
 ;alert(sentence);'>undefined</div><br class='clear' /></div>
+||||||| merged common ancestors
+sentence = "" + (22 / 7) + " is a decent approximation of π";
+;alert(sentence);'>run: sentence</div><br class='clear' /></div>
+=======
+sentence = (22 / 7) + " is a decent approximation of π";
+;alert(sentence);'>run: sentence</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       Multiline strings are allowed in CoffeeScript.
     </p>
@@ -2308,14 +3260,30 @@ sentence = <span class="string">"<span class="subst">#{ <span class="number">22<
   to interest me on shore, I thought I would sail
   about a little and see the watery part of the
   world..."</span>
+<<<<<<< HEAD
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> mobyDick;
 
   mobyDick = <span class="string">"Call me Ishmael. Some years ago -- never mind how long precisely -- having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world..."</span>;
+||||||| merged common ancestors
+</code></pre><pre><code><span class="keyword">var</span> mobyDick;
+=======
 
+
+</code></pre><pre><code><span class="keyword">var</span> mobyDick;
+>>>>>>> 1.9.3
+
+<<<<<<< HEAD
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
   var mobyDick;
+||||||| merged common ancestors
+mobyDick = <span class="string">"Call me Ishmael. Some years ago -- never mind how long precisely -- having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world..."</span>;
+</code></pre><script>window.example38 = "mobyDick = \"Call me Ishmael. Some years ago --\n  never mind how long precisely -- having little\n  or no money in my purse, and nothing particular\n  to interest me on shore, I thought I would sail\n  about a little and see the watery part of the\n  world...\"\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example38);'>load</div><div class='minibutton ok' onclick='javascript: var mobyDick;
+=======
+mobyDick = <span class="string">"Call me Ishmael. Some years ago -- never mind how long precisely -- having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world..."</span>;
+</code></pre><script>window.example40 = "mobyDick = \"Call me Ishmael. Some years ago --\n  never mind how long precisely -- having little\n  or no money in my purse, and nothing particular\n  to interest me on shore, I thought I would sail\n  about a little and see the watery part of the\n  world...\"\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example40);'>load</div><div class='minibutton ok' onclick='javascript: var mobyDick;
+>>>>>>> 1.9.3
 
   mobyDick = "Call me Ishmael. Some years ago -- never mind how long precisely -- having little or no money in my purse, and nothing particular to interest me on shore, I thought I would sail about a little and see the watery part of the world...";
 
@@ -2342,7 +3310,15 @@ sentence = <span class="string">"<span class="subst">#{ <span class="number">22<
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><div class='minibutton ok' onclick='javascript: (function() {
   var html;
 
+<<<<<<< HEAD
   html = "<strong>\n  cup of coffeescript\n</strong>";
+||||||| merged common ancestors
+html = <span class="string">"&lt;strong&gt;\n  cup of coffeescript\n&lt;/strong&gt;"</span>;
+</code></pre><script>window.example39 = "html = \"\"\"\n       <strong>\n         cup of coffeescript\n       </strong>\n       \"\"\"\n       \n"</script><div class='minibutton load' onclick='javascript: loadConsole(example39);'>load</div><div class='minibutton ok' onclick='javascript: var html;
+=======
+html = <span class="string">"&lt;strong&gt;\n  cup of coffeescript\n&lt;/strong&gt;"</span>;
+</code></pre><script>window.example41 = "html = \"\"\"\n       <strong>\n         cup of coffeescript\n       </strong>\n       \"\"\"\n       \n"</script><div class='minibutton load' onclick='javascript: loadConsole(example41);'>load</div><div class='minibutton ok' onclick='javascript: var html;
+>>>>>>> 1.9.3
 
 }).call(this);
 ;alert(html);'>undefined</div><br class='clear' /></div>
@@ -2367,11 +3343,17 @@ SkinnyMochaHalfCaffScript Compiler v1.0
 Released under the MIT License
  */</span>
 
+<<<<<<< HEAD
 (<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
 
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+</code></pre><script>window.example40 = "###\nSkinnyMochaHalfCaffScript Compiler v1.0\nReleased under the MIT License\n###\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example40);'>load</div><br class='clear' /></div>
+=======
+</code></pre><script>window.example42 = "###\nSkinnyMochaHalfCaffScript Compiler v1.0\nReleased under the MIT License\n###\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example42);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
 
     <p>
       <span id="regexes" class="bookmark"></span>
@@ -2396,10 +3378,18 @@ Released under the MIT License
 </code></pre><pre><code>(<span class="function"><span class="keyword">function</span><span class="params">()</span> {</span>
   <span class="keyword">var</span> OPERATOR;
 
+<<<<<<< HEAD
   OPERATOR = <span class="regexp">/^(?:[-=]&gt;|[-+*\/%&lt;&gt;&amp;|^!?=]=|&gt;&gt;&gt;=?|([-+:])\1|([&amp;|&lt;&gt;])\2=?|\?\.|\.{2,3})/</span>;
 
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+OPERATOR = <span class="regexp">/^(?:[-=]&gt;|[-+*\/%&lt;&gt;&amp;|^!?=]=|&gt;&gt;&gt;=?|([-+:])\1|([&amp;|&lt;&gt;])\2=?|\?\.|\.{2,3})/</span>;
+</code></pre><script>window.example41 = "OPERATOR = /// ^ (\n  ?: [-=]>             # function\n   | [-+*/%<>&|^!?=]=  # compound assign / compare\n   | >>>=?             # zero-fill right shift\n   | ([-+:])\\1         # doubles\n   | ([&|<>])\\2=?      # logic / shift\n   | \\?\\.              # soak access\n   | \\.{2,3}           # range or splat\n) ///\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example41);'>load</div><br class='clear' /></div>
+=======
+OPERATOR = <span class="regexp">/^(?:[-=]&gt;|[-+*\/%&lt;&gt;&amp;|^!?=]=|&gt;&gt;&gt;=?|([-+:])\1|([&amp;|&lt;&gt;])\2=?|\?\.|\.{2,3})/</span>;
+</code></pre><script>window.example43 = "OPERATOR = /// ^ (\n  ?: [-=]>             # function\n   | [-+*/%<>&|^!?=]=  # compound assign / compare\n   | >>>=?             # zero-fill right shift\n   | ([-+:])\\1         # doubles\n   | ([&|<>])\\2=?      # logic / shift\n   | \\?\\.              # soak access\n   | \\.{2,3}           # range or splat\n) ///\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example43);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
 
 
     <h2>
@@ -2448,8 +3438,28 @@ task <span class="string">'build:parser'</span>, <span class="string">'rebuild t
     <span class="keyword">return</span> fs.writeFile(<span class="string">""</span> + dir + <span class="string">"/parser.js"</span>, code);
   });
 
+<<<<<<< HEAD
 }).call(<span class="keyword">this</span>);
 </code></pre><script>window.exampleundefined = undefined</script><div class='minibutton load' onclick='javascript: loadConsole(exampleundefined);'>load</div><br class='clear' /></div>
+||||||| merged common ancestors
+task(<span class="string">'build:parser'</span>, <span class="string">'rebuild the Jison parser'</span>, <span class="function"><span class="keyword">function</span><span class="params">(options)</span> {</span>
+  <span class="keyword">var</span> code, dir;
+  <span class="built_in">require</span>(<span class="string">'jison'</span>);
+  code = <span class="built_in">require</span>(<span class="string">'./lib/grammar'</span>).parser.generate();
+  dir = options.output || <span class="string">'lib'</span>;
+  <span class="keyword">return</span> fs.writeFile(<span class="string">""</span> + dir + <span class="string">"/parser.js"</span>, code);
+});
+</code></pre><script>window.example42 = "fs = require 'fs'\n\noption '-o', '--output [DIR]', 'directory for compiled code'\n\ntask 'build:parser', 'rebuild the Jison parser', (options) ->\n  require 'jison'\n  code = require('./lib/grammar').parser.generate()\n  dir  = options.output or 'lib'\n  fs.writeFile \"#{dir}/parser.js\", code"</script><div class='minibutton load' onclick='javascript: loadConsole(example42);'>load</div><br class='clear' /></div>
+=======
+task(<span class="string">'build:parser'</span>, <span class="string">'rebuild the Jison parser'</span>, <span class="function"><span class="keyword">function</span><span class="params">(options)</span> {</span>
+  <span class="keyword">var</span> code, dir;
+  <span class="built_in">require</span>(<span class="string">'jison'</span>);
+  code = <span class="built_in">require</span>(<span class="string">'./lib/grammar'</span>).parser.generate();
+  dir = options.output || <span class="string">'lib'</span>;
+  <span class="keyword">return</span> fs.writeFile(dir + <span class="string">"/parser.js"</span>, code);
+});
+</code></pre><script>window.example44 = "fs = require 'fs'\n\noption '-o', '--output [DIR]', 'directory for compiled code'\n\ntask 'build:parser', 'rebuild the Jison parser', (options) ->\n  require 'jison'\n  code = require('./lib/grammar').parser.generate()\n  dir  = options.output or 'lib'\n  fs.writeFile \"#{dir}/parser.js\", code"</script><div class='minibutton load' onclick='javascript: loadConsole(example44);'>load</div><br class='clear' /></div>
+>>>>>>> 1.9.3
     <p>
       If you need to invoke one task before another &mdash; for example, running
       <tt>build</tt> before <tt>test</tt>, you can use the <tt>invoke</tt> function:
@@ -2559,13 +3569,19 @@ task <span class="string">'build:parser'</span>, <span class="string">'rebuild t
       </li>
       <li>
         <a href="http://www.packtpub.com/coffeescript-application-development/book">CoffeeScript Application Development</a>
-        is a new book from Packt Publishing that introduces CoffeeScript while
+        from Packt, introduces CoffeeScript while
         walking through the process of building a demonstration web application.
+        A <a href="https://www.packtpub.com/web-development/coffeescript-application-development-cookbook">CoffeeScript Application Development Coookbook</a>
+        with over 90 "recipes" is also available.
       </li>
       <li>
         <a href="http://www.manning.com/lee/">CoffeeScript in Action</a>
-        is a new book from Manning Publications that covers CoffeeScript syntax, composition techniques
+        from Manning Publications, covers CoffeeScript syntax, composition techniques
         and application development.
+      </li>
+      <li>
+        <a href="http://www.dpunkt.de/buecher/4021/coffeescript.html">CoffeeScript: Die Alternative zu JavaScript</a>
+        from dpunkt.verlag, is the first CoffeeScript book in Deutsch.
       </li>
     </ul>
 
@@ -2707,10 +3723,357 @@ task <span class="string">'build:parser'</span>, <span class="string">'rebuild t
     </h2>
 
     <p>
+<<<<<<< HEAD
       <b class="header" style="margin-top: 20px;">
         <a href="https://github.com/jashkenas/coffee-script/compare/1.6.2...1.6.3">1.6.3</a>
         <span class="timestamp"> &ndash; <small>June 2, 2013</small></span>
       </b>
+||||||| merged common ancestors
+      <div class="anchor" id="1.8.0"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.7.1...1.8.0">1.8.0</a>
+  <span class="timestamp"> &mdash; <time datetime="2014-08-26">August 26, 2014</time></span>
+</b>
+      <ul>
+        <li>
+          The <tt>--join</tt> option of the CLI is now deprecated.
+        </li>
+        <li>
+          Source maps now use <tt>.js.map</tt> as file extension, instead of just <tt>.map</tt>.
+        </li>
+        <li>
+          The CLI now exits with the exit code 1 when it fails to write a file to disk.
+        </li>
+        <li>
+          The compiler no longer crashes on unterminated, single-quoted strings.
+        </li>
+        <li>
+          Fixed location data for string interpolations, which made source maps out of sync.
+        </li>
+        <li>
+          The error marker in error messages is now correctly positioned if the code is indented with tabs.
+        </li>
+        <li>
+          Fixed a slight formatting error in CoffeeScript’s source map-patched stack traces.
+        </li>
+        <li>
+          The <tt>%%</tt> operator now coerces its right operand only once.
+        </li>
+        <li>
+          It is now possible to require CoffeeScript files from Cakefiles without having to register the compiler first.
+        </li>
+        <li>
+          The CoffeeScript REPL is now exported and can be required using <tt>require 'coffee-script/repl'</tt>.
+        </li>
+        <li>
+          Fixes for the REPL in Node 0.11.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <div class="anchor" id="1.7.1"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.7.0...1.7.1">1.7.1</a>
+  <span class="timestamp"> &mdash; <time datetime="2014-01-29">January 29, 2014</time></span>
+</b>
+      <ul>
+        <li>
+          Fixed a typo that broke node module lookup when running a script directly with the <tt>coffee</tt> binary.
+        </li>
+      </ul>
+    </p>
+    <p>
+      <div class="anchor" id="1.7.0"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.6.3...1.7.0">1.7.0</a>
+  <span class="timestamp"> &mdash; <time datetime="2014-01-28">January 28, 2014</time></span>
+</b>
+      <ul>
+        <li>
+          When requiring CoffeeScript files in Node you must now explicitly register the compiler. This can be done with <tt>require 'coffee-script/register'</tt> or <tt>CoffeeScript.register()</tt>. Also for configuration such as Mocha's, use <b>coffee-script/register</b>.
+        </li>
+        <li>
+          Improved error messages, source maps and stack traces. Source maps now use the updated <tt>//#</tt> syntax.
+        </li>
+        <li>
+          Leading <tt>.</tt> now closes all open calls, allowing for simpler chaining syntax.
+        </li>
+      </ul>
+      <div class='code'><pre><code>$ <span class="string">'body'</span>
+.click <span class="function"><span class="params">(e)</span> -&gt;</span>
+  $ <span class="string">'.box'</span>
+  .fadeIn <span class="string">'fast'</span>
+  .addClass <span class="string">'.active'</span>
+.css <span class="string">'background'</span>, <span class="string">'white'</span>
+
+
+</code></pre><pre><code>$(<span class="string">'body'</span>).click(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+  <span class="keyword">return</span> $(<span class="string">'.box'</span>).fadeIn(<span class="string">'fast'</span>).addClass(<span class="string">'.active'</span>);
+}).css(<span class="string">'background'</span>, <span class="string">'white'</span>);
+</code></pre><script>window.example43 = "$ 'body'\n.click (e) ->\n  $ '.box'\n  .fadeIn 'fast'\n  .addClass '.active'\n.css 'background', 'white'\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example43);'>load</div><br class='clear' /></div>
+      <ul>
+        <li>
+          Added <tt>**</tt>, <tt>//</tt> and <tt>%%</tt> operators and <tt>...</tt> expansion in parameter lists and destructuring expressions.
+        </li>
+        <li>
+          Multiline strings are now joined by a single space and ignore all indentation. A backslash at the end of a line can denote the amount of whitespace between lines, in both strings and heredocs. Backslashes correctly escape whitespace in block regexes.
+        </li>
+        <li>
+          Closing brackets can now be indented and therefore no longer cause unexpected error.
+        </li>
+        <li>
+          Several breaking compilation fixes. Non-callable literals (strings, numbers etc.) don't compile in a call now and multiple postfix conditionals compile properly. Postfix conditionals and loops always bind object literals. Conditional assignment compiles properly in subexpressions. <tt>super</tt> is disallowed outside of methods and works correctly inside <tt>for</tt> loops.
+        </li>
+        <li>
+          Formatting of compiled block comments has been improved.
+        </li>
+        <li>
+          No more <tt>-p</tt> folders on Windows.
+        </li>
+        <li>
+          The <tt>options</tt> object passed to CoffeeScript is no longer mutated.
+        </li>
+      </ul>
+    </p>
+    <p>
+      <div class="anchor" id="1.6.3"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.6.2...1.6.3">1.6.3</a>
+  <span class="timestamp"> &mdash; <time datetime="2013-06-02">June 2, 2013</time></span>
+</b>
+=======
+      <div class="anchor" id="1.9.3"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.9.2...1.9.3">1.9.3</a>
+  <span class="timestamp"> &mdash; <time datetime="2015-05-14">May 14, 2015</time></span>
+</b>
+      <ul>
+        <li>
+          Bugfix for interpolation in the first key of an object literal in an
+          implicit call.
+        </li>
+        <li>
+          Fixed broken error messages in the REPL, as well as a few minor bugs
+          with the REPL.
+        </li>
+        <li>
+          Fixed source mappings for tokens at the beginning of lines when
+          compiling with the <tt>--bare</tt> option. This has the nice side
+          effect of generating smaller source maps.
+        </li>
+        <li>
+          Slight formatting improvement of compiled block comments.
+        </li>
+        <li>
+          Better error messages for <tt>on</tt>, <tt>off</tt>, <tt>yes</tt> and
+          <tt>no</tt>.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <div class="anchor" id="1.9.2"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.9.1...1.9.2">1.9.2</a>
+  <span class="timestamp"> &mdash; <time datetime="2015-04-15">April 15, 2015</time></span>
+</b>
+      <ul>
+        <li>
+          Fixed a <b>watch</b> mode error introduced in 1.9.1 when compiling
+          multiple files with the same filename.
+        </li>
+        <li>
+          Bugfix for <tt>yield</tt> around expressions containing
+          <tt>this</tt>.
+        </li>
+        <li>
+          Added a Ruby-style <tt>-r</tt> option to the REPL, which allows
+          requiring a module before execution with <tt>--eval</tt> or
+          <tt>--interactive</tt>.
+        </li>
+        <li>
+          In <tt>&lt;script type="text/coffeescript"&gt;</tt> tags, to avoid
+          possible duplicate browser requests for .coffee files, 
+          you can now use the <tt>data-src</tt> attribute instead of <tt>src</tt>.
+        </li>
+        <li>
+          Minor bug fixes for IE8, strict ES5 regular expressions and Browserify.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <div class="anchor" id="1.9.1"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.9.0...1.9.1">1.9.1</a>
+  <span class="timestamp"> &mdash; <time datetime="2015-02-18">February 18, 2015</time></span>
+</b>
+      <ul>
+        <li>
+          Interpolation now works in object literal keys (again). You can use this to
+          dynamically name properties.
+        </li>
+        <li>
+          Internal compiler variable names no longer start with underscores. This makes
+          the generated JavaScript a bit prettier, and also fixes an issue with
+          the completely broken and ungodly way that AngularJS "parses" function
+          arguments.
+        </li>
+        <li>
+          Fixed a few <tt>yield</tt>-related edge cases with <tt>yield return</tt>
+          and <tt>yield throw</tt>.
+        </li>
+        <li>
+          Minor bug fixes and various improvements to compiler error messages.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <div class="anchor" id="1.9.0"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.8.0...1.9.0">1.9.0</a>
+  <span class="timestamp"> &mdash; <time datetime="2015-01-29">January 29, 2015</time></span>
+</b>
+      <ul>
+        <li>
+          CoffeeScript now supports ES6 generators. A generator is simply a function
+          that <tt>yield</tt>s.
+        </li>
+        <li>
+          More robust parsing and improved error messages for strings and regexes —
+          especially with respect to interpolation.
+        </li>
+        <li>
+          Changed strategy for the generation of internal compiler variable names.
+          Note that this means that <tt>@example</tt> function parameters are no longer
+          available as naked <tt>example</tt> variables within the function body.
+        </li>
+        <li>
+          Fixed REPL compatibility with latest versions of Node and Io.js.
+        </li>
+        <li>
+          Various minor bug fixes.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <div class="anchor" id="1.8.0"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.7.1...1.8.0">1.8.0</a>
+  <span class="timestamp"> &mdash; <time datetime="2014-08-26">August 26, 2014</time></span>
+</b>
+      <ul>
+        <li>
+          The <tt>--join</tt> option of the CLI is now deprecated.
+        </li>
+        <li>
+          Source maps now use <tt>.js.map</tt> as file extension, instead of just <tt>.map</tt>.
+        </li>
+        <li>
+          The CLI now exits with the exit code 1 when it fails to write a file to disk.
+        </li>
+        <li>
+          The compiler no longer crashes on unterminated, single-quoted strings.
+        </li>
+        <li>
+          Fixed location data for string interpolations, which made source maps out of sync.
+        </li>
+        <li>
+          The error marker in error messages is now correctly positioned if the code is indented with tabs.
+        </li>
+        <li>
+          Fixed a slight formatting error in CoffeeScript’s source map-patched stack traces.
+        </li>
+        <li>
+          The <tt>%%</tt> operator now coerces its right operand only once.
+        </li>
+        <li>
+          It is now possible to require CoffeeScript files from Cakefiles without having to register the compiler first.
+        </li>
+        <li>
+          The CoffeeScript REPL is now exported and can be required using <tt>require 'coffee-script/repl'</tt>.
+        </li>
+        <li>
+          Fixes for the REPL in Node 0.11.
+        </li>
+      </ul>
+    </p>
+
+    <p>
+      <div class="anchor" id="1.7.1"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.7.0...1.7.1">1.7.1</a>
+  <span class="timestamp"> &mdash; <time datetime="2014-01-29">January 29, 2014</time></span>
+</b>
+      <ul>
+        <li>
+          Fixed a typo that broke node module lookup when running a script directly with the <tt>coffee</tt> binary.
+        </li>
+      </ul>
+    </p>
+    <p>
+      <div class="anchor" id="1.7.0"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.6.3...1.7.0">1.7.0</a>
+  <span class="timestamp"> &mdash; <time datetime="2014-01-28">January 28, 2014</time></span>
+</b>
+      <ul>
+        <li>
+          When requiring CoffeeScript files in Node you must now explicitly register the compiler. This can be done with <tt>require 'coffee-script/register'</tt> or <tt>CoffeeScript.register()</tt>. Also for configuration such as Mocha's, use <b>coffee-script/register</b>.
+        </li>
+        <li>
+          Improved error messages, source maps and stack traces. Source maps now use the updated <tt>//#</tt> syntax.
+        </li>
+        <li>
+          Leading <tt>.</tt> now closes all open calls, allowing for simpler chaining syntax.
+        </li>
+      </ul>
+      <div class='code'><pre><code>$ <span class="string">'body'</span>
+.click <span class="function"><span class="params">(e)</span> -&gt;</span>
+  $ <span class="string">'.box'</span>
+  .fadeIn <span class="string">'fast'</span>
+  .addClass <span class="string">'.active'</span>
+.css <span class="string">'background'</span>, <span class="string">'white'</span>
+
+
+</code></pre><pre><code>$(<span class="string">'body'</span>).click(<span class="function"><span class="keyword">function</span><span class="params">(e)</span> {</span>
+  <span class="keyword">return</span> $(<span class="string">'.box'</span>).fadeIn(<span class="string">'fast'</span>).addClass(<span class="string">'.active'</span>);
+}).css(<span class="string">'background'</span>, <span class="string">'white'</span>);
+</code></pre><script>window.example45 = "$ 'body'\n.click (e) ->\n  $ '.box'\n  .fadeIn 'fast'\n  .addClass '.active'\n.css 'background', 'white'\n\n\n"</script><div class='minibutton load' onclick='javascript: loadConsole(example45);'>load</div><br class='clear' /></div>
+      <ul>
+        <li>
+          Added <tt>**</tt>, <tt>//</tt> and <tt>%%</tt> operators and <tt>...</tt> expansion in parameter lists and destructuring expressions.
+        </li>
+        <li>
+          Multiline strings are now joined by a single space and ignore all indentation. A backslash at the end of a line can denote the amount of whitespace between lines, in both strings and heredocs. Backslashes correctly escape whitespace in block regexes.
+        </li>
+        <li>
+          Closing brackets can now be indented and therefore no longer cause unexpected error.
+        </li>
+        <li>
+          Several breaking compilation fixes. Non-callable literals (strings, numbers etc.) don't compile in a call now and multiple postfix conditionals compile properly. Postfix conditionals and loops always bind object literals. Conditional assignment compiles properly in subexpressions. <tt>super</tt> is disallowed outside of methods and works correctly inside <tt>for</tt> loops.
+        </li>
+        <li>
+          Formatting of compiled block comments has been improved.
+        </li>
+        <li>
+          No more <tt>-p</tt> folders on Windows.
+        </li>
+        <li>
+          The <tt>options</tt> object passed to CoffeeScript is no longer mutated.
+        </li>
+      </ul>
+    </p>
+    <p>
+      <div class="anchor" id="1.6.3"></div>
+<b class="header">
+  <a href="https://github.com/jashkenas/coffeescript/compare/1.6.2...1.6.3">1.6.3</a>
+  <span class="timestamp"> &mdash; <time datetime="2013-06-02">June 2, 2013</time></span>
+</b>
+>>>>>>> 1.9.3
       <ul>
         <li>
           The CoffeeScript REPL now remembers your history between sessions.

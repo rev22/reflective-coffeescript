@@ -20,25 +20,37 @@ replDefaults =
     {Block, Assign, Value, Literal} = require './nodes'
 
     try
-      # Generate the AST of the clean input.
-      ast = CoffeeScript.nodes input
+      # Tokenize the clean input.
+      tokens = CoffeeScript.tokens input
+      # Collect referenced variable names just like in `CoffeeScript.compile`.
+      referencedVars = (
+        token[1] for token in tokens when token.variable
+      )
+      # Generate the AST of the tokens.
+      ast = CoffeeScript.nodes tokens
       # Add assignment to `_` variable to force the input to be an expression.
       ast = new Block [
         new Assign (new Value new Literal '_'), ast, '='
       ]
       helpers.code = full: input
-      js = ast.compile bare: yes, locals: Object.keys(context)
+      js = ast.compile {bare: yes, locals: Object.keys(context), referencedVars}
       result = if context is global
         vm.runInThisContext js, filename
       else
         vm.runInContext js, context, filename
-      cb null, result
+      cb null, runInContext js, context, filename
     catch err
       # AST's `compile` does not add source code information to syntax errors.
       updateSyntaxError err, input
       cb err
     finally
       delete helpers.code
+
+runInContext = (js, context, filename) ->
+  if context is global
+    vm.runInThisContext js, filename
+  else
+    vm.runInContext js, context, filename
 
 addMultilineHandler = (repl) ->
   {rli, inputStream, outputStream} = repl
@@ -103,6 +115,7 @@ addHistory = (repl, filename, maxSize) ->
     readFd = fs.openSync filename, 'r'
     buffer = new Buffer(size)
     fs.readSync readFd, buffer, 0, size, stat.size - size
+    fs.close readFd
     # Set the history on the interpreter
     repl.rli.history = buffer.toString().split('\n').reverse()
     # If the history file was truncated we should pop off a potential partial line
@@ -120,7 +133,7 @@ addHistory = (repl, filename, maxSize) ->
       fs.write fd, "#{code}\n"
       lastLine = code
 
-  repl.rli.on 'exit', -> fs.close fd
+  repl.on 'exit', -> fs.close fd
 
   # Add a command to show the history stack
   repl.commands[getCommandId(repl, 'history')] =
@@ -146,7 +159,8 @@ module.exports =
     process.argv = ['coffee'].concat process.argv[2..]
     opts = merge replDefaults, opts
     repl = nodeREPL.start opts
-    repl.on 'exit', -> repl.outputStream.write '\n'
+    runInContext opts.prelude, repl.context, 'prelude' if opts.prelude
+    repl.on 'exit', -> repl.outputStream.write '\n' if not repl.rli.closed
     addMultilineHandler repl
     addHistory repl, opts.historyFile, opts.historyMaxInputSize if opts.historyFile
     # Adapt help inherited from the node REPL
