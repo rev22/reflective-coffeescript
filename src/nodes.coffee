@@ -1410,14 +1410,13 @@ exports.Assign = class Assign extends Base
 # has no *children* -- they're within the inner scope.
 exports.Code = class Code extends Base
   constructor: (params, body, tag) ->
-    @params    = params or []
-    @body      = body or new Block
-    @bound     = tag is 'boundfunc'
+    @params      = params or []
+    @body        = body or new Block
+    @bound       = tag is 'boundfunc'
     @reflective = tag is 'reflectivefunc'
     @pure = tag is 'purefunc'
-    @isGenerator = false
-    @body.traverseChildren false, (child) =>
-      @isGenerator = true if child.operator is 'yield'
+    @isGenerator = @body.contains (node) ->
+      node instanceof Op and node.operator in ['yield', 'yield*']
 
   children: ['params', 'body']
 
@@ -1753,6 +1752,9 @@ exports.Op = class Op extends Base
 
   isSimpleNumber: NO
 
+  isYield: ->
+    @operator in ['yield', 'yield*']
+
   isUnary: ->
     not @second
 
@@ -1819,6 +1821,7 @@ exports.Op = class Op extends Base
       @error 'delete operand may not be argument or var'
     if @operator in ['--', '++'] and @first.unwrapAll().value in STRICT_PROSCRIBED
       @error "cannot increment/decrement \"#{@first.unwrapAll().value}\""
+    return @compileYield     o if @isYield()
     return @compileUnary     o if @isUnary()
     return @compileChain     o if isChain
     switch @operator
@@ -1858,8 +1861,6 @@ exports.Op = class Op extends Base
   compileUnary: (o) ->
     parts = []
     op = @operator
-    if op in ['yield', 'yield*'] and not o.scope.parent?
-      @error 'yield statements must occur within a function generator.'
     parts.push [@makeCode op]
     if op is '!' and @first instanceof Existence
       @first.negated = not @first.negated
@@ -1867,12 +1868,25 @@ exports.Op = class Op extends Base
     if o.level >= LEVEL_ACCESS
       return (new Parens this).compileToFragments o
     plusMinus = op in ['+', '-']
-    parts.push [@makeCode(' ')] if op in ['new', 'typeof', 'delete', 'yield', 'yield*'] or
+    parts.push [@makeCode(' ')] if op in ['new', 'typeof', 'delete'] or
                       plusMinus and @first instanceof Op and @first.operator is op
     if (plusMinus and @first instanceof Op) or (op is 'new' and @first.isStatement o)
       @first = new Parens @first
     parts.push @first.compileToFragments o, LEVEL_OP
     parts.reverse() if @flip
+    @joinFragmentArrays parts, ''
+
+  compileYield: (o) ->
+    parts = []
+    op = @operator
+    if not o.scope.parent?
+      @error 'yield statements must occur within a function generator.'
+    if 'expression' in Object.keys @first
+      parts.push @first.expression.compileToFragments o, LEVEL_OP if @first.expression?
+    else 
+      parts.push [@makeCode op] 
+      parts.push [@makeCode(' ')]
+      parts.push @first.compileToFragments o, LEVEL_OP
     @joinFragmentArrays parts, ''
 
   compilePower: (o) ->
