@@ -155,9 +155,8 @@ exports.Lexer = class Lexer
   # referenced as property names here, so you can still do `jQuery.is()` even
   # though `is` means `===` otherwise.
   identifierToken: ->
-    return 0 unless match = /^yield\*/.exec(@chunk) or IDENTIFIER.exec @chunk
+    return 0 unless match = IDENTIFIER.exec @chunk
     [input, id, colon] = match
-    if input is 'yield*' then id = 'yield*'
 
     # Preserve length of id for location data
     idLength = id.length
@@ -860,7 +859,7 @@ exports.Lexer = class Lexer
 JS_KEYWORDS = [
   'true', 'false', 'null', 'this'
   'new', 'delete', 'typeof', 'in', 'instanceof'
-  'return', 'throw', 'break', 'continue', 'debugger', 'yield', 'yield*'
+  'return', 'throw', 'break', 'continue', 'debugger', 'yield'
   'if', 'else', 'switch', 'for', 'while', 'do', 'try', 'catch', 'finally'
   'class', 'extends', 'super'
 ]
@@ -922,7 +921,7 @@ LITDOC   = /// ^(?:\n[^\n\S]*)* \n([^\n\S]*) '''' [^\n\S]* ( (?:\n (\1[^\n]* | [
 HEREDOC    = /// ^ ("""|''') ((?: \\[\s\S] | [^\\] )*?) (?:\n[^\n\S]*)? \1 ///
 
 OPERATOR   = /// ^ (
-  ?: [-=@]>\*?          # function / generator
+  ?: [-=@]>            # function
    | [-+*/%<>&|^!?=]=  # compound assign / compare
    | (?:\.[<>]|[<>]\.) # transignment operators
    | >>>=?             # zero-fill right shift
@@ -937,7 +936,7 @@ WHITESPACE = /^[^\n\S]+/
 
 COMMENT    = /^###([^#][\s\S]*?)(?:###[^\n\S]*|###$)|^(?:\s*#(?!##[^#]).*)+/
 
-CODE       = /^[-=@]>\*?/
+CODE       = /^[-=@]>/
 
 MULTI_DENT = /^(?:\n[^\n\S]*)+/
 
@@ -986,7 +985,7 @@ COMPOUND_ASSIGN = [
 ]
 
 # Unary tokens.
-UNARY = ['NEW', 'TYPEOF', 'DELETE', 'DO', 'YIELD', 'YIELD*']
+UNARY = ['NEW', 'TYPEOF', 'DELETE', 'DO', 'YIELD']
 
 UNARY_MATH = ['!', '~']
 

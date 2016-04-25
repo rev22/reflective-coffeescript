@@ -1412,10 +1412,12 @@ exports.Code = class Code extends Base
   constructor: (params, body, tag) ->
     @params    = params or []
     @body      = body or new Block
-    @bound     = tag in [ 'boundfunc', 'boundgenerator' ]
-    @generator = tag in [ 'generator', 'boundgenerator', 'reflectivegenerator' ]
-    @reflective = tag in [ 'reflectivefunc', 'reflectivegenerator' ]
+    @bound     = tag is 'boundfunc'
+    @reflective = tag is 'reflectivefunc'
     @pure = tag is 'purefunc'
+    @isGenerator = false
+    @body.traverseChildren false, (child) =>
+      @isGenerator = true if child.operator is 'yield'
 
   children: ['params', 'body']
 
@@ -1508,7 +1510,7 @@ exports.Code = class Code extends Base
       uniqs.push name
     @body.makeReturn() unless wasEmpty or @noReturn
     code = 'function'
-    code += '*' if @generator
+    code += '*' if @isGenerator
     code += ' ' + @name if @ctor
     code += '('
     answer = [@makeCode(code)]
@@ -1862,8 +1864,8 @@ exports.Op = class Op extends Base
     if o.level >= LEVEL_ACCESS
       return (new Parens this).compileToFragments o
     plusMinus = op in ['+', '-']
-    parts.push [@makeCode(' ')] if op in ['new', 'typeof', 'delete', 'yield'
-      'yield*'] or plusMinus and @first instanceof Op and @first.operator is op
+    parts.push [@makeCode(' ')] if op in ['new', 'typeof', 'delete', 'yield', 'yield*'] or
+                      plusMinus and @first instanceof Op and @first.operator is op
     if (plusMinus and @first instanceof Op) or (op is 'new' and @first.isStatement o)
       @first = new Parens @first
     parts.push @first.compileToFragments o, LEVEL_OP
