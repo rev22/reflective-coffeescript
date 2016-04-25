@@ -92,7 +92,11 @@ exports.Base = class Base
       else
         meth = 'call'
       func = new Value func, [new Access new Literal meth]
-    (new Call func, args).compileNode o
+    parts = (new Call func, args).compileNode o
+    if func.isGenerator
+      parts.unshift @makeCode "(yield* "
+      parts.push    @makeCode ")"
+    parts
 
   # If the code generation wishes to use the result of a complex expression
   # in multiple places, ensure that the expression is only ever evaluated once,
@@ -1415,7 +1419,7 @@ exports.Code = class Code extends Base
     @bound       = tag is 'boundfunc'
     @reflective = tag is 'reflectivefunc'
     @pure = tag is 'purefunc'
-    @isGenerator = @body.contains (node) ->
+    @isGenerator = !!@body.contains (node) ->
       node instanceof Op and node.operator in ['yield', 'yield*']
 
   children: ['params', 'body']
@@ -1883,10 +1887,10 @@ exports.Op = class Op extends Base
       @error 'yield statements must occur within a function generator.'
     if 'expression' in Object.keys @first
       parts.push @first.expression.compileToFragments o, LEVEL_OP if @first.expression?
-    else 
-      parts.push [@makeCode "(#{op} "] 
+    else
+      parts.push [@makeCode "(#{op} "]
       parts.push @first.compileToFragments o, LEVEL_OP
-      parts.push [@makeCode ")"] 
+      parts.push [@makeCode ")"]
     @joinFragmentArrays parts, ''
 
   compilePower: (o) ->
