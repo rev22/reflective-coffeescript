@@ -1739,9 +1739,10 @@ exports.Op = class Op extends Base
 
   # The map of conversions from CoffeeScript to JavaScript symbols.
   CONVERSIONS =
-    '==': '==='
-    '!=': '!=='
-    'of': 'in'
+    '==':        '==='
+    '!=':        '!=='
+    'of':        'in'
+    'yieldfrom': 'yield*'
 
   # The map of invertible operators.
   INVERSIONS =
@@ -1857,6 +1858,8 @@ exports.Op = class Op extends Base
   compileUnary: (o) ->
     parts = []
     op = @operator
+    if op in ['yield', 'yield*'] and not o.scope.parent?
+      @error 'yield statements must occur within a function generator.'
     parts.push [@makeCode op]
     if op is '!' and @first instanceof Existence
       @first.negated = not @first.negated

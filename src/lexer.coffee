@@ -165,6 +165,9 @@ exports.Lexer = class Lexer
     if id is 'own' and @tag() is 'FOR'
       @token 'OWN', id
       return id.length
+    if id is 'from' and @tag() is 'YIELD'
+      @token 'FROM', id
+      return id.length
     forcedIdentifier = colon or
       (prev = last @tokens) and (prev[0] in ['.', '?.', '::', '?::'] or
       not prev.spaced and prev[0] in [ '@@', '@' ])
@@ -891,7 +894,7 @@ RESERVED = [
   'public', 'static'
 ]
 
-STRICT_PROSCRIBED = ['arguments', 'eval']
+STRICT_PROSCRIBED = ['arguments', 'eval', 'yield*']
 
 # The superset of both JavaScript keywords and reserved words, none of which may
 # be used as identifiers or properties.
@@ -985,7 +988,7 @@ COMPOUND_ASSIGN = [
 ]
 
 # Unary tokens.
-UNARY = ['NEW', 'TYPEOF', 'DELETE', 'DO', 'YIELD']
+UNARY = ['NEW', 'TYPEOF', 'DELETE', 'DO']
 
 UNARY_MATH = ['!', '~']
 
