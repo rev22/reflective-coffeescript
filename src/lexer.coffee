@@ -376,7 +376,8 @@ exports.Lexer = class Lexer
     string = string.replace /\"/g, "\\\""
     string = '"' + string + '"'
 
-    last(@tokens)?.spaced = true
+    [ ..., theLastToken ] = @tokens
+    theLastToken?.spaced = true
 
     @token 'STRING', string, 0, length
     length
@@ -635,7 +636,7 @@ exports.Lexer = class Lexer
       # The `1`s are to remove the `#` in `#{`.
       [line, column] = @getLineAndColumnFromChunk offsetInChunk + 1
       {tokens: nested, index} =
-        outerLexer.clone().tokenize str[1..], line: line, column: column, untilBalanced: on
+        outerLexer.clone().doTokenize str[1..], line: line, column: column, untilBalanced: on
       # Skip the trailing `}`.
       index += 1
 
