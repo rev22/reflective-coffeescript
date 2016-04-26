@@ -125,7 +125,7 @@ exports.Lexer = class Lexer
     code = code.replace m, (m, start, line)=>
       # @@console.log @@JSON.stringify { m, start, line }
       # compiler = @compiler.clone() # Generate a subcompiler
-      @ .> compiler
+      { compiler } = @
       # console.log '@>' + line.replace(/^\S/, (m)-> ' @lexer.' + m)
       compiler.eval('@>' + line.replace(/^\S/, (m)-> ' @lexer.' + m)).call compiler
       start + line.replace /.+/g, (x)-> '# Processed: ' + x
@@ -614,6 +614,7 @@ exports.Lexer = class Lexer
   # This method allows us to have strings within interpolations within strings,
   # ad infinitum.
   matchWithInterpolations: (regex, delimiter) ->
+    outerLexer = @
     tokens = []
     offsetInChunk = delimiter.length
     return null unless @chunk[...offsetInChunk] is delimiter
@@ -634,7 +635,7 @@ exports.Lexer = class Lexer
       # The `1`s are to remove the `#` in `#{`.
       [line, column] = @getLineAndColumnFromChunk offsetInChunk + 1
       {tokens: nested, index} =
-        new Lexer().doTokenize str[1..], line: line, column: column, untilBalanced: on
+        outerLexer.clone().tokenize str[1..], line: line, column: column, untilBalanced: on
       # Skip the trailing `}`.
       index += 1
 
