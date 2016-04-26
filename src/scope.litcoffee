@@ -13,15 +13,19 @@ where it should declare its variables, a reference to the function that
 it belongs to, and a list of variables referenced in the source code
 and therefore should be avoided when generating variables.
 
-      constructor: (@parent, @expressions, @method, @referencedVars, forceStrict = false) ->
+      constructor: (parent, @expressions, @method, @referencedVars = [ ], forceStrict = false) ->
+        @parent = parent
         @strict = forceStrict or parent?.strict
         @variables = [{name: 'arguments', type: 'arguments'}]
         @positions = {}
-        @utilities = {} unless @parent
+        @utilities = {} unless parent
 
 The `@root` is the top-level **Scope** object for a given file.
 
-        @root = @parent?.root ? this unless forceStrict
+        if forceStrict
+          @root = @
+        else
+          @root = parent?.root ? @
 
 Adds a new variable or overrides an existing one.
 
