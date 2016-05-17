@@ -141,10 +141,12 @@ and therefore should be avoided when generating variables.</p>
 
             </div>
             
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@parent</span>, <span class="hljs-property">@expressions</span>, <span class="hljs-property">@method</span>, <span class="hljs-property">@referencedVars</span>)</span> -&gt;</span>
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(parent, <span class="hljs-property">@expressions</span>, <span class="hljs-property">@method</span>, <span class="hljs-property">@referencedVars</span> = [ ], forceStrict = <span class="hljs-literal">false</span>)</span> -&gt;</span>
+    <span class="hljs-property">@parent</span> = parent
+    <span class="hljs-property">@strict</span> = forceStrict <span class="hljs-keyword">or</span> parent?.strict
     <span class="hljs-property">@variables</span> = [{<span class="hljs-attribute">name</span>: <span class="hljs-string">'arguments'</span>, <span class="hljs-attribute">type</span>: <span class="hljs-string">'arguments'</span>}]
     <span class="hljs-property">@positions</span> = {}
-    <span class="hljs-property">@utilities</span> = {} <span class="hljs-keyword">unless</span> <span class="hljs-property">@parent</span></pre></div></div>
+    <span class="hljs-property">@utilities</span> = {} <span class="hljs-keyword">unless</span> parent</pre></div></div>
             
         </li>
         
@@ -159,20 +161,10 @@ and therefore should be avoided when generating variables.</p>
 
             </div>
             
-<<<<<<< HEAD
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@parent</span>, <span class="hljs-property">@expressions</span>, <span class="hljs-property">@method</span>, forceStrict = <span class="hljs-literal">false</span>)</span> -&gt;</span>
-    <span class="hljs-property">@strict</span> = forceStrict <span class="hljs-keyword">or</span> parent?.strict
-    <span class="hljs-property">@variables</span> = [{<span class="hljs-attribute">name</span>: <span class="hljs-string">'arguments'</span>, <span class="hljs-attribute">type</span>: <span class="hljs-string">'arguments'</span>}]
-    <span class="hljs-property">@positions</span> = {}
-    Scope.root = <span class="hljs-keyword">this</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@parent</span></pre></div></div>
-||||||| merged common ancestors
-            <div class="content"><div class='highlight'><pre>  <span class="hljs-attribute">constructor</span>: <span class="hljs-function"><span class="hljs-params">(<span class="hljs-property">@parent</span>, <span class="hljs-property">@expressions</span>, <span class="hljs-property">@method</span>)</span> -&gt;</span>
-    <span class="hljs-property">@variables</span> = [{<span class="hljs-attribute">name</span>: <span class="hljs-string">'arguments'</span>, <span class="hljs-attribute">type</span>: <span class="hljs-string">'arguments'</span>}]
-    <span class="hljs-property">@positions</span> = {}
-    Scope.root = <span class="hljs-keyword">this</span> <span class="hljs-keyword">unless</span> <span class="hljs-property">@parent</span></pre></div></div>
-=======
-            <div class="content"><div class='highlight'><pre>    <span class="hljs-property">@root</span> = <span class="hljs-property">@parent</span>?.root ? <span class="hljs-keyword">this</span></pre></div></div>
->>>>>>> 1.9.3
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-keyword">if</span> forceStrict
+      <span class="hljs-property">@root</span> = @
+    <span class="hljs-keyword">else</span>
+      <span class="hljs-property">@root</span> = parent?.root ? @</pre></div></div>
             
         </li>
         

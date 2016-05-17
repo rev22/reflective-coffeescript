@@ -240,7 +240,12 @@ parens. Unwrap all that.</p>
             <div class="content"><div class='highlight'><pre>      ast = <span class="hljs-keyword">new</span> Block [
         <span class="hljs-keyword">new</span> Assign (<span class="hljs-keyword">new</span> Value <span class="hljs-keyword">new</span> Literal <span class="hljs-string">'_'</span>), ast, <span class="hljs-string">'='</span>
       ]
+      helpers.code = <span class="hljs-attribute">full</span>: input
       js = ast.compile {<span class="hljs-attribute">bare</span>: <span class="hljs-literal">yes</span>, <span class="hljs-attribute">locals</span>: Object.keys(context), referencedVars}
+      result = <span class="hljs-keyword">if</span> context <span class="hljs-keyword">is</span> <span class="hljs-built_in">global</span>
+        vm.runInThisContext js, filename
+      <span class="hljs-keyword">else</span>
+        vm.runInContext js, context, filename
       cb <span class="hljs-literal">null</span>, runInContext js, context, filename
     <span class="hljs-keyword">catch</span> err</pre></div></div>
             

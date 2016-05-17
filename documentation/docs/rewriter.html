@@ -290,7 +290,7 @@ Match it with its paired close.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>Match tags in token stream starting at <code>i</code> with <code>pattern</code>, skipping ‘HERECOMMENT’s.
+              <p>Match tags in token stream starting at <code>i</code> with <code>pattern</code>, skipping &#39;HERECOMMENT&#39;s.
 <code>pattern</code> may consist of strings (equality), an array of strings (one of)
 or null (wildcard). Returns the index of the match or -1 if no match.</p>
 
@@ -316,7 +316,7 @@ or null (wildcard). Returns the index of the match or -1 if no match.</p>
               </div>
               <p>Returns <code>yes</code> if standing in front of something looking like
 <code>@&lt;x&gt;:</code>, <code>&lt;x&gt;:</code> or <code>&lt;EXPRESSION_START&gt;&lt;x&gt;...&lt;EXPRESSION_END&gt;:</code>,
-skipping over ‘HERECOMMENT’s.</p>
+skipping over &#39;HERECOMMENT&#39;s.</p>
 
             </div>
             
@@ -644,7 +644,7 @@ that creates grammatical ambiguities.</p>
             
             <div class="content"><div class='highlight'><pre>        s = <span class="hljs-keyword">switch</span>
           <span class="hljs-keyword">when</span> <span class="hljs-property">@tag</span>(i - <span class="hljs-number">1</span>) <span class="hljs-keyword">in</span> EXPRESSION_END <span class="hljs-keyword">then</span> start[<span class="hljs-number">1</span>]
-          <span class="hljs-keyword">when</span> <span class="hljs-property">@tag</span>(i - <span class="hljs-number">2</span>) <span class="hljs-keyword">is</span> <span class="hljs-string">'@'</span> <span class="hljs-keyword">then</span> i - <span class="hljs-number">2</span>
+          <span class="hljs-keyword">when</span> <span class="hljs-property">@tag</span>(i - <span class="hljs-number">2</span>) <span class="hljs-keyword">in</span> [ <span class="hljs-string">'@'</span>, <span class="hljs-string">'@@'</span> ] <span class="hljs-keyword">then</span> i - <span class="hljs-number">2</span>
           <span class="hljs-keyword">else</span> i - <span class="hljs-number">1</span>
         s -= <span class="hljs-number">2</span> <span class="hljs-keyword">while</span> <span class="hljs-property">@tag</span>(s - <span class="hljs-number">2</span>) <span class="hljs-keyword">is</span> <span class="hljs-string">'HERECOMMENT'</span></pre></div></div>
             
@@ -874,7 +874,7 @@ blocks are added.</p>
       <span class="hljs-keyword">not</span> (token[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'TERMINATOR'</span> <span class="hljs-keyword">and</span> <span class="hljs-property">@tag</span>(i + <span class="hljs-number">1</span>) <span class="hljs-keyword">in</span> EXPRESSION_CLOSE) <span class="hljs-keyword">and</span>
       <span class="hljs-keyword">not</span> (token[<span class="hljs-number">0</span>] <span class="hljs-keyword">is</span> <span class="hljs-string">'ELSE'</span> <span class="hljs-keyword">and</span> starter <span class="hljs-keyword">isnt</span> <span class="hljs-string">'THEN'</span>) <span class="hljs-keyword">and</span>
       <span class="hljs-keyword">not</span> (token[<span class="hljs-number">0</span>] <span class="hljs-keyword">in</span> [<span class="hljs-string">'CATCH'</span>, <span class="hljs-string">'FINALLY'</span>] <span class="hljs-keyword">and</span> starter <span class="hljs-keyword">isnt</span> <span class="hljs-string">'TRY'</span> <span class="hljs-keyword">and</span> starter <span class="hljs-keyword">isnt</span> <span class="hljs-string">'THEN'</span>) <span class="hljs-keyword">and</span>
-      <span class="hljs-keyword">not</span> (token[<span class="hljs-number">0</span>] <span class="hljs-keyword">in</span> [<span class="hljs-string">'CATCH'</span>, <span class="hljs-string">'FINALLY'</span>] <span class="hljs-keyword">and</span> starter <span class="hljs-keyword">in</span> [<span class="hljs-string">'-&gt;'</span>, <span class="hljs-string">'=&gt;'</span>, <span class="hljs-string">'@&gt;'</span>]) <span class="hljs-keyword">or</span>
+      <span class="hljs-keyword">not</span> (token[<span class="hljs-number">0</span>] <span class="hljs-keyword">in</span> [<span class="hljs-string">'CATCH'</span>, <span class="hljs-string">'FINALLY'</span>] <span class="hljs-keyword">and</span> <span class="hljs-regexp">/^[-=@]&gt;$/</span>.test starter) <span class="hljs-keyword">or</span>
       token[<span class="hljs-number">0</span>] <span class="hljs-keyword">in</span> CALL_CLOSERS <span class="hljs-keyword">and</span> <span class="hljs-property">@tokens</span>[i - <span class="hljs-number">1</span>].newLine
 
     <span class="hljs-function"><span class="hljs-title">action</span> = <span class="hljs-params">(token, i)</span> -&gt;</span>
@@ -1104,7 +1104,7 @@ EXPRESSION_END   = []
   <span class="hljs-string">'IDENTIFIER'</span>, <span class="hljs-string">'NUMBER'</span>, <span class="hljs-string">'STRING'</span>, <span class="hljs-string">'STRING_START'</span>, <span class="hljs-string">'JS'</span>, <span class="hljs-string">'REGEX'</span>, <span class="hljs-string">'REGEX_START'</span>
   <span class="hljs-string">'NEW'</span>, <span class="hljs-string">'PARAM_START'</span>, <span class="hljs-string">'CLASS'</span>, <span class="hljs-string">'IF'</span>, <span class="hljs-string">'TRY'</span>, <span class="hljs-string">'SWITCH'</span>, <span class="hljs-string">'THIS'</span>, <span class="hljs-string">'BOOL'</span>, <span class="hljs-string">'NULL'</span>
   <span class="hljs-string">'UNDEFINED'</span>, <span class="hljs-string">'UNARY'</span>, <span class="hljs-string">'YIELD'</span>, <span class="hljs-string">'UNARY_MATH'</span>, <span class="hljs-string">'SUPER'</span>, <span class="hljs-string">'THROW'</span>
-  <span class="hljs-string">'@'</span>, <span class="hljs-string">'-&gt;'</span>, <span class="hljs-string">'=&gt;'</span>, <span class="hljs-string">'['</span>, <span class="hljs-string">'('</span>, <span class="hljs-string">'{'</span>, <span class="hljs-string">'--'</span>, <span class="hljs-string">'++'</span>
+  <span class="hljs-string">'@'</span>, <span class="hljs-string">'@@'</span>, <span class="hljs-string">'-&gt;'</span>, <span class="hljs-string">'=&gt;'</span>, <span class="hljs-string">'@&gt;'</span>, <span class="hljs-string">'['</span>, <span class="hljs-string">'('</span>, <span class="hljs-string">'{'</span>, <span class="hljs-string">'--'</span>, <span class="hljs-string">'++'</span>
 ]
 
 IMPLICIT_UNSPACED_CALL = [<span class="hljs-string">'+'</span>, <span class="hljs-string">'-'</span>]</pre></div></div>

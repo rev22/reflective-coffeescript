@@ -14,8 +14,7 @@ path          = require 'path'
 helpers       = require './helpers'
 SourceMap     = require './sourcemap'
 
-# The current CoffeeScript version number.
-exports.VERSION = '1.9.3-reflective.111'
+exports.VERSION = '1.10.0-reflective.111'
 
 exports.FILE_EXTENSIONS = ['.refcoffee', '.litrefcoffee', '.refcoffee.md', '.coffee', '.litcoffee', '.coffee.md']
 
@@ -170,7 +169,8 @@ exports.eval = (code, options = {}) ->
       sandbox.module  = _module  = new Module(options.modulename || 'eval')
       sandbox.require = _require = (path) ->  Module._load path, _module, true
       _module.filename = filename
-      _require[r] = require[r] for r in Object.getOwnPropertyNames require when r isnt 'paths'
+      for r in Object.getOwnPropertyNames require when r not in ['paths', 'arguments', 'caller']
+        _require[r] = require[r]
       # use the same hack node currently uses for their own REPL
       _require.paths = _module.paths = Module._nodeModulePaths process.cwd()
       _require.resolve = (request) -> Module._resolveFilename request, _module
