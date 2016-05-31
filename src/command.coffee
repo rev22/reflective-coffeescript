@@ -61,6 +61,15 @@ notSources   = {}
 watchedDirs  = {}
 optionParser = null
 
+exports.runScript = ->
+    argv = process.argv
+    global.scriptPath = p = argv[2]
+    global.scriptArgs = argv[3...]
+    p = path.resolve p
+    opts.run = true
+    compileScript p, require('fs').readFileSync(p).toString(), p
+    return
+
 # Run `coffee` by parsing passed options and determining what action to take.
 # Many flags cause us to divert before compiling anything. Flags passed after
 # `--` will be passed verbatim to your script as arguments in `process.argv`
