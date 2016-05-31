@@ -566,7 +566,7 @@ exports.Value = class Value extends Base
       do (val = @base.value) =>
         if IDENTIFIER.test val
           # Check that variable is declared in the strict scope
-          unless val is 'this' or o.scope.check val
+          unless @notVar or val is 'this' or o.scope.check val
             @error "Variable \"#{val}\" is not declared in strict scope"
     fragments = @base.compileToFragments o, (if props.length then LEVEL_ACCESS else null)
     if (@base instanceof Parens or props.length) and SIMPLENUM.test fragmentsToText fragments
@@ -1245,6 +1245,7 @@ exports.Assign = class Assign extends Base
           o.scope.find varBase.value
     val = @value.compileToFragments o, LEVEL_LIST
     @variable.front = true if isValue and @variable.base instanceof Obj
+    @variable.notVar = true if @context is 'object'
     compiledName = @variable.compileToFragments o, LEVEL_LIST
     return (compiledName.concat @makeCode(": "), val) if @context is 'object'
     answer = compiledName.concat @makeCode(" #{ @context or '=' } "), val

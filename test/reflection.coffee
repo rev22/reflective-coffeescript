@@ -15,6 +15,152 @@ test "Verify catching impure reflective functions", ->
     catch
       caught = true
     caught
+  CoffeeScript.compile "@>@foo.x"
+  CoffeeScript.compile "->foo.x"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>foo.x"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>->foo.x"
+    catch
+      caught = true
+    caught
+  CoffeeScript.compile "@>@foo()"
+  CoffeeScript.compile "->foo()"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>foo()"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>->foo()"
+    catch
+      caught = true
+    caught
+  CoffeeScript.compile "@>{@foo}"
+  CoffeeScript.compile "->{foo}"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>{foo}"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>->{foo}"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@> -> { foo }"
+    catch
+      caught = true
+    caught
+  CoffeeScript.compile "@>{a:@foo}"
+  CoffeeScript.compile "->{a:foo}"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>{ a: foo }"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>-> { a: foo } "
+    catch
+      caught = true
+    caught
+  CoffeeScript.compile "@>a:@foo"
+  CoffeeScript.compile "->a:foo"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>a:foo"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>-> a: foo"
+    catch
+      caught = true
+    caught
+  CoffeeScript.compile "@>@x a:@foo"
+  CoffeeScript.compile "->x a:foo"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>@x a:foo"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>-> @x a: foo"
+    catch
+      caught = true
+    caught
+  CoffeeScript.compile "@>@x @z, a:@foo"
+  CoffeeScript.compile "->x z, a:foo"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>@x @z, a:foo"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>-> @x @z, a: foo"
+    catch
+      caught = true
+    caught
+  CoffeeScript.compile "@>@x(@z, a:@foo)"
+  CoffeeScript.compile "->x( z, a:foo )"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>@x(@z,a:foo)"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>-> @x( @z, a: foo )"
+    catch
+      caught = true
+    caught
+  CoffeeScript.compile "@>@x(@z,{a:@foo})"
+  CoffeeScript.compile "->x( z, { a:foo } )"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>@x(@z,{a:foo})"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>-> @x( @z, { a: foo } )"
+    catch
+      caught = true
+    caught
+  CoffeeScript.compile "@>@x @z,{a:@foo}"
+  CoffeeScript.compile "->x z, { a:foo }"
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>@x @z,{a:foo}"
+    catch
+      caught = true
+    caught
+  ok do (caught = false)->
+    try
+      CoffeeScript.compile "@>-> @x @z, { a: foo }"
+    catch
+      caught = true
+    caught
 
 test "Verify reflective functions source", ->
   ok ((@>).coffee is "@>")
