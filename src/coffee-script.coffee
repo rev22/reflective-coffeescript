@@ -14,7 +14,7 @@ path          = require 'path'
 helpers       = require './helpers'
 SourceMap     = require './sourcemap'
 
-exports.VERSION = '1.10.0-reflective.112'
+exports.VERSION = '1.10.0-reflective.114'
 
 exports.FILE_EXTENSIONS = ['.refcoffee', '.litrefcoffee', '.refcoffee.md', '.coffee', '.litcoffee', '.coffee.md']
 
